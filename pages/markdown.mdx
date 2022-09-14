@@ -1,0 +1,279 @@
+import Letterhead from '../components/layouts/Letterhead';
+
+<Letterhead
+  title="Markdown"
+  description="A page showing the supported features of markdown on this site."
+  date="Sep. 14, 2022, 9:10 a.m."
+>
+
+## Headings
+---
+# Heading 1
+## Heading 2
+### Heading 3
+#### Heading 4
+##### Heading 5
+###### Heading 6
+
+```markdown
+# Heading 1
+## Heading 2
+### Heading 3
+#### Heading 4
+##### Heading 5
+###### Heading 6
+```
+
+## Styling text
+---
+| Style | Syntax | Example | Output |
+| ----- | ------ | ------- | ------ |
+| bold | `** **` or `__ __` | `**This is bold text**` | **This is bold text** |
+| italic | `* *` or `_ _` | `*This is italic text*` | *This is italic text* |
+| strikethrough | `~~ ~~` | `~~This text is crossed out~~` | ~~This text is crossed out~~ |
+| bold and nested italic | `** **` and `_ _` | `**This is text with _emphasis_!**` | **This is text with _emphasis_!** |
+| all bold and italic | `*** ***` or `___ ___` | `***This text is super important!***` | ***This text is super important!*** |
+
+## Blockquote
+---
+Start off a blockquote with a greater-than sign (>).
+
+<u>Example:</u>
+This is normal text
+> This is a quote
+```markdown
+This is normal text
+> This is a quote
+```
+
+## Code
+---
+### Inline code
+To render inline code, surround snippets of code with backticks (&grave; &grave;).
+
+<u>Example:</u>
+Use `git status` to list all new or modified files that haven't yet been committed.
+```markdown
+Use `git status` to list all new or modified files that haven't yet been committed.
+```
+
+### Codeblock
+For multi-line code snippets, create a codeblock with triple-backticks (&grave;&grave;&grave; &grave;&grave;&grave;).
+
+<u>Example:</u>
+````markdown
+  Some basic Git commands are:
+  ```
+  git status
+  git add
+  git commit
+  ```
+````
+
+## Links
+---
+To create a link, wrap the link text in brackets `[]` and the url in parentheses `()`.
+
+<u>Example:</u>
+The link to my [website](https://linkaiwu.com)
+```markdown
+The link to my [website](https://linkaiwu.com)
+```
+
+### Relative links
+You can link to pages on the same website by including the path in the parentheses `()`.
+
+<u>Example:</u>
+Click [me](/) to go to the homepage
+```markdown
+Click [me](/) to go to the homepage
+```
+
+### Section links
+This feature is not yet implemented!
+
+## Images
+---
+You can display an image by adding `!` and wrapping the alt text in `[]`. Then wrap the link for the image in parentheses `()`.
+
+<u>Example:</u>
+![Minion](https://octodex.github.com/images/minion.png)
+```markdown
+![Minion](https://octodex.github.com/images/minion.png)`
+```
+
+## Lists
+---
+### Unordered lists
+You can make an unordered list by preceding one or more lines of text with `-`, `*`, or `+`.
+
+
+<u>Example:</u>
+- George Washington
+* John Adams
++ Thomas Jefferson
+
+```markdown
+- George Washington
+* John Adams
++ Thomas Jefferson
+```
+
+### Ordered lists
+To order your list, precede each line with a number.
+
+<u>Examples:</u>
+> **Using sequential numbers:**
+1. Lorem ipsum dolor sit amet
+2. Consectetur adipiscing elit
+3. Integer molestie lorem at massa
+
+```markdown
+1. Lorem ipsum dolor sit amet
+2. Consectetur adipiscing elit
+3. Integer molestie lorem at massa
+```
+
+> **Using all 1's**
+1. Red
+1. Orange
+1. Yellow
+
+```markdown
+1. Red
+1. Orange
+1. Yellow
+```
+
+> **Starting with an offset**
+69. Orange
+1. Banana
+1. Strawberry
+
+```markdown
+69. Orange
+1. Banana
+1. Strawberry
+```
+
+### Nested lists
+You can create a nested list by indenting one or more list items below another item.
+
+<u>Example:</u>
+1. First list item
+   - First nested list item
+     - Second nested list item
+
+```markdown
+1. First list item
+   - First nested list item
+     - Second nested list item
+```
+
+![Nested list with alignment highlighted](https://docs.github.com/assets/cb-5185/images/help/writing/nested-list-alignment.png)
+
+### Task lists
+To create a task list, preface unordered list items and space followed by `[ ]`. To mark a task as complete, use `[x]`.
+
+<u>Example:</u>
+* [ ] Touch some grass
+* [ ] Take out the trash
++ [x] Wash the dishes
+
+```
+* [ ] Touch some grass
+* [ ] Take out the trash
++ [x] Wash the dishes
+```
+
+## Paragraphs
+---
+You can create a new paragraph by leaving a blank line between lines of text.
+
+## Footnotes
+---
+You can add footnotes to your content by using this bracket syntax:
+
+```markdown
+Here is a simple footnote[^1].
+
+A footnote can also have multiple lines[^2].  
+
+Footnotes can be referenced more than once[^2]!
+
+You can also use words, to fit your writing style more closely[^note].
+
+[^1]: A footnote **can have markup**!
+[^2]: Every new line should be prefixed with 2 spaces.  
+  This allows you to have a footnote with multiple lines.
+[^note]:
+    Named footnotes will still render with numbers instead of the text but allow easier identification and linking.  
+    This footnote also has been made with a different syntax using 4 spaces for new lines.
+```
+
+Here is a simple footnote[^1].
+
+A footnote can also have multiple lines[^2].  
+
+Footnotes can be referenced more than once[^2]!
+
+You can also use words, to fit your writing style more closely[^note].
+
+[^1]: A footnote **can have markup**!
+[^2]: Every new line should be prefixed with 2 spaces.  
+  This allows you to have a footnote with multiple lines.
+[^note]:
+    Named footnotes will still render with numbers instead of the text but allow easier identification and linking.  
+    This footnote also has been made with a different syntax using 4 spaces for new lines.
+
+
+## Horizontal Line
+---
+Use a triple underscore `___`, dash `---`, or asterisk `***`.
+
+<u>Example:</u>
+
+---
+<br/>
+---
+<br/>
+---
+
+```
+---
+<br/>
+---
+<br/>
+---
+```
+
+## Tables
+---
+You can add tables to your content by using this syntax:
+
+```markdown
+| Term | Definition |
+| ---- | ---------- |
+| myriad | a very large number |
+| thwart | to oppose successfully; to prevent, frustrate |
+| grudgingly | displaying or reflecting reluctance or unwillingness |
+```
+
+| Term | Definition |
+| ---- | ---------- |
+| myriad | a very large number |
+| thwart | to oppose successfully; to prevent, frustrate |
+| grudgingly | displaying or reflecting reluctance or unwillingness |
+
+
+## Ignoring Markdown formatting
+---
+You can tell ignore (or escape) Markdown formatting by using `\` before the Markdown character.
+
+<u>Example:</u>
+Let's rename \*our-new-project\* to \*our-old-project\*.
+```markdown
+Let's rename \*our-new-project\* to \*our-old-project\*.
+```
+
+</Letterhead>

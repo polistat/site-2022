@@ -131,7 +131,7 @@ export default function Home() {
           <p className="text-sm text-neutral-400 italic">
             Oct. 27, 2020, 10:09 p.m.
           </p>
-          <p className="text-sm font-thin mt-1">
+          <p className="text-sm mt-1">
             An analysis of how allocating electors proportionally by popular vote within the states would change the election.
           </p>
         </div>
@@ -145,7 +145,7 @@ export default function Home() {
           <p className="text-sm text-neutral-400 italic">
             Oct. 28, 2020, 1:47 p.m.
           </p>
-          <p className="text-sm font-thin mt-1">
+          <p className="text-sm mt-1">
             If we only used “A” rated polls, or “A” and “B” rated polls, does it impact the results of our model?
           </p>
         </div>
@@ -159,7 +159,7 @@ export default function Home() {
           <p className="text-sm text-neutral-400 italic">
             Oct. 28, 2020, 10:11 p.m.
           </p>
-          <p className="text-sm font-thin mt-1">
+          <p className="text-sm mt-1">
             To what degree do the 2016 and 2020 student models differ in battleground states?
           </p>
         </div>
@@ -179,7 +179,7 @@ export default function Home() {
         <h2 className="text-2xl font-bold">
           Methodology
         </h2>
-        <p className="font-thin mt-1">
+        <p className="mt-1">
           Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vestibulum orci tortor, faucibus sed varius in, pulvinar non nulla. Pellentesque vel porttitor erat. Phasellus eget congue nulla. Aenean in rhoncus urna. Vestibulum dictum arcu ut lobortis aliquet. Morbi vel rhoncus orci.
         </p>
         
@@ -196,7 +196,7 @@ export default function Home() {
         <h2 className="text-2xl font-bold">
           About us
         </h2>
-        <p className="font-thin mt-1">
+        <p className="mt-1">
           ORACLE of Blair is a project by seniors at Montgomery Blair High School in Silver Spring, Maryland.
           It was created during the Fall 2022 Political Statistics course taught by Mr. David Stein.
           Questions for the students about the model can be sent to mbhs.polistat@gmail.com, while Mr. Stein can be reached directly through the Blair website.
@@ -205,7 +205,7 @@ export default function Home() {
         <h3 className="text-lg font-bold mt-3">
           Please note
         </h3>
-        <p className="font-thin">
+        <p className="">
           Any views or opinions expressed on this site are those of the students in Montgomery Blair High School's 2022 Political Statistics class and do not necessarily reflect the official position of Montgomery Blair High School.
         </p>
       </section> */}

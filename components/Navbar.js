@@ -38,8 +38,12 @@ export default function Navbar() {
         </Link>
 
         <ul className="flex flex-row gap-4 items-center text-lg font-medium">
-          <li>Blog</li>
-          <li>Methodology</li>
+          <Link href="/blog" passHref>
+            <a>Blog</a>
+          </Link>
+          <Link href="/methodology" passHref>
+            <a>Methodology</a>
+          </Link>
           {/* <ul className="flex flex-row gap-2 items-center">
             <li>🐦</li>
             <li>📷</li>
