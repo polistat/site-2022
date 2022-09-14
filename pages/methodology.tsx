@@ -34,7 +34,7 @@ export default function MethodologyPage({ source, frontMatter }: Props) {
     <Navbar/>
 
     <div className="container max-w-3xl">
-      <div className="pt-12 pb-8">
+      <header className="pt-12 pb-8 px-8">
         <h1 className="text-4xl text-center font-extrabold font-serif">{frontMatter.title}</h1>
         <p className="mt-2 text-lg text-center">{frontMatter.description}</p>
 
@@ -51,11 +51,11 @@ export default function MethodologyPage({ source, frontMatter }: Props) {
             <span className="text-sm text-neutral-400 italic">{frontMatter.date}</span>
           }
         </div>
-      </div>
+      </header>
 
-      <div className="pt-4 pb-8 px-4">
+      <main className="pt-4 pb-8 px-8">
         <MDXRemote {...source} /*components={components}*//>
-      </div>
+      </main>
     </div>
   </>;
 }

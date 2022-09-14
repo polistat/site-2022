@@ -2,11 +2,12 @@ import React from 'react';
 import Head from 'next/head';
 import Link from 'next/link';
 import { motion, AnimatePresence } from 'framer-motion';
+import { getBlogList } from "../lib/blog";
 
 import Navbar from '../components/Navbar';
 import Map from '../components/Map';
 
-export default function Home() {
+export default function Home({ blogPosts }: { blogPosts: any }) {
   const [headerSlide, setHeaderSlide] = React.useState(0);
 
   return <>
@@ -18,9 +19,9 @@ export default function Home() {
     <Navbar/>
 
     <header className="bg-neutral-50">
-      <div className="px-8 pt-12 pb-8 container max-w-5xl flex flex-col gap-8">
+      <div className="px-4 pt-12 pb-8 container max-w-5xl flex flex-col gap-8">
         <div className="flex flex-col gap-1.5 items-center">
-          <h1 className="text-4xl text-center font-bold font-serif">
+          <h1 className="text-4xl text-center font-extrabold font-serif">
             2022 Election Forecast
           </h1>
           <p className="text-xl text-center font-thin uppercase">
@@ -116,55 +117,35 @@ export default function Home() {
       </div>
     </header>
     
-    <main className="px-8 py-12 container max-w-2xl flex flex-col gap-16">
+    <main className="px-4 py-12 container max-w-2xl flex flex-col gap-16">
       <section className="p-8 border-2 border-neutral-200 shadow-md rounded-xl">
         <h2 className="text-2xl font-bold">
           The latest
         </h2>
 
         <hr className="mt-2 mb-4"/>
+        
+        {blogPosts.slice(0,3).map((post:any) =>
+          <article key={post.slug}>
+            <div className="">
+              <h3 className="font-medium">
+                <Link href={`/blog/${post.slug}`} passHref>
+                  <a className="hover:underline">
+                    {post.title}
+                  </a>
+                </Link>
+              </h3>
+              <p className="text-sm text-neutral-400 italic">
+                {post.date}
+              </p>
+              <p className="text-sm mt-1">
+                {post.description}
+              </p>
+            </div>
 
-        <div className="">
-          <h3 className="font-medium">
-            Analyzing the Effects of a Proportional Elector System
-          </h3>
-          <p className="text-sm text-neutral-400 italic">
-            Oct. 27, 2020, 10:09 p.m.
-          </p>
-          <p className="text-sm mt-1">
-            An analysis of how allocating electors proportionally by popular vote within the states would change the election.
-          </p>
-        </div>
-
-        <hr className="my-4"/>
-
-        <div className="">
-          <h3 className="font-medium">
-            Good Polls and Bad Polls
-          </h3>
-          <p className="text-sm text-neutral-400 italic">
-            Oct. 28, 2020, 1:47 p.m.
-          </p>
-          <p className="text-sm mt-1">
-            If we only used “A” rated polls, or “A” and “B” rated polls, does it impact the results of our model?
-          </p>
-        </div>
-
-        <hr className="my-4"/>
-
-        <div className="">
-          <h3 className="font-medium">
-            2016 vs. 2020 Models
-          </h3>
-          <p className="text-sm text-neutral-400 italic">
-            Oct. 28, 2020, 10:11 p.m.
-          </p>
-          <p className="text-sm mt-1">
-            To what degree do the 2016 and 2020 student models differ in battleground states?
-          </p>
-        </div>
-
-        <hr className="my-4"/>
+            <hr className="my-4"/>
+          </article>
+        )}
         
         <Link href="/blog" passHref>
           <a>
@@ -214,4 +195,13 @@ export default function Home() {
     <footer>
     </footer>
   </>;
+}
+
+export async function getStaticProps() {
+  const blogPosts = await getBlogList();
+  return {
+    props: {
+      blogPosts
+    }
+  };
 }

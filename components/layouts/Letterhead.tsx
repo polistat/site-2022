@@ -40,7 +40,7 @@ export default function Letterhead(props: Props) {
       <Navbar/>
 
       <div className="container max-w-3xl">
-        <div className="pt-16 pb-8 text-center">
+        <div className="pt-12 pb-8 px-8 text-center">
           <h1 className="text-4xl font-extrabold font-serif">{title}</h1>
           <p className="mt-2 text-lg">{description}</p>
 
@@ -59,7 +59,7 @@ export default function Letterhead(props: Props) {
           </div>
         </div>
 
-        <div className="pt-4 pb-8 px-4" {...rest}/>
+        <div className="pt-4 pb-8 px-8" {...rest}/>
       </div>
     </>
   );
