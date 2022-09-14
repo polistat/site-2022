@@ -18,7 +18,7 @@ export default function Home() {
     <Navbar/>
 
     <header className="bg-neutral-50">
-      <section className="px-8 pt-12 pb-8 container max-w-5xl flex flex-col gap-8">
+      <div className="px-8 pt-12 pb-8 container max-w-5xl flex flex-col gap-8">
         <div className="flex flex-col gap-1.5 items-center">
           <h1 className="text-4xl text-center font-bold font-serif">
             2022 Election Forecast
@@ -34,12 +34,12 @@ export default function Home() {
               transition={{ duration: 2, repeat: Infinity, }}
             />
             <p className="text-sm text-center text-neutral-400 uppercase font-bold">
-              Updated 9/12/2022
+              Updated MM/DD/YYYY
             </p>
           </div>
         </div>
 
-        <div className="flex flex-col md:flex-row gap-4">
+        <div className="flex flex-col-reverse md:flex-row gap-12 md:gap-4">
           <div className="p-0.5 md:max-w-xs self-start relative bg-white rounded-xl overflow-hidden shadow-sm">
             <ul className="flex border-b text-sm font-medium">
               <li
@@ -113,8 +113,103 @@ export default function Home() {
             </div>
           </div>
         </div>
-      </section>
+      </div>
     </header>
+    
+    <main className="px-8 py-12 container max-w-2xl flex flex-col gap-16">
+      <section className="p-8 border-2 border-neutral-200 shadow-md rounded-xl">
+        <h2 className="text-2xl font-bold">
+          The latest
+        </h2>
+
+        <hr className="mt-2 mb-4"/>
+
+        <div className="">
+          <h3 className="font-medium">
+            Analyzing the Effects of a Proportional Elector System
+          </h3>
+          <p className="text-sm text-neutral-400 italic">
+            Oct. 27, 2020, 10:09 p.m.
+          </p>
+          <p className="text-sm font-thin mt-1">
+            An analysis of how allocating electors proportionally by popular vote within the states would change the election.
+          </p>
+        </div>
+
+        <hr className="my-4"/>
+
+        <div className="">
+          <h3 className="font-medium">
+            Good Polls and Bad Polls
+          </h3>
+          <p className="text-sm text-neutral-400 italic">
+            Oct. 28, 2020, 1:47 p.m.
+          </p>
+          <p className="text-sm font-thin mt-1">
+            If we only used “A” rated polls, or “A” and “B” rated polls, does it impact the results of our model?
+          </p>
+        </div>
+
+        <hr className="my-4"/>
+
+        <div className="">
+          <h3 className="font-medium">
+            2016 vs. 2020 Models
+          </h3>
+          <p className="text-sm text-neutral-400 italic">
+            Oct. 28, 2020, 10:11 p.m.
+          </p>
+          <p className="text-sm font-thin mt-1">
+            To what degree do the 2016 and 2020 student models differ in battleground states?
+          </p>
+        </div>
+
+        <hr className="my-4"/>
+        
+        <Link href="/blog" passHref>
+          <a>
+            <button className="px-3 py-1.5 text-sm uppercase font-bold border-2 border-neutral-200 hover:bg-neutral-50 rounded-lg">
+              Keep reading the blog
+            </button>
+          </a>
+        </Link>
+      </section>
+
+      <section className="p-8 border-2 border-neutral-200 shadow-md rounded-xl">
+        <h2 className="text-2xl font-bold">
+          Methodology
+        </h2>
+        <p className="font-thin mt-1">
+          Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vestibulum orci tortor, faucibus sed varius in, pulvinar non nulla. Pellentesque vel porttitor erat. Phasellus eget congue nulla. Aenean in rhoncus urna. Vestibulum dictum arcu ut lobortis aliquet. Morbi vel rhoncus orci.
+        </p>
+        
+        <Link href="/methodology" passHref>
+          <a>
+            <button className="px-3 py-1.5 text-sm uppercase font-bold border-2 border-neutral-200 hover:bg-neutral-50 rounded-lg mt-4">
+              Our methodology
+            </button>
+          </a>
+        </Link>
+      </section>
+
+      {/* <section className="p-8 border-2 border-neutral-200 shadow-md rounded-xl">
+        <h2 className="text-2xl font-bold">
+          About us
+        </h2>
+        <p className="font-thin mt-1">
+          ORACLE of Blair is a project by seniors at Montgomery Blair High School in Silver Spring, Maryland.
+          It was created during the Fall 2022 Political Statistics course taught by Mr. David Stein.
+          Questions for the students about the model can be sent to mbhs.polistat@gmail.com, while Mr. Stein can be reached directly through the Blair website.
+        </p>
+
+        <h3 className="text-lg font-bold mt-3">
+          Please note
+        </h3>
+        <p className="font-thin">
+          Any views or opinions expressed on this site are those of the students in Montgomery Blair High School's 2022 Political Statistics class and do not necessarily reflect the official position of Montgomery Blair High School.
+        </p>
+      </section> */}
+    </main>
 
     <footer>
     </footer>
