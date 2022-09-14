@@ -16,7 +16,7 @@ export default function BlogPost({ params, source, frontMatter }) {
 
   return <>
     <Head>
-      <title>{frontMatter.title} – ORACLE of Blair</title>
+      <title>{`${frontMatter.title} – ORACLE of Blair`}</title>
       <meta property="og:title" content={`${frontMatter.title} – ORACLE of Blair`} key="ogtitle"/>
       <meta name="description" content={frontMatter.description}/>
       <meta property="og:description" content={frontMatter.description} key="ogdesc"/>

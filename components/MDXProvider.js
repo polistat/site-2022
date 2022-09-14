@@ -32,7 +32,7 @@ export default function MDXCompProvider(props) {
 
     section: ({ children, ...props }) => props.className === 'footnotes' ?
       <div className="container max-w-3xl border-t">
-        <section {...props} children={children.filter(child => child.props?.id !== 'footnote-label')}/>
+        <section {...props}>{children.filter(child => child.props?.id !== 'footnote-label')}</section>
       </div>
     : <section {...props}/>,
   };
