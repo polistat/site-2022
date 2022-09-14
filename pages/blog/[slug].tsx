@@ -1,15 +1,22 @@
 import React from 'react';
 import Head from 'next/head';
 
-import fs from "fs";
-import path from "path";
-import matter from "gray-matter";
-import { MDXRemote } from 'next-mdx-remote';
+// import matter from "gray-matter";
+import { MDXRemote, MDXRemoteSerializeResult } from 'next-mdx-remote';
 import { serialize } from 'next-mdx-remote/serialize'
+import { getBlogSlugs, getBlogData } from "../../lib/blog";
 
-import Navbar from '../components/Navbar';
+import Navbar from '../../components/Navbar';
+import { GetStaticProps } from 'next';
+import { ParsedUrlQuery } from 'querystring';
 
-export default function MethodologyPage({ source, frontMatter }) {
+interface Props {
+  params: ParsedUrlQuery | undefined;
+  source: MDXRemoteSerializeResult<Record<string, unknown>, Record<string, string>>;
+  frontMatter: { [key: string]: string }
+}
+
+export default function BlogPost({ source, frontMatter }: Props) {
   // let components;
   // try {
   //   components = require(`../content/blog/components`).default;
@@ -27,7 +34,13 @@ export default function MethodologyPage({ source, frontMatter }) {
 
     <div className="container max-w-3xl">
       <div className="pt-12 pb-8">
-        <h1 className="text-4xl text-center font-extrabold font-serif">{frontMatter.title}</h1>
+        <div className="flex justify-center">
+          <p className="px-1.5 text-sm text-center font-medium uppercase bg-amber-100 rounded-md">
+            ORACLE Blog
+          </p>
+        </div>
+
+        <h1 className="text-4xl text-center font-extrabold font-serif mt-2">{frontMatter.title}</h1>
         <p className="mt-2 text-lg text-center">{frontMatter.description}</p>
 
         <div className="mt-2 flex gap-2 items-center justify-center">
@@ -52,12 +65,21 @@ export default function MethodologyPage({ source, frontMatter }) {
   </>;
 }
 
-export async function getStaticProps() {
-  const fileContent = fs.readFileSync(path.join(process.cwd(), "content", "methodology.mdx"), "utf-8");
-  const { data, content } = matter(fileContent);
+export async function getStaticPaths() {
+  const paths = getBlogSlugs();
+  return {
+    paths,
+    fallback: false
+  };
+}
+
+export const getStaticProps: GetStaticProps = async ({ params }): Promise<{props: Props}> => {
+  // TODO: what if slug is string[] | undefined?
+  const { data, content } = await getBlogData((params?.slug as unknown) as string);
   const mdxSource = await serialize(content, { scope: data });
   return {
     props: {
+      params,
       source: mdxSource,
       frontMatter: data
     }

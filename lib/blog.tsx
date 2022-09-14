@@ -1,7 +1,9 @@
 import fs from "fs";
 import path from "path";
-import matter from "gray-matter";
+import matter, { GrayMatterFile } from "gray-matter";
+import util from "util";
 
+const readFile = util.promisify(fs.readFile);
 const dirPath = path.join(process.cwd(), "content", "blog");
 
 export const getBlogList = () => {
@@ -29,8 +31,8 @@ export const getBlogSlugs = () => {
   });
 }
 
-export const getBlogData = (slug) => {
-  const fileContent = fs.readFileSync(path.join(dirPath, `${slug}.mdx`), "utf-8");
+export const getBlogData = async (slug: string): Promise<Pick<GrayMatterFile<string>, "data" | "content">> => {
+  const fileContent = await readFile(path.join(dirPath, `${slug}.mdx`), "utf-8");
   const { data, content } = matter(fileContent);
   return { data, content };
 }

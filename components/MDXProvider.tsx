@@ -1,7 +1,9 @@
 import { MDXProvider } from "@mdx-js/react";
+import { MDXComponents } from "mdx/types";
+import { HTMLAttributes } from "react";
 
-export default function MDXCompProvider(props) {
-  const components = {
+export default function MDXCompProvider(props: HTMLAttributes<HTMLDivElement>) {
+  const components: MDXComponents = {
     p: (props) => <p className="my-4" {...props} />,
     h1: (props) => <h1 className="mt-10 mb-2 text-4xl font-bold" {...props} />,
     h2: (props) => <h2 className="mt-8 mb-2 text-3xl font-bold" {...props} />,
@@ -32,6 +34,7 @@ export default function MDXCompProvider(props) {
 
     section: ({ children, ...props }) => props.className === 'footnotes' ?
       <div className="container max-w-3xl border-t">
+        {/* @ts-expect-error ; TODO: fix*/}
         <section {...props}>{children.filter(child => child.props?.id !== 'footnote-label')}</section>
       </div>
     : <section {...props}/>,

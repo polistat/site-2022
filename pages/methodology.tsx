@@ -1,14 +1,23 @@
 import React from 'react';
 import Head from 'next/head';
 
-// import matter from "gray-matter";
-import { MDXRemote } from 'next-mdx-remote';
+import fs from "fs";
+import path from "path";
+import util from "util";
+import matter from "gray-matter";
+import { MDXRemote, MDXRemoteSerializeResult } from 'next-mdx-remote';
 import { serialize } from 'next-mdx-remote/serialize'
-import { getBlogSlugs, getBlogData } from "../../lib/blog";
 
-import Navbar from '../../components/Navbar';
+import Navbar from '../components/Navbar';
 
-export default function BlogPost({ params, source, frontMatter }) {
+const readFile = util.promisify(fs.readFile);
+
+interface Props {
+  source: MDXRemoteSerializeResult<Record<string, unknown>, Record<string, string>>;
+  frontMatter: {[key: string]: string}
+}
+
+export default function MethodologyPage({ source, frontMatter }: Props) {
   // let components;
   // try {
   //   components = require(`../content/blog/components`).default;
@@ -26,13 +35,7 @@ export default function BlogPost({ params, source, frontMatter }) {
 
     <div className="container max-w-3xl">
       <div className="pt-12 pb-8">
-        <div className="flex justify-center">
-          <p className="px-1.5 text-sm text-center font-medium uppercase bg-amber-100 rounded-md">
-            ORACLE Blog
-          </p>
-        </div>
-
-        <h1 className="text-4xl text-center font-extrabold font-serif mt-2">{frontMatter.title}</h1>
+        <h1 className="text-4xl text-center font-extrabold font-serif">{frontMatter.title}</h1>
         <p className="mt-2 text-lg text-center">{frontMatter.description}</p>
 
         <div className="mt-2 flex gap-2 items-center justify-center">
@@ -57,20 +60,12 @@ export default function BlogPost({ params, source, frontMatter }) {
   </>;
 }
 
-export async function getStaticPaths() {
-  const paths = getBlogSlugs();
-  return {
-    paths,
-    fallback: false
-  };
-}
-
-export async function getStaticProps({ params }) {
-  const { data, content } = await getBlogData(params.slug);
+export async function getStaticProps() {
+  const fileContent = await readFile(path.join(process.cwd(), "content", "methodology.mdx"), "utf-8");
+  const { data, content } = matter(fileContent);
   const mdxSource = await serialize(content, { scope: data });
   return {
     props: {
-      params,
       source: mdxSource,
       frontMatter: data
     }

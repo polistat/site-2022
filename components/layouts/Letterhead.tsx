@@ -16,7 +16,7 @@ interface Props {
 }
 
 
-export default function Letterhead(props) {
+export default function Letterhead(props: Props) {
   const {
     title,
     description,
@@ -24,7 +24,7 @@ export default function Letterhead(props) {
     // author,
     includeMeta = true,
     ...rest
-  }:Props = props;
+  }: Props = props;
   
   return (
     <>
