@@ -1,7 +1,6 @@
 import Head from 'next/head';
 
-import Navbar from '../components/Navbar';
-import Map from '../components/Map';
+import SenateMap from '../../components/SenateMap';
 
 export default function SenatePage() {
   return <>
@@ -9,8 +8,6 @@ export default function SenatePage() {
       <title>2022 Senate Forecast – ORACLE of Blair</title>
       {/* <meta name="description" content="" /> */}
     </Head>
-
-    <Navbar/>
 
     <main className="p-4 flex flex-col gap-8">
       <section className="p-8 container max-w-3xl flex flex-col gap-4 bg-neutral-50 border-2 shadow-md rounded-2xl">
@@ -23,7 +20,7 @@ export default function SenatePage() {
           </p>
         </div>
 
-        <Map/>
+        <SenateMap/>
       </section>
     </main>
 

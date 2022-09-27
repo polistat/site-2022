@@ -2,8 +2,6 @@ import Head from 'next/head';
 import Link from 'next/link';
 import { getBlogList } from "../../lib/blog";
 
-import Navbar from '../../components/Navbar';
-
 export default function SenatePage({ posts }: { posts: any }) {
     return <>
     <Head>
@@ -11,15 +9,13 @@ export default function SenatePage({ posts }: { posts: any }) {
       {/* <meta name="description" content="" /> */}
     </Head>
 
-    <Navbar/>
-
     <div className="container max-w-2xl">
       <header className="pt-12 pb-8 px-8">
         <h1 className="text-4xl text-center font-extrabold font-serif">Blog</h1>
         {/* <p className="mt-2 text-lg text-center">Description of the blog</p> */}
       </header>
 
-      <main className="flex flex-col gap-6">
+      <main className="p-4 flex flex-col gap-6">
         {posts.map((post:any) =>
           <article
             key={post.slug}
@@ -42,9 +38,6 @@ export default function SenatePage({ posts }: { posts: any }) {
         )}
       </main>
     </div>
-
-    <footer>
-    </footer>
   </>;
 }
 

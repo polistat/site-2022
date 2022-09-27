@@ -20,12 +20,12 @@ module.exports = {
           secondary: "#ef3d3d",
           secondaryVariant: "",
           background: "#ffffff",
-          surface: "",
+          surface: "#ffffff",
           // error: "",
           onPrimary: "#ffffff",
           onSecondary: "#ffffff",
           onBackground: "#000000",
-          onSurface: "",
+          onSurface: "#000000",
           // onError: ""
         }
       }

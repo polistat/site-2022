@@ -1,8 +1,6 @@
 import React from 'react';
 import Head from 'next/head';
 
-import Navbar from '../Navbar';
-
 interface Props {
   title: string;
   description: string;
@@ -30,14 +28,12 @@ export default function Letterhead(props: Props) {
     <>
       {includeMeta &&
         <Head>
-          <title>{title} – ORACLE of Blair</title>
+          <title>{`${title} – ORACLE of Blair`}</title>
           <meta property="og:title" content={`${title} – ORACLE of Blair`} key="ogtitle"/>
           <meta name="description" content={description}/>
           <meta property="og:description" content={description} key="ogdesc"/>
         </Head>
       }
-
-      <Navbar/>
 
       <div className="container max-w-3xl">
         <div className="pt-12 pb-8 px-8 text-center">

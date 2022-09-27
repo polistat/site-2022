@@ -1,9 +1,12 @@
 import '../styles/globals.css';
 
 import Head from 'next/head';
+import { AppProps } from 'next/app';
 
 import MDXProvider from "../components/MDXProvider";
-import { AppProps } from 'next/app';
+
+import Navbar from '../components/Navbar';
+import Footer from '../components/Footer';
 
 function MyApp({ Component, pageProps }: AppProps) {
   return <>
@@ -11,9 +14,15 @@ function MyApp({ Component, pageProps }: AppProps) {
       <link rel="icon" href="/favicon.png" />
     </Head>
 
-    <MDXProvider>
-      <Component {...pageProps} />
-    </MDXProvider>
+    <Navbar/>
+
+    <div className="min-h-screen">
+      <MDXProvider>
+        <Component {...pageProps} />
+      </MDXProvider>
+    </div>
+
+    <Footer/>
   </>;
 }
 

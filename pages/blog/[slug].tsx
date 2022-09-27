@@ -1,14 +1,12 @@
 import React from 'react';
 import Head from 'next/head';
+import { GetStaticProps } from 'next';
+import { ParsedUrlQuery } from 'querystring';
 
 // import matter from "gray-matter";
 import { MDXRemote, MDXRemoteSerializeResult } from 'next-mdx-remote';
 import { serialize } from 'next-mdx-remote/serialize'
 import { getBlogSlugs, getBlogData } from "../../lib/blog";
-
-import Navbar from '../../components/Navbar';
-import { GetStaticProps } from 'next';
-import { ParsedUrlQuery } from 'querystring';
 
 interface Props {
   params: ParsedUrlQuery | undefined;
@@ -29,8 +27,6 @@ export default function BlogPost({ source, frontMatter }: Props) {
       <meta name="description" content={frontMatter.description}/>
       <meta property="og:description" content={frontMatter.description} key="ogdesc"/>
     </Head>
-
-    <Navbar/>
 
     <div className="container max-w-3xl">
       <header className="pt-12 pb-8 px-8">
