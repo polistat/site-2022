@@ -16,7 +16,7 @@ export default function SenatePage() {
             The Senate
           </h1>
           <p className="text-4xl text-center font-serif">
-            <span className="font-extrabold">The Democrats</span> are favored to win the Senate
+            A blurb about the <span className="font-extrabold">Senate elections</span>
           </p>
         </div>
 

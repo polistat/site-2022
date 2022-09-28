@@ -27,7 +27,13 @@ export default function GovernorMap() {
           dataid={stateId}
           d={state.path}
           // className="fill-neutral-200 stroke-2 stroke-white"
-          className={`${selectedState===stateId ? 'fill-theme-surface' : 'fill-transparent'} stroke-2 stroke-neutral-300`}
+          className={`${
+            governorData[stateId].race ?
+            (governorData[stateId].race.magnitude>0 ? 'fill-red-50'
+              : governorData[stateId].race.magnitude<0 ? 'fill-blue-50'
+              : 'fill-neutral-50'
+            ) : 'fill-transparent'
+        } stroke-2 stroke-neutral-300`}
           key={stateId}
         />
       )}
@@ -53,8 +59,16 @@ export default function GovernorMap() {
           y={state.textY-15}
           className={`
             w-[32px] h-[30px] cursor-pointer
-            ${governorData[stateId].race ? 'stroke-2 stroke-red-400 fill-white' : 'stroke-0 stroke-neutral-600 fill-red-300'}
-            stroke-red-400 fill-white
+            ${governorData[stateId].race ? (
+              governorData[stateId].race.magnitude>0 ? 'stroke-2 stroke-white fill-red-300'
+              : governorData[stateId].race.magnitude<0 ? 'stroke-2 stroke-white fill-blue-300'
+              : 'stroke-2 stroke-white fill-neutral-300'
+            )
+            : (
+              governorData[stateId].incumbent.party==='republican' ? 'stroke-2 stroke-red-400 fill-white'
+              : governorData[stateId].incumbent.party==='democrat' ? 'stroke-2 stroke-blue-400 fill-white'
+              : 'stroke-2 fill-white stroke-neutral-300'
+            )}
           `}
           onMouseEnter={() => setSelectedState(stateId)}
           onMouseLeave={() => setSelectedState(null)}
@@ -69,7 +83,6 @@ export default function GovernorMap() {
           onMouseEnter={() => setSelectedState(stateId)}
           onMouseLeave={() => setSelectedState(null)}
           onClick={() => Router.push(`/governors/${stateId}`)}
-          key={stateId}
         >
           {stateId}
         </text>

@@ -7,6 +7,16 @@ import { MDXRemote, MDXRemoteSerializeResult } from 'next-mdx-remote';
 import { serialize } from 'next-mdx-remote/serialize'
 import { getSenateSlugs, getSenateData } from "../../lib/states";
 
+import CandidateProfileGrid from '../../components/CandidateProfileGrid';
+import CandidateProfileHeader from '../../components/CandidateProfileHeader';
+import CandidateProfileBox from '../../components/CandidateProfileBox';
+
+const components = {
+  Grid: CandidateProfileGrid,
+  Header: CandidateProfileHeader,
+  Box: CandidateProfileBox,
+};
+
 interface Props {
   params: ParsedUrlQuery | undefined;
   source: MDXRemoteSerializeResult<Record<string, unknown>, Record<string, string>>;
@@ -124,7 +134,7 @@ export default function SenateStatePage({ params, source, frontMatter }: Props) 
       
       {!noRace && <>
         <section className="px-8 pb-4 container max-w-3xl border-2 shadow-sm rounded-2xl">
-          <MDXRemote {...source} /*components={components}*//>
+          <MDXRemote {...source} components={components}/>
         </section>
 
         <section className="p-8 container max-w-3xl border-2 shadow-sm rounded-2xl">

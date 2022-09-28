@@ -3,380 +3,430 @@
     "name": "Alabama",
     "race": {
       "candidates": [
-        { "name": "Candidate 1", "party": "republican", "votePercent": 50, "winPercent": 50 },
-        { "name": "Candidate 2", "party": "democrat", "votePercent": 50, "winPercent": 50 }
-      ]
+        { "name": "Candidate 1", "party": "republican", "votePercent": 50, "winPercent": 51 },
+        { "name": "Candidate 2", "party": "democrat", "votePercent": 50, "winPercent": 49 }
+      ],
+      "magnitude": -0.5
     }
   },
   "AK": {
     "name": "Alaska",
     "race": {
       "candidates": [
-        { "name": "Candidate 1", "party": "republican", "votePercent": 50, "winPercent": 50 },
-        { "name": "Candidate 2", "party": "democrat", "votePercent": 50, "winPercent": 50 }
-      ]
+        { "name": "Candidate 1", "party": "republican", "votePercent": 50, "winPercent": 51 },
+        { "name": "Candidate 2", "party": "democrat", "votePercent": 50, "winPercent": 49 }
+      ],
+      "magnitude": 0.51
     }
   },
   "AZ": {
     "name": "Arizona",
     "race": {
       "candidates": [
-        { "name": "Candidate 1", "party": "republican", "votePercent": 50, "winPercent": 50 },
-        { "name": "Candidate 2", "party": "democrat", "votePercent": 50, "winPercent": 50 }
-      ]
+        { "name": "Candidate 1", "party": "republican", "votePercent": 50, "winPercent": 51 },
+        { "name": "Candidate 2", "party": "democrat", "votePercent": 50, "winPercent": 49 }
+      ],
+      "magnitude": 0.51
     }
   },
   "AR": {
     "name": "Arkansas",
     "race": {
       "candidates": [
-        { "name": "Candidate 1", "party": "republican", "votePercent": 50, "winPercent": 50 },
-        { "name": "Candidate 2", "party": "democrat", "votePercent": 50, "winPercent": 50 }
-      ]
+        { "name": "Candidate 1", "party": "republican", "votePercent": 50, "winPercent": 51 },
+        { "name": "Candidate 2", "party": "democrat", "votePercent": 50, "winPercent": 49 }
+      ],
+      "magnitude": 0.51
     }
   },
   "CA": {
     "name": "California",
     "race": {
       "candidates": [
-        { "name": "Candidate 1", "party": "republican", "votePercent": 50, "winPercent": 50 },
-        { "name": "Candidate 2", "party": "democrat", "votePercent": 50, "winPercent": 50 }
-      ]
+        { "name": "Candidate 1", "party": "republican", "votePercent": 50, "winPercent": 51 },
+        { "name": "Candidate 2", "party": "democrat", "votePercent": 50, "winPercent": 49 }
+      ],
+      "magnitude": 0.51
     }
   },
   "CO": {
     "name": "Colorado",
     "race": {
       "candidates": [
-        { "name": "Candidate 1", "party": "republican", "votePercent": 50, "winPercent": 50 },
-        { "name": "Candidate 2", "party": "democrat", "votePercent": 50, "winPercent": 50 }
-      ]
+        { "name": "Candidate 1", "party": "republican", "votePercent": 50, "winPercent": 51 },
+        { "name": "Candidate 2", "party": "democrat", "votePercent": 50, "winPercent": 49 }
+      ],
+      "magnitude": 0.51
     }
   },
   "CT": {
     "name": "Connecticut",
     "race": {
       "candidates": [
-        { "name": "Candidate 1", "party": "republican", "votePercent": 50, "winPercent": 50 },
-        { "name": "Candidate 2", "party": "democrat", "votePercent": 50, "winPercent": 50 }
-      ]
+        { "name": "Candidate 1", "party": "republican", "votePercent": 50, "winPercent": 51 },
+        { "name": "Candidate 2", "party": "democrat", "votePercent": 50, "winPercent": 49 }
+      ],
+      "magnitude": 0.51
     }
   },
   "DE": {
     "name": "Delaware",
-    "race": null
+    "race": null,
+    "incumbent": { "name": "Incumbent", "party": "republican", "nextElectionYear": "20XX" }
   },
   "FL": {
     "name": "Florida",
     "race": {
       "candidates": [
-        { "name": "Candidate 1", "party": "republican", "votePercent": 50, "winPercent": 50 },
-        { "name": "Candidate 2", "party": "democrat", "votePercent": 50, "winPercent": 50 }
-      ]
+        { "name": "Candidate 1", "party": "republican", "votePercent": 50, "winPercent": 51 },
+        { "name": "Candidate 2", "party": "democrat", "votePercent": 50, "winPercent": 49 }
+      ],
+      "magnitude": 0.51
     }
   },
   "GA": {
     "name": "Georgia",
     "race": {
       "candidates": [
-        { "name": "Candidate 1", "party": "republican", "votePercent": 50, "winPercent": 50 },
-        { "name": "Candidate 2", "party": "democrat", "votePercent": 50, "winPercent": 50 }
-      ]
+        { "name": "Candidate 1", "party": "republican", "votePercent": 50, "winPercent": 51 },
+        { "name": "Candidate 2", "party": "democrat", "votePercent": 50, "winPercent": 49 }
+      ],
+      "magnitude": 0.51
     }
   },
   "HI": {
     "name": "Hawaii",
     "race": {
       "candidates": [
-        { "name": "Candidate 1", "party": "republican", "votePercent": 50, "winPercent": 50 },
-        { "name": "Candidate 2", "party": "democrat", "votePercent": 50, "winPercent": 50 }
-      ]
+        { "name": "Candidate 1", "party": "republican", "votePercent": 50, "winPercent": 51 },
+        { "name": "Candidate 2", "party": "democrat", "votePercent": 50, "winPercent": 49 }
+      ],
+      "magnitude": 0.51
     }
   },
   "ID": {
     "name": "Idaho",
     "race": {
       "candidates": [
-        { "name": "Candidate 1", "party": "republican", "votePercent": 50, "winPercent": 50 },
-        { "name": "Candidate 2", "party": "democrat", "votePercent": 50, "winPercent": 50 }
-      ]
+        { "name": "Candidate 1", "party": "republican", "votePercent": 50, "winPercent": 51 },
+        { "name": "Candidate 2", "party": "democrat", "votePercent": 50, "winPercent": 49 }
+      ],
+      "magnitude": 0.51
     }
   },
   "IL": {
     "name": "Illinois",
     "race": {
       "candidates": [
-        { "name": "Candidate 1", "party": "republican", "votePercent": 50, "winPercent": 50 },
-        { "name": "Candidate 2", "party": "democrat", "votePercent": 50, "winPercent": 50 }
-      ]
+        { "name": "Candidate 1", "party": "republican", "votePercent": 50, "winPercent": 51 },
+        { "name": "Candidate 2", "party": "democrat", "votePercent": 50, "winPercent": 49 }
+      ],
+      "magnitude": 0.51
     }
   },
   "IN": {
     "name": "Indiana",
-    "race": null
+    "race": null,
+    "incumbent": { "name": "Incumbent", "party": "republican", "nextElectionYear": "20XX" }
   },
   "IA": {
     "name": "Iowa",
     "race": {
       "candidates": [
-        { "name": "Candidate 1", "party": "republican", "votePercent": 50, "winPercent": 50 },
-        { "name": "Candidate 2", "party": "democrat", "votePercent": 50, "winPercent": 50 }
-      ]
+        { "name": "Candidate 1", "party": "republican", "votePercent": 50, "winPercent": 51 },
+        { "name": "Candidate 2", "party": "democrat", "votePercent": 50, "winPercent": 49 }
+      ],
+      "magnitude": 0.51
     }
   },
   "KS": {
     "name": "Kansas",
     "race": {
       "candidates": [
-        { "name": "Candidate 1", "party": "republican", "votePercent": 50, "winPercent": 50 },
-        { "name": "Candidate 2", "party": "democrat", "votePercent": 50, "winPercent": 50 }
-      ]
+        { "name": "Candidate 1", "party": "republican", "votePercent": 50, "winPercent": 51 },
+        { "name": "Candidate 2", "party": "democrat", "votePercent": 50, "winPercent": 49 }
+      ],
+      "magnitude": 0.51
     }
   },
   "KY": {
     "name": "Kentucky",
-    "race": null
+    "race": null,
+    "incumbent": { "name": "Incumbent", "party": "republican", "nextElectionYear": "20XX" }
   },
   "LA": {
     "name": "Louisiana",
-    "race": null
+    "race": null,
+    "incumbent": { "name": "Incumbent", "party": "republican", "nextElectionYear": "20XX" }
   },
   "ME": {
     "name": "Maine",
     "race": {
       "candidates": [
-        { "name": "Candidate 1", "party": "republican", "votePercent": 50, "winPercent": 50 },
-        { "name": "Candidate 2", "party": "democrat", "votePercent": 50, "winPercent": 50 }
-      ]
+        { "name": "Candidate 1", "party": "republican", "votePercent": 50, "winPercent": 51 },
+        { "name": "Candidate 2", "party": "democrat", "votePercent": 50, "winPercent": 49 }
+      ],
+      "magnitude": 0.51
     }
   },
   "MD": {
     "name": "Maryland",
     "race": {
       "candidates": [
-        { "name": "Candidate 1", "party": "republican", "votePercent": 50, "winPercent": 50 },
-        { "name": "Candidate 2", "party": "democrat", "votePercent": 50, "winPercent": 50 }
-      ]
+        { "name": "Candidate 1", "party": "republican", "votePercent": 50, "winPercent": 51 },
+        { "name": "Candidate 2", "party": "democrat", "votePercent": 50, "winPercent": 49 }
+      ],
+      "magnitude": 0.51
     }
   },
   "MA": {
     "name": "Massachusetts",
     "race": {
       "candidates": [
-        { "name": "Candidate 1", "party": "republican", "votePercent": 50, "winPercent": 50 },
-        { "name": "Candidate 2", "party": "democrat", "votePercent": 50, "winPercent": 50 }
-      ]
+        { "name": "Candidate 1", "party": "republican", "votePercent": 50, "winPercent": 51 },
+        { "name": "Candidate 2", "party": "democrat", "votePercent": 50, "winPercent": 49 }
+      ],
+      "magnitude": 0.51
     }
   },
   "MI": {
     "name": "Michigan",
     "race": {
       "candidates": [
-        { "name": "Candidate 1", "party": "republican", "votePercent": 50, "winPercent": 50 },
-        { "name": "Candidate 2", "party": "democrat", "votePercent": 50, "winPercent": 50 }
-      ]
+        { "name": "Candidate 1", "party": "republican", "votePercent": 50, "winPercent": 51 },
+        { "name": "Candidate 2", "party": "democrat", "votePercent": 50, "winPercent": 49 }
+      ],
+      "magnitude": 0.51
     }
   },
   "MN": {
     "name": "Minnesota",
     "race": {
       "candidates": [
-        { "name": "Candidate 1", "party": "republican", "votePercent": 50, "winPercent": 50 },
-        { "name": "Candidate 2", "party": "democrat", "votePercent": 50, "winPercent": 50 }
-      ]
+        { "name": "Candidate 1", "party": "republican", "votePercent": 50, "winPercent": 51 },
+        { "name": "Candidate 2", "party": "democrat", "votePercent": 50, "winPercent": 49 }
+      ],
+      "magnitude": 0.51
     }
   },
   "MS": {
     "name": "Mississippi",
-    "race": null
+    "race": null,
+    "incumbent": { "name": "Incumbent", "party": "republican", "nextElectionYear": "20XX" }
   },
   "MO": {
     "name": "Missouri",
-    "race": null
+    "race": null,
+    "incumbent": { "name": "Incumbent", "party": "republican", "nextElectionYear": "20XX" }
   },
   "MT": {
     "name": "Montana",
-    "race": null
+    "race": null,
+    "incumbent": { "name": "Incumbent", "party": "republican", "nextElectionYear": "20XX" }
   },
   "NE": {
     "name": "Nebraska",
     "race": {
       "candidates": [
-        { "name": "Candidate 1", "party": "republican", "votePercent": 50, "winPercent": 50 },
-        { "name": "Candidate 2", "party": "democrat", "votePercent": 50, "winPercent": 50 }
-      ]
+        { "name": "Candidate 1", "party": "republican", "votePercent": 50, "winPercent": 51 },
+        { "name": "Candidate 2", "party": "democrat", "votePercent": 50, "winPercent": 49 }
+      ],
+      "magnitude": 0.51
     }
   },
   "NV": {
     "name": "Nevada",
     "race": {
       "candidates": [
-        { "name": "Candidate 1", "party": "republican", "votePercent": 50, "winPercent": 50 },
-        { "name": "Candidate 2", "party": "democrat", "votePercent": 50, "winPercent": 50 }
-      ]
+        { "name": "Candidate 1", "party": "republican", "votePercent": 50, "winPercent": 51 },
+        { "name": "Candidate 2", "party": "democrat", "votePercent": 50, "winPercent": 49 }
+      ],
+      "magnitude": 0.51
     }
   },
   "NH": {
     "name": "New Hampshire",
     "race": {
       "candidates": [
-        { "name": "Candidate 1", "party": "republican", "votePercent": 50, "winPercent": 50 },
-        { "name": "Candidate 2", "party": "democrat", "votePercent": 50, "winPercent": 50 }
-      ]
+        { "name": "Candidate 1", "party": "republican", "votePercent": 50, "winPercent": 51 },
+        { "name": "Candidate 2", "party": "democrat", "votePercent": 50, "winPercent": 49 }
+      ],
+      "magnitude": 0.51
     }
   },
   "NJ": {
     "name": "New Jersey",
-    "race": null
+    "race": null,
+    "incumbent": { "name": "Incumbent", "party": "republican", "nextElectionYear": "20XX" }
   },
   "NM": {
     "name": "New Mexico",
     "race": {
       "candidates": [
-        { "name": "Candidate 1", "party": "republican", "votePercent": 50, "winPercent": 50 },
-        { "name": "Candidate 2", "party": "democrat", "votePercent": 50, "winPercent": 50 }
-      ]
+        { "name": "Candidate 1", "party": "republican", "votePercent": 50, "winPercent": 51 },
+        { "name": "Candidate 2", "party": "democrat", "votePercent": 50, "winPercent": 49 }
+      ],
+      "magnitude": 0.51
     }
   },
   "NY": {
     "name": "New York",
     "race": {
       "candidates": [
-        { "name": "Candidate 1", "party": "republican", "votePercent": 50, "winPercent": 50 },
-        { "name": "Candidate 2", "party": "democrat", "votePercent": 50, "winPercent": 50 }
-      ]
+        { "name": "Candidate 1", "party": "republican", "votePercent": 50, "winPercent": 51 },
+        { "name": "Candidate 2", "party": "democrat", "votePercent": 50, "winPercent": 49 }
+      ],
+      "magnitude": 0.51
     }
   },
   "NC": {
     "name": "North Carolina",
-    "race": null
+    "race": null,
+    "incumbent": { "name": "Incumbent", "party": "republican", "nextElectionYear": "20XX" }
   },
   "ND": {
     "name": "North Dakota",
-    "race": null
+    "race": null,
+    "incumbent": { "name": "Incumbent", "party": "democrat", "nextElectionYear": "20XX" }
   },
   "OH": {
     "name": "Ohio",
     "race": {
       "candidates": [
-        { "name": "Candidate 1", "party": "republican", "votePercent": 50, "winPercent": 50 },
-        { "name": "Candidate 2", "party": "democrat", "votePercent": 50, "winPercent": 50 }
-      ]
+        { "name": "Candidate 1", "party": "republican", "votePercent": 50, "winPercent": 51 },
+        { "name": "Candidate 2", "party": "democrat", "votePercent": 50, "winPercent": 49 }
+      ],
+      "magnitude": 0.51
     }
   },
   "OK": {
     "name": "Oklahoma",
     "race": {
       "candidates": [
-        { "name": "Candidate 1", "party": "republican", "votePercent": 50, "winPercent": 50 },
-        { "name": "Candidate 2", "party": "democrat", "votePercent": 50, "winPercent": 50 }
-      ]
+        { "name": "Candidate 1", "party": "republican", "votePercent": 50, "winPercent": 51 },
+        { "name": "Candidate 2", "party": "democrat", "votePercent": 50, "winPercent": 49 }
+      ],
+      "magnitude": 0.51
     }
   },
   "OR": {
     "name": "Oregon",
     "race": {
       "candidates": [
-        { "name": "Candidate 1", "party": "republican", "votePercent": 50, "winPercent": 50 },
-        { "name": "Candidate 2", "party": "democrat", "votePercent": 50, "winPercent": 50 }
-      ]
+        { "name": "Candidate 1", "party": "republican", "votePercent": 50, "winPercent": 51 },
+        { "name": "Candidate 2", "party": "democrat", "votePercent": 50, "winPercent": 49 }
+      ],
+      "magnitude": 0.51
     }
   },
   "PA": {
     "name": "Pennsylvania",
     "race": {
       "candidates": [
-        { "name": "Candidate 1", "party": "republican", "votePercent": 50, "winPercent": 50 },
-        { "name": "Candidate 2", "party": "democrat", "votePercent": 50, "winPercent": 50 }
-      ]
+        { "name": "Candidate 1", "party": "republican", "votePercent": 50, "winPercent": 51 },
+        { "name": "Candidate 2", "party": "democrat", "votePercent": 50, "winPercent": 49 }
+      ],
+      "magnitude": 0.51
     }
   },
   "RI": {
     "name": "Rhode Island",
     "race": {
       "candidates": [
-        { "name": "Candidate 1", "party": "republican", "votePercent": 50, "winPercent": 50 },
-        { "name": "Candidate 2", "party": "democrat", "votePercent": 50, "winPercent": 50 }
-      ]
+        { "name": "Candidate 1", "party": "republican", "votePercent": 50, "winPercent": 51 },
+        { "name": "Candidate 2", "party": "democrat", "votePercent": 50, "winPercent": 49 }
+      ],
+      "magnitude": 0.51
     }
   },
   "SC": {
     "name": "South Carolina",
     "race": {
       "candidates": [
-        { "name": "Candidate 1", "party": "republican", "votePercent": 50, "winPercent": 50 },
-        { "name": "Candidate 2", "party": "democrat", "votePercent": 50, "winPercent": 50 }
-      ]
+        { "name": "Candidate 1", "party": "republican", "votePercent": 50, "winPercent": 51 },
+        { "name": "Candidate 2", "party": "democrat", "votePercent": 50, "winPercent": 49 }
+      ],
+      "magnitude": 0.51
     }
   },
   "SD": {
     "name": "South Dakota",
     "race": {
       "candidates": [
-        { "name": "Candidate 1", "party": "republican", "votePercent": 50, "winPercent": 50 },
-        { "name": "Candidate 2", "party": "democrat", "votePercent": 50, "winPercent": 50 }
-      ]
+        { "name": "Candidate 1", "party": "republican", "votePercent": 50, "winPercent": 51 },
+        { "name": "Candidate 2", "party": "democrat", "votePercent": 50, "winPercent": 49 }
+      ],
+      "magnitude": 0.51
     }
   },
   "TN": {
     "name": "Tennessee",
     "race": {
       "candidates": [
-        { "name": "Candidate 1", "party": "republican", "votePercent": 50, "winPercent": 50 },
-        { "name": "Candidate 2", "party": "democrat", "votePercent": 50, "winPercent": 50 }
-      ]
+        { "name": "Candidate 1", "party": "republican", "votePercent": 50, "winPercent": 51 },
+        { "name": "Candidate 2", "party": "democrat", "votePercent": 50, "winPercent": 49 }
+      ],
+      "magnitude": 0.51
     }
   },
   "TX": {
     "name": "Texas",
     "race": {
       "candidates": [
-        { "name": "Candidate 1", "party": "republican", "votePercent": 50, "winPercent": 50 },
-        { "name": "Candidate 2", "party": "democrat", "votePercent": 50, "winPercent": 50 }
-      ]
+        { "name": "Candidate 1", "party": "republican", "votePercent": 50, "winPercent": 51 },
+        { "name": "Candidate 2", "party": "democrat", "votePercent": 50, "winPercent": 49 }
+      ],
+      "magnitude": 0.51
     }
   },
   "UT": {
     "name": "Utah",
-    "race": null
+    "race": null,
+    "incumbent": { "name": "Incumbent", "party": "republican", "nextElectionYear": "20XX" }
   },
   "VT": {
     "name": "Vermont",
     "race": {
       "candidates": [
-        { "name": "Candidate 1", "party": "republican", "votePercent": 50, "winPercent": 50 },
-        { "name": "Candidate 2", "party": "democrat", "votePercent": 50, "winPercent": 50 }
-      ]
+        { "name": "Candidate 1", "party": "republican", "votePercent": 50, "winPercent": 51 },
+        { "name": "Candidate 2", "party": "democrat", "votePercent": 50, "winPercent": 49 }
+      ],
+      "magnitude": 0.51
     }
   },
   "VA": {
     "name": "Virginia",
-    "race": null
+    "race": null,
+    "incumbent": { "name": "Incumbent", "party": "republican", "nextElectionYear": "20XX" }
   },
   "WA": {
     "name": "Washington",
-    "race": null
+    "race": null,
+    "incumbent": { "name": "Incumbent", "party": "republican", "nextElectionYear": "20XX" }
   },
   "WV": {
     "name": "West Virginia",
-    "race": null
+    "race": null,
+    "incumbent": { "name": "Incumbent", "party": "republican", "nextElectionYear": "20XX" }
   },
   "WI": {
     "name": "Wisconsin",
     "race": {
       "candidates": [
-        { "name": "Candidate 1", "party": "republican", "votePercent": 50, "winPercent": 50 },
-        { "name": "Candidate 2", "party": "democrat", "votePercent": 50, "winPercent": 50 }
-      ]
+        { "name": "Candidate 1", "party": "republican", "votePercent": 50, "winPercent": 51 },
+        { "name": "Candidate 2", "party": "democrat", "votePercent": 50, "winPercent": 49 }
+      ],
+      "magnitude": 0.51
     }
   },
   "WY": {
     "name": "Wyoming",
     "race": {
       "candidates": [
-        { "name": "Candidate 1", "party": "republican", "votePercent": 50, "winPercent": 50 },
-        { "name": "Candidate 2", "party": "democrat", "votePercent": 50, "winPercent": 50 }
-      ]
+        { "name": "Candidate 1", "party": "republican", "votePercent": 50, "winPercent": 51 },
+        { "name": "Candidate 2", "party": "democrat", "votePercent": 50, "winPercent": 49 }
+      ],
+      "magnitude": 0.51
     }
   }
 }

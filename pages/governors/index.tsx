@@ -16,7 +16,7 @@ export default function SenatePage() {
             The Governors
           </h1>
           <p className="text-4xl text-center font-serif">
-            Americans will likely be led by mostly <span className="font-extrabold">Democratic governors</span>
+            A blurb about the <span className="font-extrabold">Governor elections</span>
           </p>
         </div>
 

@@ -27,7 +27,19 @@ export default function SenateMap() {
           dataid={stateId}
           d={state.path}
           // className="fill-neutral-200 stroke-2 stroke-white"
-          className={`${selectedState===stateId ? 'fill-theme-surface' : 'fill-transparent'} stroke-2 stroke-neutral-300`}
+          className={`${
+            senateData[stateId].races.length===2 ? (
+              senateData[stateId].races[0].magnitude>0 && senateData[stateId].races[1].magnitude>0 ? 'fill-red-50'
+              : senateData[stateId].races[0].magnitude<0 && senateData[stateId].races[1].magnitude<0 ? 'fill-blue-50'
+              : 'fill-neutral-50'
+            ) : (senateData[stateId].races.length===1 ? (
+              senateData[stateId].races[0].magnitude>0  ? 'fill-red-50'
+              : senateData[stateId].races[0].magnitude<0 ? 'fill-blue-50'
+              : 'fill-neutral-50'
+            ) : (
+              'fill-white'
+            ))
+          } stroke-2 stroke-neutral-300`}
           key={stateId}
         />
       )}
@@ -51,7 +63,17 @@ export default function SenateMap() {
         <rect
           x={state.textX-16}
           y={state.textY-15}
-          className="w-[15px] h-[30px] cursor-pointer stroke-2 stroke-red-400 fill-white"
+          className={`w-[15px] h-[30px] cursor-pointer ${
+            senateData[stateId].races.length>=1 ? (
+              senateData[stateId].races[0].magnitude>0 ? 'stroke-2 stroke-white fill-red-300'
+              : senateData[stateId].races[0].magnitude<0 ? 'stroke-2 stroke-white fill-blue-300':
+              'stroke-2 stroke-white fill-netural-300'
+            ) : (
+              senateData[stateId].incumbents[0].party==='republican' ? 'stroke-1 stroke-red-400 fill-white'
+              : senateData[stateId].incumbents[0].party==='democrat' ? 'stroke-1 stroke-blue-400 fill-white':
+              'stroke-1 stroke-white fill-netural-300'
+            )
+          }`}
           onMouseEnter={() => setSelectedState(stateId)}
           onMouseLeave={() => setSelectedState(null)}
           onClick={() => Router.push(`/senate/${stateId}`)}
@@ -60,7 +82,23 @@ export default function SenateMap() {
         <rect
           x={state.textX+1}
           y={state.textY-15}
-          className="w-[15px] h-[30px] cursor-pointer stroke-0 stroke-neutral-600 fill-red-300"
+          className={`w-[15px] h-[30px] cursor-pointer ${
+            senateData[stateId].races.length>=2 ? (
+              senateData[stateId].races[1].magnitude>0 ? 'stroke-2 stroke-white fill-red-300'
+              : senateData[stateId].races[1].magnitude<0 ? 'stroke-2 stroke-white fill-blue-300':
+              'stroke-2 stroke-white fill-netural-300'
+            ) : (
+              senateData[stateId].races.length===1 ? (
+                senateData[stateId].incumbents[0].party==='republican' ? 'stroke-1 stroke-red-400 fill-white'
+                : senateData[stateId].incumbents[0].party==='democrat' ? 'stroke-1 stroke-blue-400 fill-white':
+                'stroke-1 stroke-white fill-netural-300'
+              ) : (
+                senateData[stateId].incumbents[1].party==='republican' ? 'stroke-1 stroke-red-400 fill-white'
+                : senateData[stateId].incumbents[1].party==='democrat' ? 'stroke-1 stroke-blue-400 fill-white':
+                'stroke-1 stroke-white fill-netural-300'
+              )
+            )
+          }`}
           onMouseEnter={() => setSelectedState(stateId)}
           onMouseLeave={() => setSelectedState(null)}
           onClick={() => Router.push(`/senate/${stateId}`)}
@@ -97,9 +135,10 @@ export default function SenateMap() {
         className="fixed -translate-x-1/2 p-2 flex flex-col gap-4 bg-theme-surface text-theme-onSurface rounded-lg border-2 border-neutral-300 shadow-sm z-20"
         style={{ ...cursorPosition }}
       >
-        {senateData[selectedState].races.regular && <div>
+        {senateData[selectedState].races.map((race,i) =>
+        <div key={`${selectedState}${i}`}>
           <p className="font-bold">
-            {senateData[selectedState].name}
+            {senateData[selectedState].name} {i==1 && "Special"}
           </p>
 
           <table className="table-auto">
@@ -111,7 +150,7 @@ export default function SenateMap() {
               </tr>
             </thead>
             <tbody className="text-sm font-thin">
-              {senateData[selectedState].races.regular.candidates.sort((a,b) => (a.winPercent>b.winPercent) ? -1 : (a.winPercent<b.winPercent) ? 1 : 0).map(candidate =>
+              {race.candidates.sort((a,b) => (a.winPercent>b.winPercent) ? -1 : (a.winPercent<b.winPercent) ? 1 : 0).map(candidate =>
                 <tr key={candidate.name}>
                   <td className="pr-2 pb-0.5">{candidate.name}</td>
                   <td className="px-2 pb-0.5">{candidate.votePercent<1 ? "<1" : candidate.votePercent>99 ? ">99" : candidate.votePercent}%</td>
@@ -124,36 +163,8 @@ export default function SenateMap() {
               )}
             </tbody>
           </table>
-        </div>}
-
-        {senateData[selectedState].races.special && <div>
-          <p className="font-bold">
-            {senateData[selectedState].name} Special
-          </p>
-
-          <table className="table-auto">
-            <thead className="text-left uppercase text-[0.6rem] text-neutral-400 leading-3">
-              <tr>
-                <th className="pr-2 py-1">Candidate</th>
-                <th className="px-2 py-1">Pred. Vote %</th>
-                <th className="pl-2 py-1">Win Prob.</th>
-              </tr>
-            </thead>
-            <tbody className="text-sm font-thin">
-              {senateData[selectedState].races.special.candidates.sort((a,b) => (a.winPercent>b.winPercent) ? -1 : (a.winPercent<b.winPercent) ? 1 : 0).map(candidate =>
-                <tr key={candidate.name}>
-                  <td className="pr-2 pb-0.5">{candidate.name}</td>
-                  <td className="px-2 pb-0.5">{candidate.votePercent<1 ? "<1" : candidate.votePercent>99 ? ">99" : candidate.votePercent}%</td>
-                  <td
-                    className={`pl-2 pb-0.5 font-bold ${candidate.party==='democrat'?'text-blue-500':candidate.party==='republican'?'text-red-500':null}`}
-                  >
-                    {candidate.winPercent<1 ? "<1" : candidate.winPercent>99 ? ">99" : candidate.winPercent}%
-                  </td>
-                </tr>
-              )}
-            </tbody>
-          </table>
-        </div>}
+        </div>
+        )}
 
         {Object.keys(senateData[selectedState].races).length === 0 && <div>
           <p className="font-bold">
