@@ -214,6 +214,7 @@ export async function getStaticProps() {
       candidates,
       averagedPolls,
       incumbents
-    }
+    },
+    revalidate: 3600 // 1 hour
   };
 }
