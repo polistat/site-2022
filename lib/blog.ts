@@ -1,50 +1,100 @@
-import fs from "fs";
-import path from "path";
 import matter, { GrayMatterFile } from "gray-matter";
-import util from "util";
+import { octokit } from "./octokit";
 
-const readFile = util.promisify(fs.readFile);
-const dirPath = path.join(process.cwd(), "content", "blog");
+export const getBlogList = async () => {
+  const posts = await octokit.request('GET /repos/{owner}/{repo}/contents/{path}', {
+    owner: 'polistat',
+    repo: 'content-2022',
+    path: `blog`
+  }).then(async (res:any) => {
+    return Promise.all(res.data.map(async (file:any) => {
+      const slug = file.name.replace(".md", "");
+      const fileContent = await octokit.request('GET /repos/{owner}/{repo}/contents/{path}', {
+        owner: 'polistat',
+        repo: 'content-2022',
+        path: `blog/${file.name}`
+      }).then((fileRes:any) => {
+        const encoded = fileRes.data.content.replace(/\s/g, '');
+        const decoded = decodeURIComponent(escape(atob(encoded)));
+        return decoded;
+      })
+      .catch(err => console.error(err));
+      const { data } = matter(fileContent);
+  
+      const date = (new Date(data.date)).toLocaleDateString("en-US", {
+        year: "numeric",
+        month: "short",
+        day: "numeric",
+        hour: "numeric",
+        minute: "numeric",
+      });
 
-export const getBlogList = () => {
-  const files = fs.readdirSync(dirPath);
-  const posts = files.map((file) => {
-    const slug = file.replace(".mdx", "").replace(".md", "");
-    const fileContent = fs.readFileSync(path.join(dirPath, file), "utf-8");
-    const { data } = matter(fileContent);
+      return {
+        slug,
+        ...data,
+        date,
+      };
+    }));
+  })
+  .catch(err => console.error(err));
 
-    const date = (new Date(data.date)).toLocaleDateString("en-US", {
-      year: "numeric",
-      month: "short",
-      day: "numeric",
-      hour: "numeric",
-      minute: "numeric",
-    });
-    
-    return {
-      slug,
-      ...data,
-      date,
-    };
-  }).sort((a:any,b:any) => {
-    return (new Date(a.date) > new Date(b.date) ? -1 : 1)
-  });
   return posts;
 }
 
-export const getBlogSlugs = () => {
-  const files = fs.readdirSync(dirPath);
-  return files.map((file) => {
-    return {
-      params: {
-        slug: file.replace(".mdx", "").replace(".md", ""),
-      },
-    };
-  });
+export const getBlogSlugs = async () => {
+  const slugs = await octokit.request('GET /repos/{owner}/{repo}/contents/{path}', {
+    owner: 'polistat',
+    repo: 'content-2022',
+    path: `blog`
+  }).then((res:any) => {
+    return res.data.map((file:any) => {
+      return {
+        params: {
+          slug: file.name.replace(".md", ""),
+        },
+      };
+    });
+  })
+  .catch(err => console.error(err));
+
+  return slugs;
 }
 
 export const getBlogData = async (slug: string): Promise<Pick<GrayMatterFile<string>, "data" | "content">> => {
-  const fileContent = await readFile(path.join(dirPath, `${slug}.mdx`), "utf-8");
+  const fileContent = await octokit.request('GET /repos/{owner}/{repo}/contents/{path}', {
+    owner: 'polistat',
+    repo: 'content-2022',
+    path: `blog/${slug}.md`
+  }).then((fileRes:any) => {
+    const encoded = fileRes.data.content.replace(/\s/g, '');
+    const decoded = decodeURIComponent(escape(atob(encoded)));
+    return decoded;
+  })
+  .catch(err => console.error(err));
+  const { data, content } = matter(fileContent);
+
+  const date = (new Date(data.date)).toLocaleDateString("en-US", {
+    year: "numeric",
+    month: "short",
+    day: "numeric",
+    hour: "numeric",
+    minute: "numeric",
+  });
+
+  return { data: { ...data, date }, content };
+}
+
+export const getMethodologyData = async () => {
+  const fileContent = await octokit.request('GET /repos/{owner}/{repo}/contents/{path}', {
+    owner: 'polistat',
+    repo: 'content-2022',
+    path: `methodology.md`
+  }).then((fileRes:any) => {
+    const encoded = fileRes.data.content.replace(/\s/g, '');
+    const decoded = decodeURIComponent(escape(atob(encoded)));
+    return decoded;
+  })
+  .catch(err => console.error(err));
   const { data, content } = matter(fileContent);
 
   const date = (new Date(data.date)).toLocaleDateString("en-US", {

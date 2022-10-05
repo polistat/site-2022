@@ -1,8 +1,9 @@
 import Head from 'next/head';
 
 import SenateMap from '../../components/SenateMap';
+import { getCandidates, getIncumbents, getAveragedPolls } from '../../lib/results';
 
-export default function SenatePage() {
+export default function SenatePage({ latestDate, candidates, averagedPolls, incumbents }: { latestDate:any, candidates:any, averagedPolls:any, incumbents:any }) {
   return <>
     <Head>
       <title>2022 Senate Forecast – ORACLE of Blair</title>
@@ -20,11 +21,30 @@ export default function SenatePage() {
           </p>
         </div>
 
-        <SenateMap/>
+        <SenateMap
+          candidates={candidates}
+          averagedPolls={averagedPolls}
+          incumbents={incumbents}
+        />
       </section>
     </main>
 
     <footer>
     </footer>
   </>;
+}
+
+export async function getStaticProps() {
+  const candidates = await getCandidates();
+  const incumbents = await getIncumbents();
+  const { averagedPolls, latestDate } = await getAveragedPolls();
+
+  return {
+    props: {
+      latestDate,
+      candidates,
+      averagedPolls,
+      incumbents
+    }
+  };
 }
