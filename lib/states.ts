@@ -57,6 +57,7 @@ export const getSenateData = async (slug: string): Promise<Pick<GrayMatterFile<s
     return decoded;
   })
   .catch(err => console.error(err));
+  // @ts-expect-error
   const { data, content } = matter(fileContent);
 
   const date = (new Date(data.date)).toLocaleDateString("en-US", {
@@ -81,6 +82,7 @@ export const getGovernorsData = async (slug: string): Promise<Pick<GrayMatterFil
     return decoded;
   })
   .catch(err => console.error(err));
+  // @ts-expect-error
   const { data, content } = matter(fileContent);
 
   const date = (new Date(data.date)).toLocaleDateString("en-US", {

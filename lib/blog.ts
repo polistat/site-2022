@@ -19,6 +19,7 @@ export const getBlogList = async () => {
         return decoded;
       })
       .catch(err => console.error(err));
+      // @ts-expect-error
       const { data } = matter(fileContent);
   
       const date = (new Date(data.date)).toLocaleDateString("en-US", {
@@ -71,6 +72,7 @@ export const getBlogData = async (slug: string): Promise<Pick<GrayMatterFile<str
     return decoded;
   })
   .catch(err => console.error(err));
+  // @ts-expect-error
   const { data, content } = matter(fileContent);
 
   const date = (new Date(data.date)).toLocaleDateString("en-US", {
@@ -95,6 +97,7 @@ export const getMethodologyData = async () => {
     return decoded;
   })
   .catch(err => console.error(err));
+  // @ts-expect-error
   const { data, content } = matter(fileContent);
 
   const date = (new Date(data.date)).toLocaleDateString("en-US", {
