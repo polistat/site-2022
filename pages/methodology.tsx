@@ -60,6 +60,7 @@ export async function getStaticProps() {
     props: {
       source: mdxSource,
       frontMatter: data
-    }
+    },
+    revalidate: 3600 // 1 hour
   };
 }

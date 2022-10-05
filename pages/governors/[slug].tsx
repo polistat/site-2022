@@ -197,6 +197,8 @@ export const getStaticProps: GetStaticProps = async ({ params }): Promise<{props
       candidates,
       averagedPolls,
       latestDate
-    }
+    },
+    // @ts-expect-error
+    revalidate: 3600 // 1 hour
   };
 }

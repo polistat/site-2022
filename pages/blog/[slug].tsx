@@ -78,6 +78,8 @@ export const getStaticProps: GetStaticProps = async ({ params }): Promise<{props
       params,
       source: mdxSource,
       frontMatter: data
-    }
+    },
+    // @ts-expect-error
+    revalidate: 3600 // 1 hour
   };
 }
