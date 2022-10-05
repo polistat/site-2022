@@ -6,32 +6,38 @@ import { ParsedUrlQuery } from 'querystring';
 import { MDXRemote, MDXRemoteSerializeResult } from 'next-mdx-remote';
 import { serialize } from 'next-mdx-remote/serialize'
 import { getGovernorsSlugs, getGovernorsData } from "../../lib/states";
+import { getCandidates, getAveragedPolls } from '../../lib/results';
+
+import mapconfig from '../../mapconfig.json';
 
 import CandidateProfileGrid from '../../components/CandidateProfileGrid';
 import CandidateProfileHeader from '../../components/CandidateProfileHeader';
 import CandidateProfileBox from '../../components/CandidateProfileBox';
+import CandidateProfileWideBox from '../../components/CandidateProfileWideBox';
 
 const components = {
   Grid: CandidateProfileGrid,
   Header: CandidateProfileHeader,
   Box: CandidateProfileBox,
+  WideBox: CandidateProfileWideBox,
 };
 
 interface Props {
   params: ParsedUrlQuery | undefined;
   source: MDXRemoteSerializeResult<Record<string, unknown>, Record<string, string>>;
   frontMatter: { [key: string]: string }
+  stateName: string,
+  candidates: any,
+  averagedPolls: any,
+  latestDate: string
 }
 
-export default function GovernorsStatePage({ params, source, frontMatter }: Props) {
-  const {
-    name,
-  } = frontMatter;
+export default function GovernorsStatePage({ params, source, frontMatter, stateName, candidates, averagedPolls, latestDate }: Props) {
   const noRace = false;
 
   return <>
     <Head>
-      <title>{`${name} – Governors – ORACLE of Blair`}</title>
+      <title>{`${stateName} – Governors – ORACLE of Blair`}</title>
       {/* <meta name="description" content="" /> */}
     </Head>
 
@@ -40,7 +46,7 @@ export default function GovernorsStatePage({ params, source, frontMatter }: Prop
         <div className="flex flex-col md:flex-row gap-16 justify-between items-center">
           <div className="flex flex-col gap-1.5 items-start">
             <h1 className="text-4xl font-bold">
-              {name}
+              {stateName}
             </h1>
             {!noRace ?
               <p className="px-1.5 text-xl font-medium uppercase bg-amber-100 rounded-md">
@@ -61,7 +67,7 @@ export default function GovernorsStatePage({ params, source, frontMatter }: Prop
                 <tbody>
                   <tr>
                     <td className="text-lg font-semibold">
-                      00.00
+                      {(parseFloat(averagedPolls.find((a:any) => { return a.state_po===params?.slug && a.office==='Governor' }).BPI)).toFixed(2)}
                     </td>
                     <th className="px-2 uppercase text-left text-xs text-neutral-400 leading-4">
                       BPI
@@ -69,7 +75,8 @@ export default function GovernorsStatePage({ params, source, frontMatter }: Prop
                   </tr>
                   <tr>
                     <td className="text-lg font-semibold">
-                      00.00
+                      {isNaN(averagedPolls.find((a:any) => { return a.state_po===params?.slug && a.office==='Governor' }).weighted_polls) ? 'N/A'
+                      : (parseFloat(averagedPolls.find((a:any) => { return a.state_po===params?.slug && a.office==='Governor' }).weighted_polls)).toFixed(2)}
                     </td>
                     <th className="px-2 uppercase text-left text-xs text-neutral-400 leading-4">
                       Poll avg.
@@ -92,44 +99,40 @@ export default function GovernorsStatePage({ params, source, frontMatter }: Prop
             </thead>
             <tbody className="text-2xl font-normal">
               <tr>
-                <td className="pr-4 pb-1">Candidate 1</td>
-                <td className="px-4 pb-1">00%</td>
+                <td className="pr-4 pb-1">
+                  {/*
+                  // @ts-expect-error*/}
+                  {candidates.governor[params.slug].filter((a:any) => { return a.party==='democrat' || a.party==='independent' })[0].name}
+                </td>
+                <td className="px-4 pb-1">
+                  {(Number(averagedPolls.find((a:any) => { return a.state_po===params?.slug && a.office==='Governor' }).lean)*100).toFixed(1)}%
+                </td>
                 <td
-                  className={`pl-4 pb-1 font-bold text-red-500`}
+                  // @ts-expect-error
+                  className={`pl-4 pb-1 font-bold ${candidates.governor[params.slug].find(a => { return a.party==='independent' }) ? 'text-amber-500' : 'text-blue-500'}`}
                 >
-                  00%
+                  {Number(averagedPolls.find((a:any) => { return a.state_po===params?.slug && a.office==='Governor' }).dem_wins).toFixed(0)}%
                 </td>
               </tr>
+
               <tr>
-                <td className="pr-4 pb-1">Candidate 1</td>
-                <td className="px-4 pb-1">00%</td>
+                <td className="pr-4 pb-1">
+                  {/*
+                  // @ts-expect-error*/}
+                  {candidates.governor[params.slug].find(a => { return a.party==='republican' }).name}
+                </td>
+                <td className="px-4 pb-1">
+                  {(100-Number(averagedPolls.find((a:any) => { return a.state_po===params?.slug && a.office==='Governor' }).lean)*100).toFixed(1)}%
+                </td>
                 <td
                   className={`pl-4 pb-1 font-bold text-red-500`}
                 >
-                  00%
+                  {(100-Number(averagedPolls.find((a:any) => { return a.state_po===params?.slug && a.office==='Governor' }).dem_wins)).toFixed(0)}%
                 </td>
               </tr>
             </tbody>
           </table>
         }
-        {/* <table className="table-auto">
-          <thead className="text-left uppercase text-neutral-400 leading-3">
-            <tr>
-              <th className="pr-4 py-3 font-medium">Incumbents</th>
-              <th className="px-4 py-3 font-medium">Next election</th>
-            </tr>
-          </thead>
-          <tbody className="text-2xl font-normal">
-            <tr>
-              <td className="pr-4 pb-1">Senator 1</td>
-              <td className="px-4 pb-1">20XX</td>
-            </tr>
-            <tr>
-              <td className="pr-4 pb-1">Senator 2</td>
-              <td className="px-4 pb-1">20XX</td>
-            </tr>
-          </tbody>
-        </table> */}
       </section>
       
       {!noRace && <>
@@ -168,7 +171,7 @@ export default function GovernorsStatePage({ params, source, frontMatter }: Prop
 }
 
 export async function getStaticPaths() {
-  const paths = getGovernorsSlugs();
+  const paths = await getGovernorsSlugs();
   return {
     paths,
     fallback: false
@@ -178,12 +181,22 @@ export async function getStaticPaths() {
 export const getStaticProps: GetStaticProps = async ({ params }): Promise<{props: Props}> => {
   const { data, content } = await getGovernorsData((params?.slug as unknown) as string);
   const mdxSource = await serialize(content, { scope: data });
-  // TODO: fetch prediction data
+  
+  // @ts-expect-error
+  const stateName = mapconfig[params?.slug].name;
+
+  const candidates = await getCandidates();
+  const { averagedPolls, latestDate } = await getAveragedPolls();
+
   return {
     props: {
       params,
       source: mdxSource,
-      frontMatter: data
+      frontMatter: data,
+      stateName,
+      candidates,
+      averagedPolls,
+      latestDate
     }
   };
 }

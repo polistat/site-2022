@@ -1,7 +1,3 @@
----
-name: "Maryland"
----
-
 ## Candidates
 Information about the two candidates
 

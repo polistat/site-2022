@@ -4,11 +4,11 @@ import Link from 'next/link';
 import { motion, AnimatePresence } from 'framer-motion';
 import { getBlogList } from "../lib/blog";
 
-// import Map from '../components/Map';
 import SenateMap from '../components/SenateMap';
 import GovernorMap from '../components/GovernorMap';
+import { getCandidates, getIncumbents, getAveragedPolls } from '../lib/results';
 
-export default function Home({ blogPosts }: { blogPosts: any }) {
+export default function Home({ blogPosts, latestDate, candidates, averagedPolls, incumbents }: { blogPosts:any, latestDate:any, candidates:any, averagedPolls:any, incumbents:any }) {
   const [headerSlide, setHeaderSlide] = React.useState(0);
 
   return <>
@@ -34,7 +34,7 @@ export default function Home({ blogPosts }: { blogPosts: any }) {
               transition={{ duration: 2, repeat: Infinity, }}
             />
             <p className="text-sm text-center text-neutral-400 uppercase font-bold">
-              Updated MM/DD/YYYY @ HH AM/PM
+              Updated {!isNaN(new Date(latestDate).valueOf()) ? new Date(latestDate).toLocaleDateString('en-US') : latestDate}
             </p>
           </div>
         </div>
@@ -113,9 +113,17 @@ export default function Home({ blogPosts }: { blogPosts: any }) {
                 transition={{ duration: 0.2 }}
               >
               {headerSlide === 0 ? <>
-                <SenateMap/>
+                <SenateMap
+                  candidates={candidates}
+                  averagedPolls={averagedPolls}
+                  incumbents={incumbents}
+                />
               </> : headerSlide === 1 ? <>
-                <GovernorMap/>
+                <GovernorMap
+                  candidates={candidates}
+                  averagedPolls={averagedPolls}
+                  incumbents={incumbents}
+                />
               </> : null}
               </motion.div>
             </AnimatePresence>
@@ -188,33 +196,24 @@ export default function Home({ blogPosts }: { blogPosts: any }) {
           </a>
         </Link>
       </section>
-
-      {/* <section className="p-8 border-2 border-neutral-200 shadow-md rounded-xl">
-        <h2 className="text-2xl font-bold">
-          About us
-        </h2>
-        <p className="mt-1">
-          ORACLE of Blair is a project by seniors at Montgomery Blair High School in Silver Spring, Maryland.
-          It was created during the Fall 2022 Political Statistics course taught by Mr. David Stein.
-          Questions for the students about the model can be sent to mbhs.polistat@gmail.com, while Mr. Stein can be reached directly through the Blair website.
-        </p>
-
-        <h3 className="text-lg font-bold mt-3">
-          Please note
-        </h3>
-        <p className="">
-          Any views or opinions expressed on this site are those of the students in Montgomery Blair High School's 2022 Political Statistics class and do not necessarily reflect the official position of Montgomery Blair High School.
-        </p>
-      </section> */}
     </main>
   </>;
 }
 
 export async function getStaticProps() {
   const blogPosts = await getBlogList();
+
+  const candidates = await getCandidates();
+  const incumbents = await getIncumbents();
+  const { averagedPolls, latestDate } = await getAveragedPolls();
+
   return {
     props: {
-      blogPosts
+      blogPosts,
+      latestDate,
+      candidates,
+      averagedPolls,
+      incumbents
     }
   };
 }

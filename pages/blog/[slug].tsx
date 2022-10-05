@@ -62,7 +62,7 @@ export default function BlogPost({ source, frontMatter }: Props) {
 }
 
 export async function getStaticPaths() {
-  const paths = getBlogSlugs();
+  const paths = await getBlogSlugs();
   return {
     paths,
     fallback: false

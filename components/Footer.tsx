@@ -28,7 +28,7 @@ export default function Footer() {
               Please note
             </h2>
             <p className="text-xs mt-0.5">
-              Any views or opinions expressed on this site are those of the students in Montgomery Blair High School's 2022 Political Statistics class and do not necessarily reflect the official position of Montgomery Blair High School.
+              Any views or opinions expressed on this site are those of the students in Montgomery Blair High School&apos;s 2022 Political Statistics class and do not necessarily reflect the official position of Montgomery Blair High School.
             </p>
           </div>
         </div>

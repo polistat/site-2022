@@ -2,9 +2,8 @@ import React from 'react';
 import Router from 'next/router';
 
 import mapconfig from '../mapconfig.json';
-import governorData from '../content/governorData.json';
 
-export default function GovernorMap() {
+export default function GovernorMap({ candidates, averagedPolls, incumbents }) {
   const [cursorPosition, setCursorPosition] = React.useState({ top: 0, left: 0 });
   const [selectedState, setSelectedState] = React.useState(null);
 
@@ -28,13 +27,13 @@ export default function GovernorMap() {
           d={state.path}
           // className="fill-neutral-200 stroke-2 stroke-white"
           className={`${
-            governorData[stateId].race ?
-            (governorData[stateId].race.magnitude>0 ? 'fill-red-50'
-              : governorData[stateId].race.magnitude<0 ? 'fill-blue-50'
-              : 'fill-neutral-50'
-            ) : 'fill-transparent'
-        } stroke-2 stroke-neutral-300`}
-          key={stateId}
+            averagedPolls.find(a => { return a.state_po===stateId && a.office==='Governor' }) ?
+            (averagedPolls.find(a => { return a.state_po===stateId && a.office==='Governor' }).lean>0.5 ? 'fill-blue-50'
+              : averagedPolls.find(a => { return a.state_po===stateId && a.office==='Governor' }).lean<0.5 ? 'fill-red-50'
+              : 'fill-white'
+            ) : 'fill-neutral-100'
+          } stroke-2 stroke-neutral-300`}
+          key={`state${stateId}`}
         />
       )}
       
@@ -46,7 +45,7 @@ export default function GovernorMap() {
           dataid={stateId}
           d={state.path}
           className={`${selectedState===stateId ? 'opacity-100' : 'opacity-0'} cursor-pointer fill-transparent stroke-[3px] stroke-neutral-600`}
-          key={stateId}
+          key={`state${stateId}hover`}
           onMouseEnter={() => setSelectedState(stateId)}
           onMouseLeave={() => setSelectedState(null)}
           onClick={() => Router.push(`/governors/${stateId}`)}
@@ -59,27 +58,27 @@ export default function GovernorMap() {
           y={state.textY-15}
           className={`
             w-[32px] h-[30px] cursor-pointer
-            ${governorData[stateId].race ? (
-              governorData[stateId].race.magnitude>0 ? 'stroke-2 stroke-white fill-red-300'
-              : governorData[stateId].race.magnitude<0 ? 'stroke-2 stroke-white fill-blue-300'
+            ${averagedPolls.find(a => { return a.state_po===stateId && a.office==='Governor' }) ? (
+              averagedPolls.find(a => { return a.state_po===stateId && a.office==='Governor' }).lean>0.5 ? 'stroke-2 stroke-white fill-blue-300'
+              : averagedPolls.find(a => { return a.state_po===stateId && a.office==='Governor' }).lean<0.5 ? 'stroke-2 stroke-white fill-red-300'
               : 'stroke-2 stroke-white fill-neutral-300'
             )
             : (
-              governorData[stateId].incumbent.party==='republican' ? 'stroke-2 stroke-red-400 fill-white'
-              : governorData[stateId].incumbent.party==='democrat' ? 'stroke-2 stroke-blue-400 fill-white'
-              : 'stroke-2 fill-white stroke-neutral-300'
+              incumbents.governor[stateId][0].party==='republican' ? 'stroke-2 stroke-red-400 fill-neutral-100'
+              : incumbents.governor[stateId][0].party==='democrat' ? 'stroke-2 stroke-blue-400 fill-neutral-100'
+              : 'stroke-2 fill-neutral-100 stroke-neutral-300'
             )}
           `}
           onMouseEnter={() => setSelectedState(stateId)}
           onMouseLeave={() => setSelectedState(null)}
           onClick={() => Router.push(`/governors/${stateId}`)}
-          key={stateId}
+          key={`state${stateId}rect`}
         />
         <text
           className={`font-medium text-lg fill-neutral-600 select-none cursor-pointer`}
           x={state.textX-13}
           y={state.textY+6}
-          key={stateId}
+          key={`state${stateId}label`}
           onMouseEnter={() => setSelectedState(stateId)}
           onMouseLeave={() => setSelectedState(null)}
           onClick={() => Router.push(`/governors/${stateId}`)}
@@ -106,9 +105,9 @@ export default function GovernorMap() {
         className="fixed -translate-x-1/2 p-2 flex flex-col gap-4 bg-theme-surface text-theme-onSurface rounded-lg border-2 border-neutral-300 shadow-sm z-20"
         style={{ ...cursorPosition }}
       >
-        {governorData[selectedState].race && <div>
+        {averagedPolls.find(a => { return a.state_po===selectedState && a.office==='Governor' }) && <div>
           <p className="font-bold">
-            {governorData[selectedState].name}
+            {mapconfig[selectedState].name}
           </p>
 
           <table className="table-auto">
@@ -120,24 +119,46 @@ export default function GovernorMap() {
               </tr>
             </thead>
             <tbody className="text-sm font-thin">
-              {governorData[selectedState].race.candidates.sort((a,b) => (a.winPercent>b.winPercent) ? -1 : (a.winPercent<b.winPercent) ? 1 : 0).map(candidate =>
-                <tr key={candidate.name}>
-                  <td className="pr-2 pb-0.5">{candidate.name}</td>
-                  <td className="px-2 pb-0.5">{candidate.votePercent<1 ? "<1" : candidate.votePercent>99 ? ">99" : candidate.votePercent}%</td>
-                  <td
-                    className={`pl-2 pb-0.5 font-bold ${candidate.party==='democrat'?'text-blue-500':candidate.party==='republican'?'text-red-500':null}`}
-                  >
-                    {candidate.winPercent<1 ? "<1" : candidate.winPercent>99 ? ">99" : candidate.winPercent}%
-                  </td>
-                </tr>
-              )}
+              <tr>
+                <td className="pr-2 pb-0.5">
+                  {candidates.governor[selectedState].find(a => { return a.party==='democrat' }).name}
+                </td>
+                <td className="px-2 pb-0.5">
+                  {parseFloat(parseFloat(averagedPolls.find(a => { return a.state_po===selectedState && a.office==='Governor' }).lean*100).toFixed(2))}%
+                </td>
+                {/* <td className="px-2 pb-0.5">{candidate.votePercent<1 ? "<1" : candidate.votePercent>99 ? ">99" : candidate.votePercent}%</td> */}
+                <td
+                  className={`pl-2 pb-0.5 font-bold text-blue-500`}
+                >
+                  {parseFloat(parseFloat(averagedPolls.find(a => { return a.state_po===selectedState && a.office==='Governor' }).dem_wins).toFixed(2))}%
+                  {/* {candidate.winPercent<1 ? "<1" : candidate.winPercent>99 ? ">99" : candidate.winPercent}% */}
+                </td>
+              </tr>
+
+              <tr>
+                <td className="pr-2 pb-0.5">
+                  {candidates.governor[selectedState].find(a => { return a.party==='republican' }).name}
+                </td>
+                <td className="px-2 pb-0.5">
+                  {parseFloat(parseFloat(100-averagedPolls.find(a => { return a.state_po===selectedState && a.office==='Governor' }).lean*100).toFixed(2))}%
+                </td>
+                {/* <td className="px-2 pb-0.5">{candidate.votePercent<1 ? "<1" : candidate.votePercent>99 ? ">99" : candidate.votePercent}%</td> */}
+                <td
+                  className={`pl-2 pb-0.5 font-bold text-red-500`}
+                >
+                  {parseFloat(parseFloat(100-averagedPolls.find(a => { return a.state_po===selectedState && a.office==='Governor' }).dem_wins).toFixed(2))}%
+                  {/* {candidate.winPercent<1 ? "<1" : candidate.winPercent>99 ? ">99" : candidate.winPercent}% */}
+                </td>
+              </tr>
+
+              {/* averagedPolls.find(a => { return a.state_po===selectedState && a.office==='Governor' }) */}
             </tbody>
           </table>
         </div>}
 
-        {!governorData[selectedState].race && <div>
+        {!averagedPolls.find(a => { return a.state_po===selectedState && a.office==='Governor' }) && <div>
           <p className="font-bold">
-            {governorData[selectedState].name}
+            {mapconfig[selectedState].name}
           </p>
           <p className="text-sm text-neutral-400">
             No races

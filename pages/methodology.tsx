@@ -1,14 +1,10 @@
 import React from 'react';
 import Head from 'next/head';
 
-import fs from "fs";
-import path from "path";
-import util from "util";
 import matter from "gray-matter";
 import { MDXRemote, MDXRemoteSerializeResult } from 'next-mdx-remote';
 import { serialize } from 'next-mdx-remote/serialize'
-
-const readFile = util.promisify(fs.readFile);
+import { getMethodologyData } from "../lib/blog";
 
 interface Props {
   source: MDXRemoteSerializeResult<Record<string, unknown>, Record<string, string>>;
@@ -57,7 +53,7 @@ export default function MethodologyPage({ source, frontMatter }: Props) {
 }
 
 export async function getStaticProps() {
-  const fileContent = await readFile(path.join(process.cwd(), "content", "methodology.mdx"), "utf-8");
+  const fileContent = await getMethodologyData();
   const { data, content } = matter(fileContent);
   const mdxSource = await serialize(content, { scope: data });
   return {
