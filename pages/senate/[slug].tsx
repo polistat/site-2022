@@ -183,7 +183,7 @@ export const getStaticProps: GetStaticProps = async ({ params }): Promise<{props
   const mdxSource = await serialize(content, { scope: data });
   
   // @ts-expect-error
-  const stateName = mapconfig[params.slug].name;
+  const stateName = mapconfig[params.slug.replace(/[0-9]/g, '')].name;
 
   const candidates = await getCandidates();
   const { averagedPolls, latestDate } = await getAveragedPolls();
