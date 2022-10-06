@@ -174,7 +174,7 @@ export async function getStaticPaths() {
   const paths = await getGovernorsSlugs();
   return {
     paths,
-    fallback: false
+    fallback: 'blocking'
   };
 }
 

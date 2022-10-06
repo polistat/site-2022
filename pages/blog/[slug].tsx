@@ -65,7 +65,7 @@ export async function getStaticPaths() {
   const paths = await getBlogSlugs();
   return {
     paths,
-    fallback: false
+    fallback: 'blocking'
   };
 }
 
