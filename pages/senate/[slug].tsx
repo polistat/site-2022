@@ -60,7 +60,9 @@ export default function SenateStatePage({ params, source, frontMatter, stateName
           </div>
           
           <div className={`${!noRace ? '-mr-4' : null} flex gap-8 justify-center`}>
-            <img src={`/states/${params?.slug}.svg`} className="w-36"/>
+            {/*
+            // @ts-expect-error */ }
+            <img src={`/states/${params?.slug.replace(/[0-9]/g, '')}.svg`} className="w-36"/>
 
             {!noRace &&
               <table className="table-auto self-center">
@@ -105,7 +107,7 @@ export default function SenateStatePage({ params, source, frontMatter, stateName
                   {candidates.senate[params.slug].filter((a:any) => { return a.party==='democrat' || a.party==='independent' })[0].name}
                 </td>
                 <td className="px-4 pb-1">
-                  {(Number(averagedPolls.find((a:any) => { return a.state_po===params?.slug && a.office==='Senate' }).lean)/100).toFixed(1)}%
+                  {(Number(averagedPolls.find((a:any) => { return a.state_po===params?.slug && a.office==='Senate' }).lean)).toFixed(1)}%
                 </td>
                 <td
                 // @ts-expect-error
@@ -122,7 +124,7 @@ export default function SenateStatePage({ params, source, frontMatter, stateName
                   {candidates.senate[params.slug].find((a:any) => { return a.party==='republican' }).name}
                 </td>
                 <td className="px-4 pb-1">
-                  {(100-Number(averagedPolls.find((a:any) => { return a.state_po===params?.slug && a.office==='Senate' }).lean)/100).toFixed(1)}%
+                  {(100-Number(averagedPolls.find((a:any) => { return a.state_po===params?.slug && a.office==='Senate' }).lean)).toFixed(1)}%
                 </td>
                 <td
                   className={`pl-4 pb-1 font-bold text-red-500`}

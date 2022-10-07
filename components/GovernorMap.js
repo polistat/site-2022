@@ -124,7 +124,7 @@ export default function GovernorMap({ candidates, averagedPolls, incumbents }) {
                   {candidates.governor[selectedState].find(a => { return a.party==='democrat' }).name}
                 </td>
                 <td className="px-2 pb-0.5">
-                  {parseFloat(parseFloat(averagedPolls.find(a => { return a.state_po===selectedState && a.office==='Governor' }).lean/100).toFixed(1))}%
+                  {parseFloat(parseFloat(averagedPolls.find(a => { return a.state_po===selectedState && a.office==='Governor' }).lean).toFixed(1))}%
                 </td>
                 {/* <td className="px-2 pb-0.5">{candidate.votePercent<1 ? "<1" : candidate.votePercent>99 ? ">99" : candidate.votePercent}%</td> */}
                 <td
@@ -140,7 +140,7 @@ export default function GovernorMap({ candidates, averagedPolls, incumbents }) {
                   {candidates.governor[selectedState].find(a => { return a.party==='republican' }).name}
                 </td>
                 <td className="px-2 pb-0.5">
-                  {parseFloat(parseFloat(100-averagedPolls.find(a => { return a.state_po===selectedState && a.office==='Governor' }).lean/100).toFixed(1))}%
+                  {parseFloat(parseFloat(100-averagedPolls.find(a => { return a.state_po===selectedState && a.office==='Governor' }).lean).toFixed(1))}%
                 </td>
                 {/* <td className="px-2 pb-0.5">{candidate.votePercent<1 ? "<1" : candidate.votePercent>99 ? ">99" : candidate.votePercent}%</td> */}
                 <td
