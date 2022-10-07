@@ -105,7 +105,7 @@ export default function GovernorsStatePage({ params, source, frontMatter, stateN
                   {candidates.governor[params.slug].filter((a:any) => { return a.party==='democrat' || a.party==='independent' })[0].name}
                 </td>
                 <td className="px-4 pb-1">
-                  {(Number(averagedPolls.find((a:any) => { return a.state_po===params?.slug && a.office==='Governor' }).lean)*100).toFixed(1)}%
+                  {(Number(averagedPolls.find((a:any) => { return a.state_po===params?.slug && a.office==='Governor' }).lean)/100).toFixed(1)}%
                 </td>
                 <td
                   // @ts-expect-error
@@ -122,7 +122,7 @@ export default function GovernorsStatePage({ params, source, frontMatter, stateN
                   {candidates.governor[params.slug].find(a => { return a.party==='republican' }).name}
                 </td>
                 <td className="px-4 pb-1">
-                  {(100-Number(averagedPolls.find((a:any) => { return a.state_po===params?.slug && a.office==='Governor' }).lean)*100).toFixed(1)}%
+                  {(100-Number(averagedPolls.find((a:any) => { return a.state_po===params?.slug && a.office==='Governor' }).lean)/100).toFixed(1)}%
                 </td>
                 <td
                   className={`pl-4 pb-1 font-bold text-red-500`}

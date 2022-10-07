@@ -28,8 +28,8 @@ export default function SenateMap({ candidates, averagedPolls, incumbents }) {
           // className="fill-neutral-200 stroke-2 stroke-white"
           className={`${
             averagedPolls.find(a => { return a.state_po===stateId && a.office==='Senate' }) ? (
-              averagedPolls.find(a => { return a.state_po===stateId && a.office==='Senate' }).lean>0.5  ? (candidates.senate[stateId].find(a => { return a.party==='independent' }) ? 'fill-amber-50' : 'fill-blue-50')
-              : averagedPolls.find(a => { return a.state_po===stateId && a.office==='Senate' }).lean<0.5 ? 'fill-red-50'
+              averagedPolls.find(a => { return a.state_po===stateId && a.office==='Senate' }).lean>50  ? (candidates.senate[stateId].find(a => { return a.party==='independent' }) ? 'fill-amber-50' : 'fill-blue-50')
+              : averagedPolls.find(a => { return a.state_po===stateId && a.office==='Senate' }).lean<50 ? 'fill-red-50'
               : 'fill-white'
             ) : (
               'fill-neutral-100'
@@ -60,8 +60,8 @@ export default function SenateMap({ candidates, averagedPolls, incumbents }) {
           y={state.textY-15}
           className={`w-[18px] h-[30px] cursor-pointer ${
             averagedPolls.find(a => { return a.state_po===stateId && a.office==='Senate' }) ? (
-              averagedPolls.find(a => { return a.state_po===stateId && a.office==='Senate' }).lean>0.5 ? (candidates.senate[stateId].find(a => { return a.party==='independent' }) ? 'stroke-2 stroke-white fill-amber-300' : 'stroke-2 stroke-white fill-blue-300')
-              : averagedPolls.find(a => { return a.state_po===stateId && a.office==='Senate' }).lean<0.5 ? 'stroke-2 stroke-white fill-red-300':
+              averagedPolls.find(a => { return a.state_po===stateId && a.office==='Senate' }).lean>50 ? (candidates.senate[stateId].find(a => { return a.party==='independent' }) ? 'stroke-2 stroke-white fill-amber-300' : 'stroke-2 stroke-white fill-blue-300')
+              : averagedPolls.find(a => { return a.state_po===stateId && a.office==='Senate' }).lean<50 ? 'stroke-2 stroke-white fill-red-300':
               'stroke-2 stroke-white fill-neutral-300'
             ) : (
               incumbents.senate[stateId][0].party==='republican' ? 'stroke-[1.5] stroke-red-400 fill-neutral-100'
@@ -79,8 +79,8 @@ export default function SenateMap({ candidates, averagedPolls, incumbents }) {
           y={state.textY-15}
           className={`w-[18px] h-[30px] cursor-pointer ${
             averagedPolls.find(a => { return a.state_po===`${stateId}2` && a.office==='Senate' }) ? (
-              averagedPolls.find(a => { return a.state_po===`${stateId}2` && a.office==='Senate' }).lean>0.5 ? (candidates.senate[stateId].find(a => { return a.party==='independent' }) ? 'stroke-2 stroke-white fill-amber-300' : 'stroke-2 stroke-white fill-blue-300')
-              : averagedPolls.find(a => { return a.state_po===`${stateId}2` && a.office==='Senate' }).lean<0.5 ? 'stroke-2 stroke-white fill-red-300':
+              averagedPolls.find(a => { return a.state_po===`${stateId}2` && a.office==='Senate' }).lean>50 ? (candidates.senate[stateId].find(a => { return a.party==='independent' }) ? 'stroke-2 stroke-white fill-amber-300' : 'stroke-2 stroke-white fill-blue-300')
+              : averagedPolls.find(a => { return a.state_po===`${stateId}2` && a.office==='Senate' }).lean<50 ? 'stroke-2 stroke-white fill-red-300':
               'stroke-2 stroke-white fill-netural-300'
             ) : (
               averagedPolls.find(a => { return a.state_po===stateId && a.office==='Senate' }) ? (
@@ -149,7 +149,7 @@ export default function SenateMap({ candidates, averagedPolls, incumbents }) {
                   {candidates.senate[selectedState].filter(a => { return a.party==='democrat' || a.party==='independent' })[0].name}
                 </td>
                 <td className="px-2 pb-0.5">
-                  {(Number(averagedPolls.find(a => { return a.state_po===selectedState && a.office==='Senate' }).lean)*100).toFixed(1)}%
+                  {(Number(averagedPolls.find(a => { return a.state_po===selectedState && a.office==='Senate' }).lean)/100).toFixed(1)}%
                 </td>
                 <td
                   className={`pl-2 pb-0.5 font-bold ${candidates.senate[selectedState].find(a => { return a.party==='independent' }) ? 'text-amber-500' : 'text-blue-500'}`}
@@ -163,7 +163,7 @@ export default function SenateMap({ candidates, averagedPolls, incumbents }) {
                   {candidates.senate[selectedState].find(a => { return a.party==='republican' }).name}
                 </td>
                 <td className="px-2 pb-0.5">
-                  {(100-Number(averagedPolls.find(a => { return a.state_po===selectedState && a.office==='Senate' }).lean)*100).toFixed(1)}%
+                  {(100-Number(averagedPolls.find(a => { return a.state_po===selectedState && a.office==='Senate' }).lean)/100).toFixed(1)}%
                 </td>
                 <td
                   className={`pl-2 pb-0.5 font-bold text-red-500`}
@@ -194,7 +194,7 @@ export default function SenateMap({ candidates, averagedPolls, incumbents }) {
                   {candidates.senate[`${selectedState}2`].filter(a => { return a.party==='democrat' || a.party==='independent' })[0].name}
                 </td>
                 <td className="px-2 pb-0.5">
-                  {(Number(averagedPolls.find(a => { return a.state_po===`${selectedState}2` && a.office==='Senate' }).lean)*100).toFixed(1)}%
+                  {(Number(averagedPolls.find(a => { return a.state_po===`${selectedState}2` && a.office==='Senate' }).lean)/100).toFixed(1)}%
                 </td>
                 <td
                   className={`pl-2 pb-0.5 font-bold ${candidates.senate[`${selectedState}2`].find(a => { return a.party==='independent' }) ? 'text-amber-500' : 'text-blue-500'}`}
@@ -208,7 +208,7 @@ export default function SenateMap({ candidates, averagedPolls, incumbents }) {
                   {candidates.senate[`${selectedState}2`].find(a => { return a.party==='republican' }).name}
                 </td>
                 <td className="px-2 pb-0.5">
-                  {(100-Number(averagedPolls.find(a => { return a.state_po===`${selectedState}2` && a.office==='Senate' }).lean)*100).toFixed(1)}%
+                  {(100-Number(averagedPolls.find(a => { return a.state_po===`${selectedState}2` && a.office==='Senate' }).lean)/100).toFixed(1)}%
                 </td>
                 <td
                   className={`pl-2 pb-0.5 font-bold text-red-500`}
