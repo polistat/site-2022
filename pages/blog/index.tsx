@@ -6,7 +6,12 @@ export default function SenatePage({ posts }: { posts: any }) {
     return <>
     <Head>
       <title>Blog – ORACLE of Blair</title>
-      {/* <meta name="description" content="" /> */}
+      <meta name="description" content="A collection of in-depth analyses of ORACLE's model and predictions. The ORACLE (Overall Results of an Analytical Consideration of the Looming Elections) of Blair is a senior class project at Montgomery Blair High School with the goal of modeling the 2022 senate and gubernatorial elections."/>
+      <meta itemProp="description" content="A collection of in-depth analyses of ORACLE's model and predictions. The ORACLE (Overall Results of an Analytical Consideration of the Looming Elections) of Blair is a senior class project at Montgomery Blair High School with the goal of modeling the 2022 senate and gubernatorial elections."/>
+      <meta property="og:title" content="2022 Senate Forecast – ORACLE of Blair"/>
+      <meta property="og:description" content="A collection of in-depth analyses of ORACLE's model and predictions. The ORACLE (Overall Results of an Analytical Consideration of the Looming Elections) of Blair is a senior class project at Montgomery Blair High School with the goal of modeling the 2022 senate and gubernatorial elections."/>
+      <meta name="twitter:title" content="2022 Senate Forecast – ORACLE of Blair"/>
+      <meta name="twitter:description" content="A collection of in-depth analyses of ORACLE's model and predictions. The ORACLE (Overall Results of an Analytical Consideration of the Looming Elections) of Blair is a senior class project at Montgomery Blair High School with the goal of modeling the 2022 senate and gubernatorial elections."/>
     </Head>
 
     <div className="container max-w-2xl">

@@ -145,11 +145,19 @@ export default function SenateMap({ candidates, averagedPolls, incumbents }) {
       />
       <path
         className="stroke-neutral-500 fill-transparent stroke-1"
-        d="M720 70 A 30 30 0 0 0 760 75 M760 75 765 80 767 68 755 70Z"
+        d="M720 70 A 30 30 0 0 0 760 75"
+      />
+      <path
+        className="stroke-neutral-500 fill-neutral-500 stroke-1"
+        d="M760 75 763 78 767 68 757 72Z"
       />
       <path
         className="stroke-neutral-500 fill-transparent stroke-1"
-        d="M850 70 A 30 30 0 0 1 810 75 M810 75 815 70 803 68 805 80Z"
+        d="M850 70 A 30 30 0 0 1 810 75"
+      />
+      <path
+        className="stroke-neutral-500 fill-neutral-500 stroke-1"
+        d="M810 75 813 72 803 68 807 78Z"
       />
       <text
         className="font-thin italic text-md fill-neutral-500 select-none"

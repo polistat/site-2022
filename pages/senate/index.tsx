@@ -7,11 +7,16 @@ export default function SenatePage({ latestDate, candidates, averagedPolls, incu
   return <>
     <Head>
       <title>2022 Senate Forecast – ORACLE of Blair</title>
-      {/* <meta name="description" content="" /> */}
+      <meta name="description" content="ORACLE's forecast for the 2022 senate elections. The ORACLE (Overall Results of an Analytical Consideration of the Looming Elections) of Blair is a senior class project at Montgomery Blair High School with the goal of modeling the 2022 senate and gubernatorial elections."/>
+      <meta itemProp="description" content="ORACLE's forecast for the 2022 senate elections. The ORACLE (Overall Results of an Analytical Consideration of the Looming Elections) of Blair is a senior class project at Montgomery Blair High School with the goal of modeling the 2022 senate and gubernatorial elections."/>
+      <meta property="og:title" content="2022 Senate Forecast – ORACLE of Blair"/>
+      <meta property="og:description" content="ORACLE's forecast for the 2022 senate elections. The ORACLE (Overall Results of an Analytical Consideration of the Looming Elections) of Blair is a senior class project at Montgomery Blair High School with the goal of modeling the 2022 senate and gubernatorial elections."/>
+      <meta name="twitter:title" content="2022 Senate Forecast – ORACLE of Blair"/>
+      <meta name="twitter:description" content="ORACLE's forecast for the 2022 senate elections. The ORACLE (Overall Results of an Analytical Consideration of the Looming Elections) of Blair is a senior class project at Montgomery Blair High School with the goal of modeling the 2022 senate and gubernatorial elections."/>
     </Head>
 
     <main className="p-4 flex flex-col gap-8">
-      <section className="px-4 pt-8 pb-4 container max-w-4xl flex flex-col gap-4 bg-neutral-50 border-2 shadow-md rounded-2xl">
+      <section className="p-8 container max-w-4xl flex flex-col gap-4 bg-neutral-50 border-2 shadow-md rounded-2xl">
         <div className="flex flex-col gap-1.5 items-center">
           <h1 className="px-1.5 text-xl text-center font-medium uppercase bg-amber-100 rounded-md">
             The Senate
@@ -21,11 +26,13 @@ export default function SenatePage({ latestDate, candidates, averagedPolls, incu
           </p>
         </div>
 
-        <SenateMap
-          candidates={candidates}
-          averagedPolls={averagedPolls}
-          incumbents={incumbents}
-        />
+        <div className="-ml-10">
+          <SenateMap
+            candidates={candidates}
+            averagedPolls={averagedPolls}
+            incumbents={incumbents}
+          />
+        </div>
       </section>
     </main>
 
