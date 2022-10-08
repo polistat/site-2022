@@ -106,25 +106,25 @@ export default function Home({ blogPosts, latestDate, candidates, averagedPolls,
             <AnimatePresence exitBeforeEnter>
               <motion.div
                 key={headerSlide}
-                className="p-0 pr-4 md:p-6 md:pr-0"
+                className="p-0 md:p-4 -ml-8 md:-ml-4 md:-mr-4"
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
                 exit={{ opacity: 0 }}
                 transition={{ duration: 0.2 }}
               >
-              {headerSlide === 0 ? <>
-                <SenateMap
-                  candidates={candidates}
-                  averagedPolls={averagedPolls}
-                  incumbents={incumbents}
-                />
-              </> : headerSlide === 1 ? <>
-                <GovernorMap
-                  candidates={candidates}
-                  averagedPolls={averagedPolls}
-                  incumbents={incumbents}
-                />
-              </> : null}
+                {headerSlide === 0 ? <>
+                  <SenateMap
+                    candidates={candidates}
+                    averagedPolls={averagedPolls}
+                    incumbents={incumbents}
+                  />
+                </> : headerSlide === 1 ? <>
+                  <GovernorMap
+                    candidates={candidates}
+                    averagedPolls={averagedPolls}
+                    incumbents={incumbents}
+                  />
+                </> : null}
               </motion.div>
             </AnimatePresence>
 
