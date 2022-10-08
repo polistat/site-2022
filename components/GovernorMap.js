@@ -28,8 +28,8 @@ export default function GovernorMap({ candidates, averagedPolls, incumbents }) {
           // className="fill-neutral-200 stroke-2 stroke-white"
           className={`${
             averagedPolls.find(a => { return a.state_po===stateId && a.office==='Governor' }) ?
-            (averagedPolls.find(a => { return a.state_po===stateId && a.office==='Governor' }).lean>0.5 ? 'fill-blue-50'
-              : averagedPolls.find(a => { return a.state_po===stateId && a.office==='Governor' }).lean<0.5 ? 'fill-red-50'
+            (averagedPolls.find(a => { return a.state_po===stateId && a.office==='Governor' }).lean>50 ? 'fill-blue-50'
+              : averagedPolls.find(a => { return a.state_po===stateId && a.office==='Governor' }).lean<50 ? 'fill-red-50'
               : 'fill-white'
             ) : 'fill-neutral-100'
           } stroke-2 stroke-neutral-300`}
@@ -59,8 +59,8 @@ export default function GovernorMap({ candidates, averagedPolls, incumbents }) {
           className={`
             w-[32px] h-[30px] cursor-pointer
             ${averagedPolls.find(a => { return a.state_po===stateId && a.office==='Governor' }) ? (
-              averagedPolls.find(a => { return a.state_po===stateId && a.office==='Governor' }).lean>0.5 ? 'stroke-2 stroke-white fill-blue-300'
-              : averagedPolls.find(a => { return a.state_po===stateId && a.office==='Governor' }).lean<0.5 ? 'stroke-2 stroke-white fill-red-300'
+              averagedPolls.find(a => { return a.state_po===stateId && a.office==='Governor' }).lean>50 ? 'stroke-2 stroke-white fill-blue-300'
+              : averagedPolls.find(a => { return a.state_po===stateId && a.office==='Governor' }).lean<50 ? 'stroke-2 stroke-white fill-red-300'
               : 'stroke-2 stroke-white fill-neutral-300'
             )
             : (
@@ -124,13 +124,13 @@ export default function GovernorMap({ candidates, averagedPolls, incumbents }) {
                   {candidates.governor[selectedState].find(a => { return a.party==='democrat' }).name}
                 </td>
                 <td className="px-2 pb-0.5">
-                  {parseFloat(parseFloat(averagedPolls.find(a => { return a.state_po===selectedState && a.office==='Governor' }).lean*100).toFixed(2))}%
+                  {parseFloat(parseFloat(averagedPolls.find(a => { return a.state_po===selectedState && a.office==='Governor' }).lean).toFixed(1))}%
                 </td>
                 {/* <td className="px-2 pb-0.5">{candidate.votePercent<1 ? "<1" : candidate.votePercent>99 ? ">99" : candidate.votePercent}%</td> */}
                 <td
                   className={`pl-2 pb-0.5 font-bold text-blue-500`}
                 >
-                  {parseFloat(parseFloat(averagedPolls.find(a => { return a.state_po===selectedState && a.office==='Governor' }).dem_wins).toFixed(2))}%
+                  {parseFloat(parseFloat(averagedPolls.find(a => { return a.state_po===selectedState && a.office==='Governor' }).dem_wins).toFixed(0))}%
                   {/* {candidate.winPercent<1 ? "<1" : candidate.winPercent>99 ? ">99" : candidate.winPercent}% */}
                 </td>
               </tr>
@@ -140,13 +140,13 @@ export default function GovernorMap({ candidates, averagedPolls, incumbents }) {
                   {candidates.governor[selectedState].find(a => { return a.party==='republican' }).name}
                 </td>
                 <td className="px-2 pb-0.5">
-                  {parseFloat(parseFloat(100-averagedPolls.find(a => { return a.state_po===selectedState && a.office==='Governor' }).lean*100).toFixed(2))}%
+                  {parseFloat(parseFloat(100-averagedPolls.find(a => { return a.state_po===selectedState && a.office==='Governor' }).lean).toFixed(1))}%
                 </td>
                 {/* <td className="px-2 pb-0.5">{candidate.votePercent<1 ? "<1" : candidate.votePercent>99 ? ">99" : candidate.votePercent}%</td> */}
                 <td
                   className={`pl-2 pb-0.5 font-bold text-red-500`}
                 >
-                  {parseFloat(parseFloat(100-averagedPolls.find(a => { return a.state_po===selectedState && a.office==='Governor' }).dem_wins).toFixed(2))}%
+                  {parseFloat(parseFloat(100-averagedPolls.find(a => { return a.state_po===selectedState && a.office==='Governor' }).dem_wins).toFixed(0))}%
                   {/* {candidate.winPercent<1 ? "<1" : candidate.winPercent>99 ? ">99" : candidate.winPercent}% */}
                 </td>
               </tr>
