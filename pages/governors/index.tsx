@@ -11,7 +11,7 @@ export default function SenatePage({ latestDate, candidates, averagedPolls, incu
     </Head>
 
     <main className="p-4 flex flex-col gap-8">
-      <section className="p-8 container max-w-3xl flex flex-col gap-4 bg-neutral-50 border-2 shadow-md rounded-2xl">
+      <section className="px-4 pt-8 pb-4 container max-w-4xl flex flex-col gap-4 bg-neutral-50 border-2 shadow-md rounded-2xl">
         <div className="flex flex-col gap-1.5 items-center">
           <h1 className="px-1.5 text-xl text-center font-medium uppercase bg-amber-100 rounded-md">
             The Governors
