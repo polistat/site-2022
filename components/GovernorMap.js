@@ -40,7 +40,11 @@ export default function GovernorMap({ candidates, averagedPolls, incumbents }) {
       
       {/* on hover */}
       {Object.entries(mapconfig).map(([stateId, state]) =>
-        <Link href={`/governors/${stateId}`} passHref>
+        <Link
+          href={`/governors/${stateId}`}
+          passHref
+          key={`state${stateId}hover`}
+        >
           <a>
             <path
               id={stateId}
@@ -48,7 +52,6 @@ export default function GovernorMap({ candidates, averagedPolls, incumbents }) {
               dataid={stateId}
               d={state.path}
               className={`${selectedState===stateId ? 'opacity-100' : 'opacity-0'} cursor-pointer fill-transparent stroke-[3px] stroke-neutral-600`}
-              key={`state${stateId}hover`}
               onMouseEnter={() => setSelectedState(stateId)}
               onMouseLeave={() => setSelectedState(null)}
             />
@@ -57,7 +60,11 @@ export default function GovernorMap({ candidates, averagedPolls, incumbents }) {
       )}
 
       {Object.entries(mapconfig).map(([stateId, state]) => <>
-        <Link href={`/governors/${stateId}`} passHref>
+        <Link
+          href={`/governors/${stateId}`}
+          passHref
+          key={`state${stateId}labels`}
+        >
           <a>
             <rect
               x={state.textX-16}
@@ -78,13 +85,11 @@ export default function GovernorMap({ candidates, averagedPolls, incumbents }) {
               onMouseEnter={() => setSelectedState(stateId)}
               onMouseLeave={() => setSelectedState(null)}
               onClick={() => Router.push(`/governors/${stateId}`)}
-              key={`state${stateId}rect`}
             />
             <text
               className={`font-medium text-lg fill-neutral-600 select-none cursor-pointer`}
               x={state.textX-13}
               y={state.textY+6}
-              key={`state${stateId}label`}
               onMouseEnter={() => setSelectedState(stateId)}
               onMouseLeave={() => setSelectedState(null)}
               onClick={() => Router.push(`/governors/${stateId}`)}

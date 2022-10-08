@@ -20,28 +20,32 @@ export default function SenateMap({ candidates, averagedPolls, incumbents }) {
       {/* STATES -- separated so strokes don't overlap */}
       {/* base */}
       {Object.entries(mapconfig).map(([stateId, state]) =>
-            <path
-              id={stateId}
-              dataname={state.name}
-              dataid={stateId}
-              d={state.path}
-              // className="fill-neutral-200 stroke-2 stroke-white"
-              className={`${
-                averagedPolls.find(a => { return a.state_po===stateId && a.office==='Senate' }) ? (
-                  averagedPolls.find(a => { return a.state_po===stateId && a.office==='Senate' }).lean>50  ? (candidates.senate[stateId].find(a => { return a.party==='independent' }) ? 'fill-amber-50' : 'fill-blue-50')
-                  : averagedPolls.find(a => { return a.state_po===stateId && a.office==='Senate' }).lean<50 ? 'fill-red-50'
-                  : 'fill-white'
-                ) : (
-                  'fill-neutral-100'
-                )
-              } stroke-2 stroke-neutral-300`}
-              key={`state${stateId}`}
-            />
+        <path
+          id={stateId}
+          dataname={state.name}
+          dataid={stateId}
+          d={state.path}
+          // className="fill-neutral-200 stroke-2 stroke-white"
+          className={`${
+            averagedPolls.find(a => { return a.state_po===stateId && a.office==='Senate' }) ? (
+              averagedPolls.find(a => { return a.state_po===stateId && a.office==='Senate' }).lean>50  ? (candidates.senate[stateId].find(a => { return a.party==='independent' }) ? 'fill-amber-50' : 'fill-blue-50')
+              : averagedPolls.find(a => { return a.state_po===stateId && a.office==='Senate' }).lean<50 ? 'fill-red-50'
+              : 'fill-white'
+            ) : (
+              'fill-neutral-100'
+            )
+          } stroke-2 stroke-neutral-300`}
+          key={`state${stateId}`}
+        />
       )}
       
       {/* on hover */}
       {Object.entries(mapconfig).map(([stateId, state]) =>
-        <Link href={`/senate/${stateId}`} passHref>
+        <Link
+          href={`/senate/${stateId}`}
+          passHref
+          key={`state${stateId}hover`}
+        >
           <a>
             <path
               id={stateId}
@@ -49,7 +53,6 @@ export default function SenateMap({ candidates, averagedPolls, incumbents }) {
               dataid={stateId}
               d={state.path}
               className={`${selectedState===stateId ? 'opacity-100' : 'opacity-0'} cursor-pointer fill-transparent stroke-[3px] stroke-neutral-600`}
-              key={`state${stateId}hover`}
               onMouseEnter={() => setSelectedState(stateId)}
               onMouseLeave={() => setSelectedState(null)}
             />
@@ -58,7 +61,11 @@ export default function SenateMap({ candidates, averagedPolls, incumbents }) {
       )}
 
       {Object.entries(mapconfig).map(([stateId, state]) => <>
-        <Link href={`/senate/${stateId}`} passHref>
+        <Link
+          href={`/senate/${stateId}`}
+          passHref
+          key={`state${stateId}labels`}
+        >
           <a>
             <rect
               x={state.textX-19}
@@ -76,7 +83,6 @@ export default function SenateMap({ candidates, averagedPolls, incumbents }) {
               }`}
               onMouseEnter={() => setSelectedState(stateId)}
               onMouseLeave={() => setSelectedState(null)}
-              key={`state${stateId}rect`}
             />
             <rect
               x={state.textX+1}
@@ -100,13 +106,11 @@ export default function SenateMap({ candidates, averagedPolls, incumbents }) {
               }`}
               onMouseEnter={() => setSelectedState(stateId)}
               onMouseLeave={() => setSelectedState(null)}
-              key={`state${stateId}rect2`}
             />
             <text
               className={`font-medium text-lg fill-neutral-600 select-none cursor-pointer`}
               x={state.textX-13}
               y={state.textY+6}
-              key={`state${stateId}text`}
               onMouseEnter={() => setSelectedState(stateId)}
               onMouseLeave={() => setSelectedState(null)}
             >
