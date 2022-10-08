@@ -13,8 +13,13 @@ export default function Home({ blogPosts, latestDate, candidates, averagedPolls,
 
   return <>
     <Head>
-      <title>Home – ORACLE of Blair</title>
-      {/* <meta name="description" content="" /> */}
+      <title>ORACLE of Blair</title>
+      <meta name="description" content="The ORACLE (Overall Results of an Analytical Consideration of the Looming Elections) of Blair is a senior class project at Montgomery Blair High School with the goal of modeling the 2022 senate and gubernatorial elections."/>
+      <meta itemProp="description" content="The ORACLE (Overall Results of an Analytical Consideration of the Looming Elections) of Blair is a senior class project at Montgomery Blair High School with the goal of modeling the 2022 senate and gubernatorial elections."/>
+      <meta property="og:title" content="ORACLE of Blair"/>
+      <meta property="og:description" content="The ORACLE (Overall Results of an Analytical Consideration of the Looming Elections) of Blair is a senior class project at Montgomery Blair High School with the goal of modeling the 2022 senate and gubernatorial elections."/>
+      <meta name="twitter:title" content="ORACLE of Blair"/>
+      <meta name="twitter:description" content="The ORACLE (Overall Results of an Analytical Consideration of the Looming Elections) of Blair is a senior class project at Montgomery Blair High School with the goal of modeling the 2022 senate and gubernatorial elections."/>
     </Head>
 
     <header className="bg-neutral-50">

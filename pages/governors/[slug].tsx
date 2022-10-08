@@ -150,20 +150,11 @@ export default function GovernorsStatePage({ params, source, frontMatter, stateN
           <div className="h-72 bg-neutral-100 rounded-3xl mt-6"/>
         </section>
 
-        <section className="container max-w-3xl grid grid-cols-1 md:grid-cols-2 gap-8">
-          <div className="p-8 border-2 shadow-sm rounded-2xl">
-            <h2 className="text-2xl md:text-xl font-bold">
-              Past election history
-            </h2>
-            <div className="h-96 bg-neutral-100 rounded-xl mt-4"/>
-          </div>
-
-          <div className="p-8 border-2 shadow-sm rounded-2xl">
-            <h2 className="text-2xl md:text-xl font-bold">
-              Recent polls
-            </h2>
-            <div className="h-96 bg-neutral-100 rounded-xl mt-4"/>
-          </div>
+        <section className="p-8 container max-w-3xl border-2 shadow-sm rounded-2xl">
+          <h2 className="text-2xl font-bold">
+            Recent polls
+          </h2>
+          <div className="h-96 bg-neutral-100 rounded-xl mt-4"/>
         </section>
       </>}
     </main>

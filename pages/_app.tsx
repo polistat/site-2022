@@ -12,6 +12,13 @@ function MyApp({ Component, pageProps }: AppProps) {
   return <>
     <Head>
       <link rel="icon" href="/favicon.png" />
+      <meta itemProp="image" content="/school.png"/>
+      <meta itemProp="name" content="ORACLE of Blair"/>
+      <meta property="og:url" content="https://polistat.mbhs.edu"/>
+      <meta property="og:type" content="website"/>
+      <meta property="og:image" content="/school.png"/>
+      <meta name="twitter:card" content="summary_large_image"/>
+      <meta name="twitter:image" content="/school.png"/>
     </Head>
 
     <Navbar/>
