@@ -1,0 +1,7 @@
+version: "3.3"
+services:
+  polistat-site:
+    build: .
+    container_name: "polistat_2022_site"
+    ports: 
+      - "8783:3000"
