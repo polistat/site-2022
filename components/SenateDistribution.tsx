@@ -24,18 +24,16 @@ export default function SenateDistribution({ overallSenate }: { overallSenate: a
       <text
         x={30}
         y={110}
+        className="text-2xl font-normal fill-red-800/75"
       >
-        <tspan
-          className="text-2xl font-normal fill-red-800/75"
-        >
-          Republicans win in
-        </tspan>
-        <tspan
-          className="text-3xl font-medium fill-red-800/75"
-          dx="-7em" dy="1em"
-        >
-          {(100-average).toFixed(1)}% of our simulations
-        </tspan>
+        Republicans win in
+      </text>
+      <text
+        x={30}
+        y={140}
+        className="text-3xl font-medium fill-red-800/75"
+      >
+        {(100-average).toFixed(1)}% of our simulations
       </text>
       <rect
         x={7+34*13}
@@ -45,21 +43,18 @@ export default function SenateDistribution({ overallSenate }: { overallSenate: a
         className="fill-blue-200/50"
       />
       <text
-        x={770}
+        x={775}
         y={110}
+        className="text-2xl font-normal fill-blue-800/75"
       >
-        <tspan
-          className="text-2xl font-normal fill-blue-800/75"
-          
-        >
-          Democrats win in
-        </tspan>
-        <tspan
-          className="text-3xl font-medium fill-blue-800/75"
-          dx="-11.6em" dy="1em"
-        >
-          {average.toFixed(1)}% of our simulations
-        </tspan>
+        Democrats win in
+      </text>
+      <text
+        x={620}
+        y={140}
+        className="text-3xl font-medium fill-blue-800/75"
+      >
+        {average.toFixed(1)}% of our simulations
       </text>
 
       {/* majority label */}

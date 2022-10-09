@@ -5,6 +5,9 @@ import SenateDistribution from '../../components/SenateDistribution';
 import { getCandidates, getIncumbents, getAveragedPolls, getOverallSenate } from '../../lib/results';
 
 export default function SenatePage({ latestDate, candidates, incumbents, averagedPolls, overallSenate }: { latestDate:any, candidates:any, incumbents:any, averagedPolls:any, overallSenate:any }) {
+  const totalSimulations = overallSenate.reduce((sum:number, a:any) => sum+Number(a.occurrences), 0);
+  const average = overallSenate.reduce((sum:number, a:any) => sum+Number(a.demSeats)*Number(a.occurrences), 0) / totalSimulations;
+
   return <>
     <Head>
       <title>2022 Senate Forecast – ORACLE of Blair</title>
