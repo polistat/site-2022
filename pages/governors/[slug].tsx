@@ -24,12 +24,12 @@ const components = {
 
 interface Props {
   params: ParsedUrlQuery | undefined;
-  source: MDXRemoteSerializeResult<Record<string, unknown>, Record<string, string>>;
-  frontMatter: { [key: string]: string }
-  stateName: string,
-  candidates: any,
-  averagedPolls: any,
-  latestDate: string
+  source: MDXRemoteSerializeResult<Record<string, unknown>, Record<string, string>> | null;
+  frontMatter: { [key: string]: string } | null;
+  stateName: string;
+  candidates: any;
+  averagedPolls: any;
+  latestDate: string;
 }
 
 export default function GovernorsStatePage({ params, source, frontMatter, stateName, candidates, averagedPolls, latestDate }: Props) {
@@ -136,9 +136,11 @@ export default function GovernorsStatePage({ params, source, frontMatter, stateN
       </section>
       
       {!noRace && <>
-        <section className="px-8 pb-4 container max-w-3xl border-2 shadow-sm rounded-2xl">
-          <MDXRemote {...source} components={components}/>
-        </section>
+        {source &&
+          <section className="px-8 pb-4 container max-w-3xl border-2 shadow-sm rounded-2xl">
+            <MDXRemote {...source} components={components}/>
+          </section>
+        }
 
         <section className="p-8 container max-w-3xl border-2 shadow-sm rounded-2xl">
           <h2 className="text-2xl font-bold">
@@ -170,14 +172,25 @@ export async function getStaticPaths() {
 }
 
 export const getStaticProps: GetStaticProps = async ({ params }): Promise<{props: Props}> => {
-  const { data, content } = await getGovernorsData((params?.slug as unknown) as string);
-  const mdxSource = await serialize(content, { scope: data });
+  const candidates = await getCandidates();
+  const { averagedPolls, latestDate } = await getAveragedPolls();
+
+  // @ts-expect-error
+  if (!candidates.governor[params?.slug])
+    return {
+      // @ts-expect-error
+      notFound: true,
+    };
+
+  const { data, content } = await getGovernorsData((params?.slug as unknown) as string)
+    .catch(err => {
+      console.log(err);
+      return { data:null, content:null };
+    });;
+  const mdxSource = content ? await serialize(content, { scope: data }) : null;
   
   // @ts-expect-error
   const stateName = mapconfig[params?.slug].name;
-
-  const candidates = await getCandidates();
-  const { averagedPolls, latestDate } = await getAveragedPolls();
 
   return {
     props: {
