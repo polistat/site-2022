@@ -75,7 +75,7 @@ export default function Home({ blogPosts, latestDate, candidates, averagedPolls,
                     The Senate
                   </h2>
                   <p className="text-sm mt-2">
-                    Description of model. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin non velit pharetra, rhoncus mi commodo, auctor est. Mauris ac rutrum.
+                    We constructed a model to predict the outcomes of the 2022 Senate elections. Click on a colored state on the map to learn more about the race, the candidates, and our prediction.
                   </p>
 
                   <Link href="/senate" passHref>
@@ -90,7 +90,7 @@ export default function Home({ blogPosts, latestDate, candidates, averagedPolls,
                     The Governors
                   </h2>
                   <p className="text-sm mt-2">
-                    Description of model. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus orci quam, tincidunt vitae sapien ut, rhoncus tempus urna. Duis mattis.
+                    We constructed a model to predict the outcomes of the 2022 gubernatorial elections. Click on a colored state on the map to learn more about the race, the candidates, and our prediction.
                   </p>
                   
                   <Link href="/governors" passHref>
@@ -190,7 +190,7 @@ export default function Home({ blogPosts, latestDate, candidates, averagedPolls,
           Methodology
         </h2>
         <p className="mt-1">
-          Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vestibulum orci tortor, faucibus sed varius in, pulvinar non nulla. Pellentesque vel porttitor erat. Phasellus eget congue nulla. Aenean in rhoncus urna. Vestibulum dictum arcu ut lobortis aliquet. Morbi vel rhoncus orci.
+          In the interest of transparency and education, we describe in detail exactly how we came up with all of the numbers in our simulation. Read the methodology page about our reasoning and methods for constructing the model.
         </p>
         
         <Link href="/methodology" passHref>

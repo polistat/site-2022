@@ -64,6 +64,37 @@ export const getAveragedPolls = async () => {
   return { averagedPolls, latestDate };
 }
 
+// fetch latest overall senate data and date from @polistat/results-2022
+export const getOverallSenate = async () => {
+  const overallSenateFileName = await octokit.request('GET /repos/{owner}/{repo}/contents/{path}', {
+    owner: 'polistat',
+    repo: 'results-2022',
+    path: `overall-senate`
+  }).then((res:any) => {
+    // get latest file
+    // res.data
+    return res.data.map((file:any) => file.name).sort().at(-1);
+    // return res.data.find((a:any) => { return a.name === latestFileName });
+  })
+  .catch(err => console.error(err));
+
+  const latestDate = overallSenateFileName.replace(/\.[^/.]+$/, "");
+  
+  const overallSenate = await octokit.request('GET /repos/{owner}/{repo}/contents/{path}', {
+    owner: 'polistat',
+    repo: 'results-2022',
+    path: `overall-senate/${overallSenateFileName}`
+  }).then((res:any) => {
+    const encoded = res.data.content.replace(/\s/g, '');
+    const decoded = decodeURIComponent(escape(atob(encoded)));
+    // return decoded.split("\r\n").map(a => a.split(','));
+    return csvToJson(decoded);
+  })
+  .catch(err => console.error(err));
+
+  return { overallSenate, latestDate };
+}
+
 
 function csvToJson(csv:string){
   let lines=csv.replace(/\r/g, '').split("\n");
