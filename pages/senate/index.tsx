@@ -1,4 +1,5 @@
 import Head from 'next/head';
+import { motion } from 'framer-motion';
 
 import SenateMap from '../../components/SenateMap';
 import SenateDistribution from '../../components/SenateDistribution';
@@ -7,7 +8,7 @@ import { getCandidates, getIncumbents, getAveragedPolls, getOverallSenate } from
 export default function SenatePage({ latestDate, candidates, incumbents, averagedPolls, overallSenate }: { latestDate:any, candidates:any, incumbents:any, averagedPolls:any, overallSenate:any }) {
   const totalSimulations = overallSenate.reduce((sum:number, a:any) => sum+Number(a.occurrences), 0);
   const average = overallSenate.reduce((sum:number, a:any) => sum+Number(a.demSeats)*Number(a.occurrences), 0) / totalSimulations;
-
+  
   return <>
     <Head>
       <title>2022 Senate Forecast – ORACLE of Blair</title>
@@ -26,7 +27,46 @@ export default function SenatePage({ latestDate, candidates, incumbents, average
             The Senate
           </h1>
           <p className="text-4xl text-center font-serif">
-            A blurb about the <span className="font-extrabold">Senate elections</span>
+            {average>70 ?
+              <span>
+                <span className="font-extrabold">The Democrats</span> are strongly favored to win the Senate
+              </span>
+            : average>60 ?
+              <span>
+                <span className="font-extrabold">The Democrats</span> are favored to win the Senate
+              </span>
+            : average>55 ?
+              <span>
+                <span className="font-extrabold">The Democrats</span> are slightly favored to win the Senate
+              </span>
+            : average>45 ?
+              <span>
+                The Senate election remains a <span className="font-extrabold">toss-up</span>
+              </span>
+            : average>40 ?
+              <span>
+                <span className="font-extrabold">The Republicans</span> are slightly favored to win the Senate
+              </span>
+            : average>30 ?
+              <span>
+                <span className="font-extrabold">The Republicans</span> are favored to win the Senate
+              </span>
+            :
+              <span>
+                <span className="font-extrabold">The Republicans</span> are strongly favored to win the Senate
+              </span>
+            }
+          </p>
+        </div>
+          
+        <div className="flex gap-2 items-center justify-center">
+          <motion.div
+            className="h-2 w-2 rounded-full bg-green-400"
+            animate={{ opacity: [0,1,0] }}
+            transition={{ duration: 2, repeat: Infinity, }}
+          />
+          <p className="text-sm text-center text-neutral-400 uppercase font-bold">
+            Updated {!isNaN(new Date(latestDate).valueOf()) ? new Date(`${latestDate}T00:00:00.000-05:00`).toLocaleDateString('en-US') : latestDate}
           </p>
         </div>
 
