@@ -1,9 +1,10 @@
 import Head from 'next/head';
 
 import SenateMap from '../../components/SenateMap';
-import { getCandidates, getIncumbents, getAveragedPolls } from '../../lib/results';
+import SenateDistribution from '../../components/SenateDistribution';
+import { getCandidates, getIncumbents, getAveragedPolls, getOverallSenate } from '../../lib/results';
 
-export default function SenatePage({ latestDate, candidates, averagedPolls, incumbents }: { latestDate:any, candidates:any, averagedPolls:any, incumbents:any }) {
+export default function SenatePage({ latestDate, candidates, incumbents, averagedPolls, overallSenate }: { latestDate:any, candidates:any, incumbents:any, averagedPolls:any, overallSenate:any }) {
   return <>
     <Head>
       <title>2022 Senate Forecast – ORACLE of Blair</title>
@@ -34,6 +35,21 @@ export default function SenatePage({ latestDate, candidates, averagedPolls, incu
           />
         </div>
       </section>
+
+      <section className="p-8 container max-w-3xl border-2 shadow-sm rounded-2xl">
+        <h2 className="text-2xl font-bold">
+          Seat distribution
+        </h2>
+        <p className="mt-2">
+          A range of scenarios of the seats that each party will win in our model's 10,000 simulations.
+        </p>
+
+        <div className="rounded-lg overflow-hidden mt-8">
+          <SenateDistribution
+            overallSenate={overallSenate}
+          />
+        </div>
+      </section>
     </main>
 
     <footer>
@@ -45,13 +61,15 @@ export async function getStaticProps() {
   const candidates = await getCandidates();
   const incumbents = await getIncumbents();
   const { averagedPolls, latestDate } = await getAveragedPolls();
+  const { overallSenate, latestDate:latestDate2 } = await getOverallSenate();
 
   return {
     props: {
       latestDate,
       candidates,
+      incumbents,
       averagedPolls,
-      incumbents
+      overallSenate
     },
     revalidate: 3600 // 1 hour
   };
