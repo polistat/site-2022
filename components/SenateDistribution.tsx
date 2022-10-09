@@ -7,6 +7,8 @@ export default function SenateDistribution({ overallSenate }: { overallSenate: a
   const endSeats = Math.round(average)+14;
   const maxOccurrences = Math.max(...overallSenate.filter((a:any) => Number(a.demSeats)>=startSeats && Number(a.demSeats)<=endSeats).map((a:any) => Number(a.occurrences))); // in displayed range
 
+  const demWinChance = overallSenate.filter((a:any) => Number(a.demSeats)>=50).reduce((sum:number, a:any) => sum+Number(a.occurrences), 0) / totalSimulations;
+
   const [selectedBin, setSelectedBin] = React.useState<number|null>(null);
 
   return <>
@@ -33,7 +35,7 @@ export default function SenateDistribution({ overallSenate }: { overallSenate: a
         y={140}
         className="text-3xl font-medium fill-red-800/75"
       >
-        {(100-average).toFixed(1)}% of our simulations
+        {(100-demWinChance*100).toFixed(1)}% of our simulations
       </text>
       <rect
         x={7+34*13}
@@ -54,7 +56,7 @@ export default function SenateDistribution({ overallSenate }: { overallSenate: a
         y={140}
         className="text-3xl font-medium fill-blue-800/75"
       >
-        {average.toFixed(1)}% of our simulations
+        {(demWinChance*100).toFixed(1)}% of our simulations
       </text>
 
       {/* majority label */}

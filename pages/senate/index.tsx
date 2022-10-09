@@ -7,7 +7,7 @@ import { getCandidates, getIncumbents, getAveragedPolls, getOverallSenate } from
 
 export default function SenatePage({ latestDate, candidates, incumbents, averagedPolls, overallSenate }: { latestDate:any, candidates:any, incumbents:any, averagedPolls:any, overallSenate:any }) {
   const totalSimulations = overallSenate.reduce((sum:number, a:any) => sum+Number(a.occurrences), 0);
-  const average = overallSenate.reduce((sum:number, a:any) => sum+Number(a.demSeats)*Number(a.occurrences), 0) / totalSimulations;
+  const demWinChance = overallSenate.filter((a:any) => Number(a.demSeats)>=50).reduce((sum:number, a:any) => sum+Number(a.occurrences), 0) / totalSimulations;
   
   return <>
     <Head>
@@ -27,27 +27,27 @@ export default function SenatePage({ latestDate, candidates, incumbents, average
             The Senate
           </h1>
           <p className="text-4xl text-center font-serif">
-            {average>70 ?
+            {demWinChance>0.7 ?
               <span>
                 <span className="font-extrabold">The Democrats</span> are strongly favored to win the Senate
               </span>
-            : average>60 ?
+            : demWinChance>0.6 ?
               <span>
                 <span className="font-extrabold">The Democrats</span> are favored to win the Senate
               </span>
-            : average>55 ?
+            : demWinChance>0.55 ?
               <span>
                 <span className="font-extrabold">The Democrats</span> are slightly favored to win the Senate
               </span>
-            : average>45 ?
+            : demWinChance>0.45 ?
               <span>
                 The Senate election remains a <span className="font-extrabold">toss-up</span>
               </span>
-            : average>40 ?
+            : demWinChance>0.4 ?
               <span>
                 <span className="font-extrabold">The Republicans</span> are slightly favored to win the Senate
               </span>
-            : average>30 ?
+            : demWinChance>0.3 ?
               <span>
                 <span className="font-extrabold">The Republicans</span> are favored to win the Senate
               </span>
