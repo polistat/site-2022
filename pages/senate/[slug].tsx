@@ -199,14 +199,24 @@ export default function SenateStatePage({ params, source, frontMatter, stateName
           <p className="mt-2">
             We run our model twice a day. Explore how our prediction has changed over the course of the race.
           </p>
-          <div className="h-72 bg-neutral-100 rounded-3xl mt-6"/>
+          <div className="h-32 bg-neutral-100 rounded-2xl animate-pulse mt-6"/>
         </section>
 
         <section className="p-8 container max-w-3xl border-2 shadow-sm rounded-2xl">
           <h2 className="text-2xl font-bold">
             Recent polls
           </h2>
-          <div className="h-96 bg-neutral-100 rounded-xl mt-4"/>
+
+          <div className="grid grid-cols-2 gap-2 mt-4">
+            <div className="h-10 bg-neutral-100 rounded-lg animate-pulse"/>
+            <div className="h-10 bg-neutral-100 rounded-lg animate-pulse"/>
+            <div className="h-10 bg-neutral-100 rounded-lg animate-pulse"/>
+            <div className="h-10 bg-neutral-100 rounded-lg animate-pulse"/>
+            <div className="h-10 bg-neutral-100 rounded-lg animate-pulse"/>
+            <div className="h-10 bg-neutral-100 rounded-lg animate-pulse"/>
+            <div className="h-10 bg-neutral-100 rounded-lg animate-pulse"/>
+            <div className="h-10 bg-neutral-100 rounded-lg animate-pulse"/>
+          </div>
         </section>
       </>}
     </main>

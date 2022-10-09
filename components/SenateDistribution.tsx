@@ -19,7 +19,7 @@ export default function SenateDistribution({ overallSenate }: { overallSenate: a
       <rect
         x={0}
         y={50}
-        width={7+34*13}
+        width={7+34*(50-startSeats)}
         height={400}
         className="fill-red-200/50"
       />
@@ -38,9 +38,9 @@ export default function SenateDistribution({ overallSenate }: { overallSenate: a
         {(100-demWinChance*100).toFixed(1)}% of our simulations
       </text>
       <rect
-        x={7+34*13}
+        x={7+34*(50-startSeats)}
         y={50}
-        width={1000-(7+34*13)}
+        width={1000-(7+34*(50-startSeats))}
         height={400}
         className="fill-blue-200/50"
       />
@@ -62,10 +62,10 @@ export default function SenateDistribution({ overallSenate }: { overallSenate: a
       {/* majority label */}
       <path
         className={`${selectedBin ? 'stroke-black/10' : 'stroke-black'} stroke-2`}
-        d={`M ${7+34*13} 125 ${7+34*13} 450`}
+        d={`M ${7+34*(50-startSeats)} 125 ${7+34*(50-startSeats)} 450`}
       />
       <text
-        x={7+34*13-45}
+        x={7+34*(50-startSeats)-45}
         y={115}
         className={`text-lg ${selectedBin ? 'fill-black/10' : 'fill-black'} font-thin uppercase`}
       >
