@@ -175,9 +175,6 @@ export async function getStaticPaths() {
 export const getStaticProps: GetStaticProps = async ({ params }): Promise<{props: Props}> => {
   const candidates = await getCandidates();
   const { averagedPolls, latestDate } = await getAveragedPolls();
-  
-  // @ts-expect-error
-  const stateName = mapconfig[params?.slug].name;
 
   // @ts-expect-error
   if (!candidates.governor[params?.slug] && !mapconfig[params?.slug])
@@ -185,6 +182,9 @@ export const getStaticProps: GetStaticProps = async ({ params }): Promise<{props
       // @ts-expect-error
       notFound: true,
     };
+  
+  // @ts-expect-error
+  const stateName = mapconfig[params?.slug].name;
 
   const { data, content } = await getGovernorsData((params?.slug as unknown) as string)
     .catch(err => {
