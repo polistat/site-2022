@@ -34,7 +34,8 @@ interface Props {
 }
 
 export default function SenateStatePage({ params, source, frontMatter, stateName, candidates, averagedPolls, latestDate }: Props) {
-  const noRace = false;
+  // @ts-expect-error
+  const noRace = !candidates.senate[params?.slug];
 
   return <>
     <Head>
@@ -223,23 +224,22 @@ export async function getStaticPaths() {
 export const getStaticProps: GetStaticProps = async ({ params }): Promise<{props: Props}> => {
   const candidates = await getCandidates();
   const { averagedPolls, latestDate } = await getAveragedPolls();
+  
+  // @ts-expect-error
+  const stateName = mapconfig[params.slug.replace(/[0-9]/g, '')].name;
 
   // @ts-expect-error
-  if (!candidates.senate[params?.slug])
+  if (!candidates.senate[params?.slug] && !mapconfig[params?.slug])
     return {
       // @ts-expect-error
       notFound: true,
     };
-
+  
   const { data, content } = await getSenateData((params?.slug as unknown) as string)
     .catch(err => {
-      console.log(err);
       return { data:null, content:null };
     });
-  const mdxSource = content ? await serialize(content, { scope: data }) : null;
-  
-  // @ts-expect-error
-  const stateName = mapconfig[params.slug.replace(/[0-9]/g, '')].name;
+  const mdxSource = content&&data ? await serialize(content, { scope: data }) : null;
 
   return {
     props: {

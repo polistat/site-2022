@@ -33,7 +33,8 @@ interface Props {
 }
 
 export default function GovernorsStatePage({ params, source, frontMatter, stateName, candidates, averagedPolls, latestDate }: Props) {
-  const noRace = false;
+  // @ts-expect-error
+  const noRace = !candidates.governor[params?.slug];
 
   return <>
     <Head>
@@ -174,9 +175,12 @@ export async function getStaticPaths() {
 export const getStaticProps: GetStaticProps = async ({ params }): Promise<{props: Props}> => {
   const candidates = await getCandidates();
   const { averagedPolls, latestDate } = await getAveragedPolls();
+  
+  // @ts-expect-error
+  const stateName = mapconfig[params?.slug].name;
 
   // @ts-expect-error
-  if (!candidates.governor[params?.slug])
+  if (!candidates.governor[params?.slug] && !mapconfig[params?.slug])
     return {
       // @ts-expect-error
       notFound: true,
@@ -184,13 +188,9 @@ export const getStaticProps: GetStaticProps = async ({ params }): Promise<{props
 
   const { data, content } = await getGovernorsData((params?.slug as unknown) as string)
     .catch(err => {
-      console.log(err);
       return { data:null, content:null };
-    });;
-  const mdxSource = content ? await serialize(content, { scope: data }) : null;
-  
-  // @ts-expect-error
-  const stateName = mapconfig[params?.slug].name;
+    });
+  const mdxSource = content&&data ? await serialize(content, { scope: data }) : null;
 
   return {
     props: {
