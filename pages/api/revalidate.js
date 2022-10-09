@@ -8,26 +8,48 @@ export default async function handler(req, res) {
   }
 
   try {
-    // this should be the actual path not a rewritten path
-    // e.g. for "/blog/[slug]" this should be "/blog/post-1"
-    await res.revalidate('/');
-    await res.revalidate('/methodology');
-
-    await res.revalidate('/senate');
-    await res.revalidate('/governors');
-
     const candidates = await getCandidates();
-    await Promise.all(Object.keys(candidates.senate).map(async a => await res.revalidate(`/senate/${a}`)));
-    await Promise.all(Object.keys(candidates.governor).map(async a => await res.revalidate(`/governors/${a}`)));
-
-    await res.revalidate('/blog');
     const blogSlugs = await getBlogSlugs();
-    await Promise.all(blogSlugs.map(async a => await res.revalidate(`/blog/${a.params.slug}`)));
 
-    return res.json({ revalidated: true });
+    switch (req.query.query) {
+      case 'races':
+        await res.revalidate('/');
+        await res.revalidate('/senate');
+        await res.revalidate('/governors');
+        await Promise.all(Object.keys(candidates.senate).map(async a => await res.revalidate(`/senate/${a}`)));
+        await Promise.all(Object.keys(candidates.governor).map(async a => await res.revalidate(`/governors/${a}`)));
+        break;
+      case 'blog':
+        await res.revalidate('/blog');
+        await Promise.all(blogSlugs.map(async a => await res.revalidate(`/blog/${a.params.slug}`)));
+        break;
+      case 'methodology':
+        await res.revalidate('/methodology');
+        break;
+      default:
+        await res.revalidate('/');
+        await res.revalidate('/methodology');
+
+        await res.revalidate('/senate');
+        await res.revalidate('/governors');
+        await Promise.all(Object.keys(candidates.senate).map(async a => await res.revalidate(`/senate/${a}`)));
+        await Promise.all(Object.keys(candidates.governor).map(async a => await res.revalidate(`/governors/${a}`)));
+
+        await res.revalidate('/blog');
+        await Promise.all(blogSlugs.map(async a => await res.revalidate(`/blog/${a.params.slug}`)));
+        break;
+    }
+
+    return res.json({
+      message: 'Success!',
+      revalidated: true,
+      query: req.query.query || 'all',
+    });
   } catch (err) {
-    // If there was an error, Next.js will continue
-    // to show the last successfully generated page
-    return res.status(500).send('Error revalidating');
+    return res.status(500).json({
+      message: `Error while revalidating: ${err.message}`,
+      revalidated: false,
+      query: req.query.query || 'all',
+    });
   }
 }
