@@ -116,12 +116,12 @@ export default function GovernorMap({ candidates, averagedPolls, incumbents }) {
       <rect
         x={760}
         y={36}
-        className='w-[24px] h-[24px] cursor-pointer stroke-2 stroke-white fill-neutral-300'
+        className='w-[24px] h-[24px] stroke-2 stroke-white fill-neutral-300'
       />
       <rect
         x={790}
         y={36}
-        className='w-[24px] h-[24px] cursor-pointer stroke-2 stroke-neutral-300 fill-neutral-50'
+        className='w-[24px] h-[24px] stroke-2 stroke-neutral-300 fill-neutral-50'
       />
       <path
         className="stroke-neutral-500 fill-transparent stroke-1"
