@@ -40,7 +40,7 @@ export default function SenateStatePage({ params, source, frontMatter, stateName
   return <>
     <Head>
       <title>{`${stateName} – Senate – ORACLE of Blair`}</title>
-      {/* <meta name="description" content="" /> */}
+      <meta property="og:title" content={`${stateName} – Senate – ORACLE of Blair`} key="ogtitle"/>
     </Head>
 
     <main className="p-4 flex flex-col gap-8">

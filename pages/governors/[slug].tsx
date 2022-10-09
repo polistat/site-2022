@@ -39,7 +39,7 @@ export default function GovernorsStatePage({ params, source, frontMatter, stateN
   return <>
     <Head>
       <title>{`${stateName} – Governors – ORACLE of Blair`}</title>
-      {/* <meta name="description" content="" /> */}
+      <meta property="og:title" content={`${stateName} – Governors – ORACLE of Blair`} key="ogtitle"/>
     </Head>
 
     <main className="p-4 flex flex-col gap-8">
