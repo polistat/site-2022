@@ -93,6 +93,16 @@ export default function SenatePage({ latestDate, candidates, incumbents, average
           />
         </div>
       </section>
+
+      <section className="p-8 container max-w-3xl border-2 shadow-sm rounded-2xl">
+        <h2 className="text-2xl font-bold">
+          Chance of winning over time
+        </h2>
+        <p className="mt-2">
+          We run our model twice a day. Explore how our prediction has changed over the course of the race.
+        </p>
+      <div className="h-32 bg-neutral-100 rounded-2xl animate-pulse mt-6"/>
+      </section>
     </main>
 
     <footer>

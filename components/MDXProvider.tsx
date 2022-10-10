@@ -5,12 +5,12 @@ import { HTMLAttributes } from "react";
 export default function MDXCompProvider(props: HTMLAttributes<HTMLDivElement>) {
   const components: MDXComponents = {
     p: (props) => <p className="my-4" {...props} />,
-    h1: (props) => <h1 className="mt-10 mb-2 text-3xl font-bold" {...props} />,
-    h2: (props) => <h2 className="mt-8 mb-2 text-2xl font-bold" {...props} />,
-    h3: (props) => <h3 className="mt-6 mb-2 text-xl font-bold" {...props} />,
-    h4: (props) => <h4 className="mt-4 mb-2 text-lg font-bold" {...props} />,
-    h5: (props) => <h5 className="mt-2 mb-2 text-md font-bold" {...props} />,
-    h6: (props) => <h6 className="mt-2 text-sm font-bold" {...props} />,
+    h1: (props) => <h1 className="mt-10 mb-2 text-3xl font-semibold" {...props} />,
+    h2: (props) => <h2 className="mt-8 mb-2 text-2xl font-semibold" {...props} />,
+    h3: (props) => <h3 className="mt-6 mb-1 text-xl font-semibold" {...props} />,
+    h4: (props) => <h4 className="mt-4 mb-1 text-lg font-semibold" {...props} />,
+    h5: (props) => <h5 className="mt-2 text-md font-semibold" {...props} />,
+    h6: (props) => <h6 className="mt-2 text-sm font-semibold" {...props} />,
     blockquote: (props) => <blockquote className="my-4 pl-5 border-l-4" {...props}/>,
     ul: (props) => <ul className="my-4 pl-8 list-disc" {...props}/>,
     ol: (props) => <ol className="my-4 pl-8 list-decimal" {...props}/>,

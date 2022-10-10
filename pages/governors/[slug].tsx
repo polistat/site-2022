@@ -10,17 +10,7 @@ import { getCandidates, getAveragedPolls } from '../../lib/results';
 
 import mapconfig from '../../mapconfig.json';
 
-import CandidateProfileGrid from '../../components/CandidateProfileGrid';
-import CandidateProfileHeader from '../../components/CandidateProfileHeader';
-import CandidateProfileBox from '../../components/CandidateProfileBox';
-import CandidateProfileWideBox from '../../components/CandidateProfileWideBox';
-
-const components = {
-  Grid: CandidateProfileGrid,
-  Header: CandidateProfileHeader,
-  Box: CandidateProfileBox,
-  WideBox: CandidateProfileWideBox,
-};
+import components from '../../components/MdComponents';
 
 interface Props {
   params: ParsedUrlQuery | undefined;

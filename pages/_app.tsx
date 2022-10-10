@@ -2,6 +2,7 @@ import '../styles/globals.css';
 
 import Head from 'next/head';
 import { AppProps } from 'next/app';
+import { MathJaxContext } from 'better-react-mathjax';
 
 import MDXProvider from "../components/MDXProvider";
 
@@ -24,9 +25,11 @@ function MyApp({ Component, pageProps }: AppProps) {
     <Navbar/>
 
     <div className="min-h-screen">
-      <MDXProvider>
-        <Component {...pageProps} />
-      </MDXProvider>
+      <MathJaxContext config={{ loader: { load: ["input/asciimath"] } }}>
+        <MDXProvider>
+          <Component {...pageProps} />
+        </MDXProvider>
+      </MathJaxContext>
     </div>
 
     <Footer/>

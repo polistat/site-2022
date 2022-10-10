@@ -11,17 +11,7 @@ import { getCandidates, getAveragedPolls } from '../../lib/results';
 
 import mapconfig from '../../mapconfig.json';
 
-import CandidateProfileGrid from '../../components/CandidateProfileGrid';
-import CandidateProfileHeader from '../../components/CandidateProfileHeader';
-import CandidateProfileBox from '../../components/CandidateProfileBox';
-import CandidateProfileWideBox from '../../components/CandidateProfileWideBox';
-
-const components = {
-  Grid: CandidateProfileGrid,
-  Header: CandidateProfileHeader,
-  Box: CandidateProfileBox,
-  WideBox: CandidateProfileWideBox,
-};
+import components from '../../components/MdComponents';
 
 interface Props {
   params: ParsedUrlQuery | undefined;
@@ -207,7 +197,7 @@ export default function SenateStatePage({ params, source, frontMatter, stateName
             Recent polls
           </h2>
 
-          <div className="grid grid-cols-2 gap-2 mt-4">
+          <div className="grid grid-cols-2 gap-2 mt-6">
             <div className="h-10 bg-neutral-100 rounded-lg animate-pulse"/>
             <div className="h-10 bg-neutral-100 rounded-lg animate-pulse"/>
             <div className="h-10 bg-neutral-100 rounded-lg animate-pulse"/>

@@ -31,7 +31,7 @@ export default function Home({ blogPosts, latestDate, candidates, averagedPolls,
           <p className="text-xl text-center font-thin uppercase">
             Senate &amp; Governors 
           </p>
-          
+
           <div className="flex gap-2 items-center justify-center mt-1">
             <motion.div
               className="h-2 w-2 rounded-full bg-green-400"
