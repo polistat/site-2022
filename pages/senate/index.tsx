@@ -1,4 +1,5 @@
 import Head from 'next/head';
+import { motion } from 'framer-motion';
 
 import SenateMap from '../../components/SenateMap';
 import SenateDistribution from '../../components/SenateDistribution';
@@ -6,8 +7,8 @@ import { getCandidates, getIncumbents, getAveragedPolls, getOverallSenate } from
 
 export default function SenatePage({ latestDate, candidates, incumbents, averagedPolls, overallSenate }: { latestDate:any, candidates:any, incumbents:any, averagedPolls:any, overallSenate:any }) {
   const totalSimulations = overallSenate.reduce((sum:number, a:any) => sum+Number(a.occurrences), 0);
-  const average = overallSenate.reduce((sum:number, a:any) => sum+Number(a.demSeats)*Number(a.occurrences), 0) / totalSimulations;
-
+  const demWinChance = overallSenate.filter((a:any) => Number(a.demSeats)>=50).reduce((sum:number, a:any) => sum+Number(a.occurrences), 0) / totalSimulations;
+  
   return <>
     <Head>
       <title>2022 Senate Forecast – ORACLE of Blair</title>
@@ -26,7 +27,46 @@ export default function SenatePage({ latestDate, candidates, incumbents, average
             The Senate
           </h1>
           <p className="text-4xl text-center font-serif">
-            A blurb about the <span className="font-extrabold">Senate elections</span>
+            {demWinChance>0.7 ?
+              <span>
+                <span className="font-extrabold">The Democrats</span> are strongly favored to win the Senate
+              </span>
+            : demWinChance>0.6 ?
+              <span>
+                <span className="font-extrabold">The Democrats</span> are favored to win the Senate
+              </span>
+            : demWinChance>0.55 ?
+              <span>
+                <span className="font-extrabold">The Democrats</span> are slightly favored to win the Senate
+              </span>
+            : demWinChance>0.45 ?
+              <span>
+                The Senate election remains a <span className="font-extrabold">toss-up</span>
+              </span>
+            : demWinChance>0.4 ?
+              <span>
+                <span className="font-extrabold">The Republicans</span> are slightly favored to win the Senate
+              </span>
+            : demWinChance>0.3 ?
+              <span>
+                <span className="font-extrabold">The Republicans</span> are favored to win the Senate
+              </span>
+            :
+              <span>
+                <span className="font-extrabold">The Republicans</span> are strongly favored to win the Senate
+              </span>
+            }
+          </p>
+        </div>
+          
+        <div className="flex gap-2 items-center justify-center">
+          <motion.div
+            className="h-2 w-2 rounded-full bg-green-400"
+            animate={{ opacity: [0,1,0] }}
+            transition={{ duration: 2, repeat: Infinity, }}
+          />
+          <p className="text-sm text-center text-neutral-400 uppercase font-bold">
+            Updated {!isNaN(new Date(latestDate).valueOf()) ? new Date(`${latestDate}T00:00:00.000-05:00`).toLocaleDateString('en-US') : latestDate}
           </p>
         </div>
 
@@ -52,6 +92,16 @@ export default function SenatePage({ latestDate, candidates, incumbents, average
             overallSenate={overallSenate}
           />
         </div>
+      </section>
+
+      <section className="p-8 container max-w-3xl border-2 shadow-sm rounded-2xl">
+        <h2 className="text-2xl font-bold">
+          Chance of winning over time
+        </h2>
+        <p className="mt-2">
+          We run our model twice a day. Explore how our prediction has changed over the course of the race.
+        </p>
+      <div className="h-32 bg-neutral-100 rounded-2xl animate-pulse mt-6"/>
       </section>
     </main>
 

@@ -10,35 +10,26 @@ import { getCandidates, getAveragedPolls } from '../../lib/results';
 
 import mapconfig from '../../mapconfig.json';
 
-import CandidateProfileGrid from '../../components/CandidateProfileGrid';
-import CandidateProfileHeader from '../../components/CandidateProfileHeader';
-import CandidateProfileBox from '../../components/CandidateProfileBox';
-import CandidateProfileWideBox from '../../components/CandidateProfileWideBox';
-
-const components = {
-  Grid: CandidateProfileGrid,
-  Header: CandidateProfileHeader,
-  Box: CandidateProfileBox,
-  WideBox: CandidateProfileWideBox,
-};
+import components from '../../components/MdComponents';
 
 interface Props {
   params: ParsedUrlQuery | undefined;
-  source: MDXRemoteSerializeResult<Record<string, unknown>, Record<string, string>>;
-  frontMatter: { [key: string]: string }
-  stateName: string,
-  candidates: any,
-  averagedPolls: any,
-  latestDate: string
+  source: MDXRemoteSerializeResult<Record<string, unknown>, Record<string, string>> | null;
+  frontMatter: { [key: string]: string } | null;
+  stateName: string;
+  candidates: any;
+  averagedPolls: any;
+  latestDate: string;
 }
 
 export default function GovernorsStatePage({ params, source, frontMatter, stateName, candidates, averagedPolls, latestDate }: Props) {
-  const noRace = false;
+  // @ts-expect-error
+  const noRace = !candidates.governor[params?.slug];
 
   return <>
     <Head>
       <title>{`${stateName} – Governors – ORACLE of Blair`}</title>
-      {/* <meta name="description" content="" /> */}
+      <meta property="og:title" content={`${stateName} – Governors – ORACLE of Blair`} key="ogtitle"/>
     </Head>
 
     <main className="p-4 flex flex-col gap-8">
@@ -136,9 +127,11 @@ export default function GovernorsStatePage({ params, source, frontMatter, stateN
       </section>
       
       {!noRace && <>
-        <section className="px-8 pb-4 container max-w-3xl border-2 shadow-sm rounded-2xl">
-          <MDXRemote {...source} components={components}/>
-        </section>
+        {source &&
+          <section className="px-8 pb-4 container max-w-3xl border-2 shadow-sm rounded-2xl">
+            <MDXRemote {...source} components={components}/>
+          </section>
+        }
 
         <section className="p-8 container max-w-3xl border-2 shadow-sm rounded-2xl">
           <h2 className="text-2xl font-bold">
@@ -147,14 +140,24 @@ export default function GovernorsStatePage({ params, source, frontMatter, stateN
           <p className="mt-2">
             We run our model twice a day. Explore how our prediction has changed over the course of the race.
           </p>
-          <div className="h-72 bg-neutral-100 rounded-3xl mt-6"/>
+          <div className="h-32 bg-neutral-100 rounded-2xl animate-pulse mt-6"/>
         </section>
 
         <section className="p-8 container max-w-3xl border-2 shadow-sm rounded-2xl">
           <h2 className="text-2xl font-bold">
             Recent polls
           </h2>
-          <div className="h-96 bg-neutral-100 rounded-xl mt-4"/>
+
+          <div className="grid grid-cols-2 gap-2 mt-4">
+            <div className="h-10 bg-neutral-100 rounded-lg animate-pulse"/>
+            <div className="h-10 bg-neutral-100 rounded-lg animate-pulse"/>
+            <div className="h-10 bg-neutral-100 rounded-lg animate-pulse"/>
+            <div className="h-10 bg-neutral-100 rounded-lg animate-pulse"/>
+            <div className="h-10 bg-neutral-100 rounded-lg animate-pulse"/>
+            <div className="h-10 bg-neutral-100 rounded-lg animate-pulse"/>
+            <div className="h-10 bg-neutral-100 rounded-lg animate-pulse"/>
+            <div className="h-10 bg-neutral-100 rounded-lg animate-pulse"/>
+          </div>
         </section>
       </>}
     </main>
@@ -170,14 +173,24 @@ export async function getStaticPaths() {
 }
 
 export const getStaticProps: GetStaticProps = async ({ params }): Promise<{props: Props}> => {
-  const { data, content } = await getGovernorsData((params?.slug as unknown) as string);
-  const mdxSource = await serialize(content, { scope: data });
+  const candidates = await getCandidates();
+  const { averagedPolls, latestDate } = await getAveragedPolls();
+
+  // @ts-expect-error
+  if (!candidates.governor[params?.slug] && !mapconfig[params?.slug])
+    return {
+      // @ts-expect-error
+      notFound: true,
+    };
   
   // @ts-expect-error
   const stateName = mapconfig[params?.slug].name;
 
-  const candidates = await getCandidates();
-  const { averagedPolls, latestDate } = await getAveragedPolls();
+  const { data, content } = await getGovernorsData((params?.slug as unknown) as string)
+    .catch(err => {
+      return { data:null, content:null };
+    });
+  const mdxSource = content&&data ? await serialize(content, { scope: data }) : null;
 
   return {
     props: {

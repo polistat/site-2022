@@ -1,4 +1,5 @@
 import Head from 'next/head';
+import { motion } from 'framer-motion';
 
 import GovernorMap from '../../components/GovernorMap';
 import { getCandidates, getIncumbents, getAveragedPolls } from '../../lib/results';
@@ -22,7 +23,18 @@ export default function SenatePage({ latestDate, candidates, averagedPolls, incu
             The Governors
           </h1>
           <p className="text-4xl text-center font-serif">
-            A blurb about the <span className="font-extrabold">Governor elections</span>
+            The 2022 <span className="font-extrabold">Governor elections</span>
+          </p>
+        </div>
+          
+        <div className="flex gap-2 items-center justify-center">
+          <motion.div
+            className="h-2 w-2 rounded-full bg-green-400"
+            animate={{ opacity: [0,1,0] }}
+            transition={{ duration: 2, repeat: Infinity, }}
+          />
+          <p className="text-sm text-center text-neutral-400 uppercase font-bold">
+            Updated {!isNaN(new Date(latestDate).valueOf()) ? new Date(`${latestDate}T00:00:00.000-05:00`).toLocaleDateString('en-US') : latestDate}
           </p>
         </div>
 

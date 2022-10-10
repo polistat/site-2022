@@ -70,9 +70,16 @@ export async function getStaticPaths() {
 }
 
 export const getStaticProps: GetStaticProps = async ({ params }): Promise<{props: Props}> => {
-  // TODO: what if slug is string[] | undefined?
+  const paths = await getBlogSlugs();
+  if (!paths.find((a:any) => a.params.slug===params?.slug))
+    return {
+      // @ts-expect-error
+      notFound: true,
+    };
+
   const { data, content } = await getBlogData((params?.slug as unknown) as string);
   const mdxSource = await serialize(content, { scope: data });
+
   return {
     props: {
       params,

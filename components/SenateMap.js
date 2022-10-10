@@ -136,12 +136,12 @@ export default function SenateMap({ candidates, averagedPolls, incumbents }) {
       <rect
         x={760}
         y={20}
-        className='w-[24px] h-[40px] cursor-pointer stroke-2 stroke-white fill-neutral-300'
+        className='w-[24px] h-[40px] stroke-2 stroke-white fill-neutral-300'
       />
       <rect
         x={790}
         y={20}
-        className='w-[24px] h-[40px] cursor-pointer stroke-2 stroke-neutral-300 fill-neutral-50'
+        className='w-[24px] h-[40px] stroke-2 stroke-neutral-300 fill-neutral-50'
       />
       <path
         className="stroke-neutral-500 fill-transparent stroke-1"
@@ -229,7 +229,7 @@ export default function SenateMap({ candidates, averagedPolls, incumbents }) {
 
         {averagedPolls.find(a => { return a.state_po===`${selectedState}2` && a.office==='Senate' }) && <div>
           <p className="font-bold">
-            {mapconfig[selectedState].name} Special
+            {`${mapconfig[selectedState].name} (special)`}
           </p>
 
           <table className="table-auto">

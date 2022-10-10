@@ -7,6 +7,8 @@ export default function SenateDistribution({ overallSenate }: { overallSenate: a
   const endSeats = Math.round(average)+14;
   const maxOccurrences = Math.max(...overallSenate.filter((a:any) => Number(a.demSeats)>=startSeats && Number(a.demSeats)<=endSeats).map((a:any) => Number(a.occurrences))); // in displayed range
 
+  const demWinChance = overallSenate.filter((a:any) => Number(a.demSeats)>=50).reduce((sum:number, a:any) => sum+Number(a.occurrences), 0) / totalSimulations;
+
   const [selectedBin, setSelectedBin] = React.useState<number|null>(null);
 
   return <>
@@ -17,7 +19,7 @@ export default function SenateDistribution({ overallSenate }: { overallSenate: a
       <rect
         x={0}
         y={50}
-        width={7+34*13}
+        width={7+34*(50-startSeats)}
         height={400}
         className="fill-red-200/50"
       />
@@ -33,12 +35,12 @@ export default function SenateDistribution({ overallSenate }: { overallSenate: a
         y={140}
         className="text-3xl font-medium fill-red-800/75"
       >
-        {(100-average).toFixed(1)}% of our simulations
+        {(100-demWinChance*100).toFixed(1)}% of our simulations
       </text>
       <rect
-        x={7+34*13}
+        x={7+34*(50-startSeats)}
         y={50}
-        width={1000-(7+34*13)}
+        width={1000-(7+34*(50-startSeats))}
         height={400}
         className="fill-blue-200/50"
       />
@@ -54,16 +56,16 @@ export default function SenateDistribution({ overallSenate }: { overallSenate: a
         y={140}
         className="text-3xl font-medium fill-blue-800/75"
       >
-        {average.toFixed(1)}% of our simulations
+        {(demWinChance*100).toFixed(1)}% of our simulations
       </text>
 
       {/* majority label */}
       <path
         className={`${selectedBin ? 'stroke-black/10' : 'stroke-black'} stroke-2`}
-        d={`M ${7+34*13} 125 ${7+34*13} 450`}
+        d={`M ${7+34*(50-startSeats)} 125 ${7+34*(50-startSeats)} 450`}
       />
       <text
-        x={7+34*13-45}
+        x={7+34*(50-startSeats)-45}
         y={115}
         className={`text-lg ${selectedBin ? 'fill-black/10' : 'fill-black'} font-thin uppercase`}
       >
@@ -90,12 +92,12 @@ export default function SenateDistribution({ overallSenate }: { overallSenate: a
       {Array.from(Array(29).keys()).map(a => <>
         {startSeats+a === selectedBin && <>
           <rect
-            x={7+34*a-40}
+            x={7+34*a-42}
             y={450-Math.round(300*(overallSenate[startSeats+a].occurrences/maxOccurrences))-27}
-            className='w-[116px] h-[21px] fill-white/75'
+            className='w-[119px] h-[21px] fill-white/75'
           />
           <text
-            x={(7+34*a-35)<0 ? 0 : (7+34*a-35)>892 ? 892 : 7+34*a-35}
+            x={(7+34*a-35)<0 ? 0 : (7+34*a-35)>892 ? 892 : 7+34*a-37}
             y={450-Math.round(300*(overallSenate[startSeats+a].occurrences/maxOccurrences))-10}
             className="text-lg fill-black font-medium"
           >

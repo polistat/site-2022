@@ -31,7 +31,7 @@ export default function Home({ blogPosts, latestDate, candidates, averagedPolls,
           <p className="text-xl text-center font-thin uppercase">
             Senate &amp; Governors 
           </p>
-          
+
           <div className="flex gap-2 items-center justify-center mt-1">
             <motion.div
               className="h-2 w-2 rounded-full bg-green-400"
@@ -48,13 +48,13 @@ export default function Home({ blogPosts, latestDate, candidates, averagedPolls,
           <div className="p-0.5 md:max-w-xs self-start relative bg-neutral-100 rounded-xl overflow-hidden shadow-sm">
             <ul className="flex border-b text-sm font-medium rounded-t-xl">
               <li
-                className={`pt-2.5 pb-2 px-5 flex-grow cursor-pointer rounded-t-xl ${headerSlide===0 ? 'bg-white' : null}`}
+                className={`pt-2.5 pb-2 px-5 grow cursor-pointer rounded-t-xl ${headerSlide===0 ? 'bg-white' : null}`}
                 onClick={() => setHeaderSlide(0)}
               >
                 Senate
               </li>
               <li
-                className={`pt-2.5 pb-2 px-5 flex-grow cursor-pointer rounded-t-xl ${headerSlide===1 ? 'bg-white' : null}`}
+                className={`pt-2.5 pb-2 px-5 grow cursor-pointer rounded-t-xl ${headerSlide===1 ? 'bg-white' : null}`}
                 onClick={() => setHeaderSlide(1)}
               >
                 Governors
@@ -179,7 +179,7 @@ export default function Home({ blogPosts, latestDate, candidates, averagedPolls,
         <Link href="/blog" passHref>
           <a>
             <button className="px-3 py-1.5 text-sm uppercase font-bold border-2 border-neutral-200 hover:bg-neutral-50 rounded-lg">
-              Keep reading the blog
+              More from the blog
             </button>
           </a>
         </Link>
