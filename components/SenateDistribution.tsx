@@ -92,12 +92,12 @@ export default function SenateDistribution({ overallSenate }: { overallSenate: a
       {Array.from(Array(29).keys()).map(a => <>
         {startSeats+a === selectedBin && <>
           <rect
-            x={7+34*a-42}
+            x={(7+34*a-42)<0 ? 0 : (7+34*a-42)>882 ? 882 : 7+34*a-44}
             y={450-Math.round(300*(overallSenate[startSeats+a].occurrences/maxOccurrences))-27}
-            className='w-[119px] h-[21px] fill-white/75'
+            className='w-[121px] h-[21px] fill-white/75'
           />
           <text
-            x={(7+34*a-35)<0 ? 0 : (7+34*a-35)>892 ? 892 : 7+34*a-37}
+            x={(7+34*a-35)<4 ? 4 : (7+34*a-35)>886 ? 886 : 7+34*a-37}
             y={450-Math.round(300*(overallSenate[startSeats+a].occurrences/maxOccurrences))-10}
             className="text-lg fill-black font-medium"
           >

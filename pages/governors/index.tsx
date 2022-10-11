@@ -2,6 +2,7 @@ import Head from 'next/head';
 import { motion } from 'framer-motion';
 
 import GovernorMap from '../../components/GovernorMap';
+import GovernorDistribution from '../../components/GovernorDistribution';
 import { getCandidates, getIncumbents, getAveragedPolls } from '../../lib/results';
 
 export default function SenatePage({ latestDate, candidates, averagedPolls, incumbents }: { latestDate:any, candidates:any, averagedPolls:any, incumbents:any }) {
@@ -43,6 +44,22 @@ export default function SenatePage({ latestDate, candidates, averagedPolls, incu
             candidates={candidates}
             averagedPolls={averagedPolls}
             incumbents={incumbents}
+          />
+        </div>
+      </section>
+
+      <section className="p-8 container max-w-3xl border-2 shadow-sm rounded-2xl">
+        <h2 className="text-2xl font-bold">
+          Seat distribution
+        </h2>
+        <p className="mt-2">
+          A spread of all governor positions based on likelihood of winning based on our model.
+        </p>
+
+        <div className="rounded-lg overflow-hidden mt-6">
+          <GovernorDistribution
+            incumbents={incumbents}
+            averagedPolls={averagedPolls}
           />
         </div>
       </section>

@@ -25,7 +25,16 @@ function MyApp({ Component, pageProps }: AppProps) {
     <Navbar/>
 
     <div className="min-h-screen">
-      <MathJaxContext config={{ loader: { load: ["input/asciimath"] } }}>
+      <MathJaxContext config={{
+        loader: { load: ["input/asciimath"] },
+        asciimath: {
+          displaystyle: true,
+          delimiters: [
+            ["$", "$"],
+            ["`", "`"]
+          ]
+        }
+      }}>
         <MDXProvider>
           <Component {...pageProps} />
         </MDXProvider>

@@ -84,7 +84,7 @@ export default function SenatePage({ latestDate, candidates, incumbents, average
           Seat distribution
         </h2>
         <p className="mt-2">
-          A range of scenarios of the seats that each party will win in our model&apos;s 10,000 simulations.
+          A range of scenarios of the seats that each party will win in our model&apos;s 1,000,000 simulations.
         </p>
 
         <div className="rounded-lg overflow-hidden mt-8">
@@ -122,7 +122,7 @@ export async function getStaticProps() {
       candidates,
       incumbents,
       averagedPolls,
-      overallSenate
+      overallSenate,
     },
     revalidate: 3600 // 1 hour
   };
