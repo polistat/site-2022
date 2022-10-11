@@ -1,4 +1,5 @@
 import Head from 'next/head';
+import Link from 'next/link';
 import { GetStaticProps } from 'next';
 import { ParsedUrlQuery } from 'querystring';
 
@@ -6,7 +7,7 @@ import { ParsedUrlQuery } from 'querystring';
 import { MDXRemote, MDXRemoteSerializeResult } from 'next-mdx-remote';
 import { serialize } from 'next-mdx-remote/serialize'
 import { getGovernorsSlugs, getGovernorsData } from "../../lib/states";
-import { getCandidates, getAveragedPolls } from '../../lib/results';
+import { getCandidates, getAveragedPolls, getLatestPolls } from '../../lib/results';
 
 import mapconfig from '../../mapconfig.json';
 
@@ -20,9 +21,10 @@ interface Props {
   candidates: any;
   averagedPolls: any;
   latestDate: string;
+  latestPolls: any;
 }
 
-export default function GovernorsStatePage({ params, source, frontMatter, stateName, candidates, averagedPolls, latestDate }: Props) {
+export default function GovernorsStatePage({ params, source, frontMatter, stateName, candidates, averagedPolls, latestDate, latestPolls }: Props) {
   // @ts-expect-error
   const noRace = !candidates.governor[params?.slug];
 
@@ -147,17 +149,71 @@ export default function GovernorsStatePage({ params, source, frontMatter, stateN
           <h2 className="text-2xl font-bold">
             Recent polls
           </h2>
+          <p className="text-sm mt-1">
+            Polls consist of polls ranked C- and above gathered by <Link href="https://projects.fivethirtyeight.com/polls/" passHref><a className="text-blue-500 hover:underline underline-offset-1 decoration-blue-500" target="_blank" rel="noopener noreferrer">FiveThirtyEight</a></Link>.
+          </p>
 
-          <div className="grid grid-cols-2 gap-2 mt-4">
-            <div className="h-10 bg-neutral-100 rounded-lg animate-pulse"/>
-            <div className="h-10 bg-neutral-100 rounded-lg animate-pulse"/>
-            <div className="h-10 bg-neutral-100 rounded-lg animate-pulse"/>
-            <div className="h-10 bg-neutral-100 rounded-lg animate-pulse"/>
-            <div className="h-10 bg-neutral-100 rounded-lg animate-pulse"/>
-            <div className="h-10 bg-neutral-100 rounded-lg animate-pulse"/>
-            <div className="h-10 bg-neutral-100 rounded-lg animate-pulse"/>
-            <div className="h-10 bg-neutral-100 rounded-lg animate-pulse"/>
-          </div>
+          {latestPolls.length === 0 ?
+            <p className="text-sm text-neutral-400 mt-4">
+              No polls to display.
+            </p>
+          :
+            <ul className="grid grid-cols-1 md:grid-cols-2 gap-4 mt-6">
+              {latestPolls
+              .sort((a:any,b:any) => new Date(b[0]?.end_date).valueOf() - new Date(a[0]?.end_date).valueOf())
+              .map((a:any) => a.poll_id)
+              .filter((v:any,i:any,a:any) => a.indexOf(v) === i) // remove duplicates
+              .slice(0,16)
+              .map((pollId:any) => {
+                const poll = latestPolls.filter((a:any) => a.poll_id==pollId);
+                return <li className="px-3 py-2 bg-neutral-100 rounded-lg" key={pollId}>
+                  <div className="flex items-start gap-4">
+                    <div className="flex-1">
+                      <Link href={poll[0].url} passHref>
+                        <a className="hover:underline underline-offset-1" target="_blank" rel="noopener noreferrer">
+                          <p className="font-medium leading-5">{poll[0].pollster}</p>
+                        </a>
+                      </Link>
+                    </div>
+
+                    <div className="flex gap-1.5">
+                      <p className="text-sm font-medium uppercase">{poll[0].population}</p>
+                      <p className="text-sm text-neutral-400 font-medium">{new Date(poll[0].end_date).toLocaleDateString('en-US', { month:'numeric', day:'numeric', year:'2-digit' })}</p>
+                    </div>
+                  </div>
+
+                  <div className="flex gap-4">
+                    <div className="flex gap-2">
+                      <p className="font-thin">
+                        {/*
+                        // @ts-expect-error */ }
+                        {candidates.governor[params.slug].find((a:any)=>a.party==='democrat') ? poll.find((a:any) => a.party==='DEM')?.answer : poll.find((a:any) => a.party==='IND')?.answer}
+                      </p>
+                      {/*
+                      // @ts-expect-error */ }
+                      {candidates.governor[params.slug].find((a:any)=>a.party==='democrat') ?
+                        <p className={`text-blue-500 font-normal`}>
+                          {poll.find((a:any) => a.party==='DEM')?.pct}%
+                        </p>
+                      :
+                        <p className={`text-amber-500`}>
+                          {poll.find((a:any) => a.party==='IND')?.pct}%
+                        </p>
+                      }
+                    </div>
+                    <div className="flex gap-2">
+                      <p className="font-thin">
+                        {poll.find((a:any) => a.party==='REP')?.answer}
+                      </p>
+                      <p className="text-red-500 font-normal">
+                        {poll.find((a:any) => a.party==='REP')?.pct}%
+                      </p>
+                    </div>
+                  </div>
+                </li>
+              })}
+            </ul>
+          }
         </section>
       </>}
     </main>
@@ -192,6 +248,8 @@ export const getStaticProps: GetStaticProps = async ({ params }): Promise<{props
     });
   const mdxSource = content&&data ? await serialize(content, { scope: data }) : null;
 
+  const { latestPolls, latestDate:latestDate2 } = await getLatestPolls('governor', stateName);
+
   return {
     props: {
       params,
@@ -200,7 +258,8 @@ export const getStaticProps: GetStaticProps = async ({ params }): Promise<{props
       stateName,
       candidates,
       averagedPolls,
-      latestDate
+      latestDate,
+      latestPolls,
     },
     // @ts-expect-error
     revalidate: 3600 // 1 hour

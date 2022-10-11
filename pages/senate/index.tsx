@@ -122,7 +122,7 @@ export async function getStaticProps() {
       candidates,
       incumbents,
       averagedPolls,
-      overallSenate
+      overallSenate,
     },
     revalidate: 3600 // 1 hour
   };
