@@ -5,7 +5,7 @@ import { ParsedUrlQuery } from 'querystring';
 
 // import matter from "gray-matter";
 import { MDXRemote, MDXRemoteSerializeResult } from 'next-mdx-remote';
-import { serialize } from 'next-mdx-remote/serialize'
+import { serialize } from '../../lib/serialize';
 import { getGovernorsSlugs, getGovernorsData } from "../../lib/states";
 import { getCandidates, getTimeline, getAveragedPolls, getLatestPolls } from '../../lib/results';
 

@@ -5,7 +5,7 @@ import { ParsedUrlQuery } from 'querystring';
 
 // import matter from "gray-matter";
 import { MDXRemote, MDXRemoteSerializeResult } from 'next-mdx-remote';
-import { serialize } from 'next-mdx-remote/serialize'
+import { serialize } from '../../lib/serialize';
 import { getBlogSlugs, getBlogData } from "../../lib/blog";
 
 interface Props {
