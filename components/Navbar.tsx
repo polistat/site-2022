@@ -56,7 +56,7 @@ export default function Navbar() {
             onMouseLeave={() => setPastModelsIsOpen(false)}
           >
             <a className="cursor-pointer transition ease-in-out duration-300">
-              Past models
+              Past Models
             </a>
             <motion.div
               className="absolute right-0 w-24"

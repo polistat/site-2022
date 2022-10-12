@@ -33,6 +33,22 @@ export const getIncumbents = async () => {
   return incumbents;
 }
 
+// fetch timeline.json from @polistat/results-22
+export const getTimeline = async () => {
+  const timeline = await octokit.request('GET /repos/{owner}/{repo}/contents/{path}', {
+    owner: 'polistat',
+    repo: 'results-2022',
+    path: `timeline.json`
+  }).then((res:any) => {
+    const encoded = res.data.content.replace(/\s/g, '');
+    const decoded = decodeURIComponent(escape(atob(encoded)));
+    return JSON.parse(decoded);
+  })
+  .catch(err => console.error(err));
+
+  return timeline;
+}
+
 // fetch latest averaged polls and date from @polistat/results-2022
 export const getAveragedPolls = async () => {
   const averagedPollsFileName = await octokit.request('GET /repos/{owner}/{repo}/contents/{path}', {

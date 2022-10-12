@@ -13,6 +13,7 @@ export default function SenateDistribution({ overallSenate }: { overallSenate: a
 
   return <>
     <svg
+      strokeLinejoin="round"
       viewBox="0 50 1000 600"
     >
       {/* backdrop */}
@@ -85,6 +86,7 @@ export default function SenateDistribution({ overallSenate }: { overallSenate: a
             :
               'fill-transparent'
           }`}
+          key={`bars${a}`}
         />
       </>)}
 
@@ -92,14 +94,16 @@ export default function SenateDistribution({ overallSenate }: { overallSenate: a
       {Array.from(Array(29).keys()).map(a => <>
         {startSeats+a === selectedBin && <>
           <rect
-            x={(7+34*a-42)<0 ? 0 : (7+34*a-42)>882 ? 882 : 7+34*a-44}
+            x={Math.max(Math.min(7+34*a-44, 882), 0)}
             y={450-Math.round(300*(overallSenate[startSeats+a].occurrences/maxOccurrences))-27}
             className='w-[121px] h-[21px] fill-white/75'
+            key={`textBg${a}`}
           />
           <text
             x={(7+34*a-35)<4 ? 4 : (7+34*a-35)>886 ? 886 : 7+34*a-37}
             y={450-Math.round(300*(overallSenate[startSeats+a].occurrences/maxOccurrences))-10}
             className="text-lg fill-black font-medium"
+            key={`text${a}`}
           >
             {(overallSenate.find((b:any) => Number(b.demSeats)===startSeats+a).occurrences / totalSimulations*100).toFixed(1)}% chance
           </text>
@@ -117,14 +121,14 @@ export default function SenateDistribution({ overallSenate }: { overallSenate: a
 
         {startSeats+a === selectedBin && <>
           <text
-            x={(7+34*a-27)<0 ? 0 : (7+34*a-27)>912 ? 912 : 7+34*a-27}
+            x={Math.max(Math.min(7+34*a-27, 912), 0)}
             y={450+22}
             className={`text-md ${startSeats+a>=50 ? 'fill-blue-500 font-medium' : 'fill-neutral-400 font-thin'} uppercase`}
           >
             {startSeats+a} D seats
           </text>
           <text
-            x={(7+34*a-27)<0 ? 0 : (7+34*a-27)>912 ? 912 : 7+34*a-27}
+            x={Math.max(Math.min(7+34*a-27, 912), 0)}
             y={450+40}
             className={`text-md ${startSeats+a>=50 ? 'fill-neutral-400 font-thin' : 'fill-red-500 font-medium'} uppercase`}
           >
@@ -141,6 +145,7 @@ export default function SenateDistribution({ overallSenate }: { overallSenate: a
           className='w-[34px] h-[300px] fill-transparent'
           onMouseEnter={() => setSelectedBin(startSeats+a)}
           onMouseLeave={() => setSelectedBin(null)}
+          key={`hover${a}`}
         />
       </>)}
 

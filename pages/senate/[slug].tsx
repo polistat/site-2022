@@ -7,11 +7,12 @@ import { ParsedUrlQuery } from 'querystring';
 import { MDXRemote, MDXRemoteSerializeResult } from 'next-mdx-remote';
 import { serialize } from 'next-mdx-remote/serialize'
 import { getSenateSlugs, getSenateData } from "../../lib/states";
-import { getCandidates, getAveragedPolls, getLatestPolls } from '../../lib/results';
+import { getCandidates, getTimeline, getAveragedPolls, getLatestPolls } from '../../lib/results';
 
 import mapconfig from '../../mapconfig.json';
 
 import components from '../../components/MdComponents';
+import ChancesTimeline from '../../components/ChancesTimeline';
 
 interface Props {
   params: ParsedUrlQuery | undefined;
@@ -22,9 +23,10 @@ interface Props {
   averagedPolls: any;
   latestDate: string;
   latestPolls: any;
+  racesTimeline: any;
 }
 
-export default function SenateStatePage({ params, source, frontMatter, stateName, candidates, averagedPolls, latestDate, latestPolls }: Props) {
+export default function SenateStatePage({ params, source, frontMatter, stateName, candidates, averagedPolls, latestDate, latestPolls, racesTimeline }: Props) {
   // @ts-expect-error
   const noRace = !candidates.senate[params?.slug];
 
@@ -190,7 +192,22 @@ export default function SenateStatePage({ params, source, frontMatter, stateName
           <p className="mt-2">
             We run our model twice a day. Explore how our prediction has changed over the course of the race.
           </p>
-          <div className="h-32 bg-neutral-100 rounded-2xl animate-pulse mt-6"/>
+
+          <div className="mt-4">
+            <ChancesTimeline
+              dates={racesTimeline.dates}
+              // @ts-expect-error
+              timeline={racesTimeline.senate[params.slug].map(n => Number(n)/100)}
+              labels={{
+              // @ts-expect-error
+                democrat: candidates.senate[params.slug].find((a:any) => { return a.party==='democrat' })?.name.split(' ').at(-1),
+                // @ts-expect-error
+                independent: candidates.senate[params.slug].find((a:any) => { return a.party==='independent' })?.name.split(' ').at(-1),
+              // @ts-expect-error
+                republican: candidates.senate[params.slug].find((a:any) => { return a.party==='republican' })?.name.split(' ').at(-1),
+              }}
+            />
+          </div>
         </section>
 
         <section className="p-8 container max-w-3xl border-2 shadow-sm rounded-2xl">
@@ -230,33 +247,25 @@ export default function SenateStatePage({ params, source, frontMatter, stateName
                     </div>
                   </div>
 
-                  <div className="flex gap-4">
-                    <div className="flex gap-2">
-                      <p className="font-thin">
-                        {/*
-                        // @ts-expect-error */ }
-                        {candidates.senate[params.slug].find((a:any)=>a.party==='democrat') ? poll.find((a:any) => a.party==='DEM')?.answer : poll.find((a:any) => a.party==='IND')?.answer}
-                      </p>
-                      {/*
-                      // @ts-expect-error */ }
-                      {candidates.senate[params.slug].find((a:any)=>a.party==='democrat') ?
-                        <p className={`text-blue-500 font-normal`}>
-                          {poll.find((a:any) => a.party==='DEM')?.pct}%
+                  <div className="grid grid-cols-2 gap-x-4 gap-y-0">
+                    {poll.map((a:any) =>
+                      <div className="flex gap-2" key={a.answer}>
+                        <p className="font-thin">
+                          {a.answer}
                         </p>
-                      :
-                        <p className={`text-amber-500`}>
-                          {poll.find((a:any) => a.party==='IND')?.pct}%
+                        <p
+                          className={`${
+                            a.party==='DEM' ? 'text-blue-500'
+                            : a.party==='REP' ? 'text-red-500'
+                            : a.party==='IND' ? 'text-amber-500'
+                            : a.party==='GRE' ? 'text-green-500'
+                            : 'text-neutral-400'
+                          } font-normal`}
+                        >
+                          {a.pct}%
                         </p>
-                      }
-                    </div>
-                    <div className="flex gap-2">
-                      <p className="font-thin">
-                        {poll.find((a:any) => a.party==='REP')?.answer}
-                      </p>
-                      <p className="text-red-500 font-normal">
-                        {poll.find((a:any) => a.party==='REP')?.pct}%
-                      </p>
-                    </div>
+                      </div>
+                    )}
                   </div>
                 </li>
               })}
@@ -278,7 +287,6 @@ export async function getStaticPaths() {
 
 export const getStaticProps: GetStaticProps = async ({ params }): Promise<{props: Props}> => {
   const candidates = await getCandidates();
-  const { averagedPolls, latestDate } = await getAveragedPolls();
 
   // @ts-expect-error
   if (!candidates.senate[params?.slug] && !mapconfig[params?.slug])
@@ -286,6 +294,11 @@ export const getStaticProps: GetStaticProps = async ({ params }): Promise<{props
       // @ts-expect-error
       notFound: true,
     };
+    
+  const { averagedPolls, latestDate } = await getAveragedPolls();
+
+  // @ts-expect-error
+  const { timeline: timelineTimestamp, races: { dates:timelineDates, senate: { [params.slug]:raceTimeline} } } = await getTimeline();
   
   // @ts-expect-error
   const stateName = mapconfig[params.slug.replace(/[0-9]/g, '')].name;
@@ -308,6 +321,8 @@ export const getStaticProps: GetStaticProps = async ({ params }): Promise<{props
       averagedPolls,
       latestDate,
       latestPolls,
+      // @ts-expect-error
+      racesTimeline: { dates:timelineDates, senate: { [params.slug]:raceTimeline } },
     },
     // @ts-expect-error
     revalidate: 3600 // 1 hour
