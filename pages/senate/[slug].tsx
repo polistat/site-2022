@@ -249,7 +249,7 @@ export default function SenateStatePage({ params, source, frontMatter, stateName
 
                   <div className="grid grid-cols-2 gap-x-4 gap-y-0">
                     {poll.map((a:any) =>
-                      <div className="flex gap-2">
+                      <div className="flex gap-2" key={a.answer}>
                         <p className="font-thin">
                           {a.answer}
                         </p>

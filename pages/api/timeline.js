@@ -1,5 +1,4 @@
 import { octokit } from "../../lib/octokit";
-import { getCandidates } from "../../lib/results";
 
 export default async function handler(req, res) {
   // Check for secret to confirm this is a valid request
