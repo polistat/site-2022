@@ -27,7 +27,7 @@ export default function MDXCompProvider(props: HTMLAttributes<HTMLDivElement>) {
     strong: (props) => <strong {...props}/>,
     del: (props) => <del {...props}/>,
     hr: (props) => <hr {...props}/>,
-    a: (props) => <a className="text-blue-500 hover:underline underline-offset-1 decoration-blue-500" target="_blank" rel="noopener noreferrer" {...props}/>,
+    a: (props) => <a className="text-blue-500 hover:underline underline-offset-1 decoration-blue-500" {...props}/>,
     img: (props) => <img className="my-4 w-full" {...props}/>,
     button: (props) => <button {...props}/>,
     input: (props) => <input className="my-2 ml-4 mr-1" {...props}/>, // task lists

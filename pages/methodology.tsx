@@ -3,7 +3,7 @@ import Head from 'next/head';
 
 import matter from "gray-matter";
 import { MDXRemote, MDXRemoteSerializeResult } from 'next-mdx-remote';
-import { serialize } from 'next-mdx-remote/serialize'
+import { serialize } from '../lib/serialize';
 import { getMethodologyData } from "../lib/blog";
 
 import components from '../components/MdComponents';
@@ -38,7 +38,7 @@ export default function MethodologyPage({ source, frontMatter }: Props) {
 export async function getStaticProps() {
   const fileContent = await getMethodologyData();
   const { data, content } = matter(fileContent);
-  const mdxSource = await serialize(content, { scope: data });
+  const mdxSource = await serialize(content, data);
   return {
     props: {
       source: mdxSource,
