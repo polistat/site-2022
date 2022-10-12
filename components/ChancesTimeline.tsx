@@ -20,7 +20,7 @@ export default function ChancesTimeline({ dates, timeline, labels }: { dates: st
         <path
           className="stroke-black/50 stroke-1"
           d={`M 60 ${50+50*n} 1000 ${50+50*n}`}
-          stroke-dasharray="4,8"
+          strokeDasharray="4,8"
           key={`gridlineY${n}`}
         />
         <text
