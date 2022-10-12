@@ -3,9 +3,10 @@ import { motion } from 'framer-motion';
 
 import SenateMap from '../../components/SenateMap';
 import SenateDistribution from '../../components/SenateDistribution';
-import { getCandidates, getIncumbents, getAveragedPolls, getOverallSenate } from '../../lib/results';
+import ChancesTimeline from '../../components/ChancesTimeline';
+import { getCandidates, getIncumbents, getTimeline, getAveragedPolls, getOverallSenate } from '../../lib/results';
 
-export default function SenatePage({ latestDate, candidates, incumbents, averagedPolls, overallSenate }: { latestDate:any, candidates:any, incumbents:any, averagedPolls:any, overallSenate:any }) {
+export default function SenatePage({ latestDate, candidates, incumbents, averagedPolls, overallSenate, overallSenateTimeline }: { latestDate:any; candidates:any; incumbents:any; averagedPolls:any; overallSenate:any; overallSenateTimeline:any; }) {
   const totalSimulations = overallSenate.reduce((sum:number, a:any) => sum+Number(a.occurrences), 0);
   const demWinChance = overallSenate.filter((a:any) => Number(a.demSeats)>=50).reduce((sum:number, a:any) => sum+Number(a.occurrences), 0) / totalSimulations;
   
@@ -101,7 +102,13 @@ export default function SenatePage({ latestDate, candidates, incumbents, average
         <p className="mt-2">
           We run our model twice a day. Explore how our prediction has changed over the course of the race.
         </p>
-      <div className="h-32 bg-neutral-100 rounded-2xl animate-pulse mt-6"/>
+
+        <div className="mt-4">
+          <ChancesTimeline
+            dates={overallSenateTimeline.dates}
+            timeline={overallSenateTimeline.demWinChances}
+          />
+        </div>
       </section>
     </main>
 
@@ -113,6 +120,7 @@ export default function SenatePage({ latestDate, candidates, incumbents, average
 export async function getStaticProps() {
   const candidates = await getCandidates();
   const incumbents = await getIncumbents();
+  const { timeline: timelineTimestamp, overallSenate: overallSenateTimeline } = await getTimeline();
   const { averagedPolls, latestDate } = await getAveragedPolls();
   const { overallSenate, latestDate:latestDate2 } = await getOverallSenate();
 
@@ -123,6 +131,7 @@ export async function getStaticProps() {
       incumbents,
       averagedPolls,
       overallSenate,
+      overallSenateTimeline,
     },
     revalidate: 3600 // 1 hour
   };

@@ -3,7 +3,7 @@ import { getBlogSlugs } from "../../lib/blog";
 
 export default async function handler(req, res) {
   // Check for secret to confirm this is a valid request
-  if (req.query.secret !== process.env.REVALIDATION_TOKEN) {
+  if (req.query.secret !== process.env.ADMIN_TOKEN) {
     return res.status(401).json({ message: 'Invalid token' });
   }
 
@@ -47,7 +47,7 @@ export default async function handler(req, res) {
     });
   } catch (err) {
     return res.status(500).json({
-      message: `Error while revalidating: ${err.message}`,
+      message: `Error: ${err.message}`,
       revalidated: false,
       query: req.query.query || 'all',
     });
