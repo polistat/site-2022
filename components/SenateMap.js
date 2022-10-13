@@ -28,7 +28,7 @@ export default function SenateMap({ candidates, averagedPolls, incumbents }) {
           // className="fill-neutral-200 stroke-2 stroke-white"
           className={`${
             averagedPolls.find(a => { return a.state_po===stateId && a.office==='Senate' }) ? (
-              averagedPolls.find(a => { return a.state_po===stateId && a.office==='Senate' }).lean>50  ? (candidates.senate[stateId].find(a => { return a.party==='independent' }) ? 'fill-amber-50' : 'fill-blue-50')
+              averagedPolls.find(a => { return a.state_po===stateId && a.office==='Senate' }).lean>50  ? (stateId==='AK' ? 'fill-red-50' : candidates.senate[stateId].find(a => { return a.party==='independent' }) ? 'fill-amber-50' : 'fill-blue-50')
               : averagedPolls.find(a => { return a.state_po===stateId && a.office==='Senate' }).lean<50 ? 'fill-red-50'
               : 'fill-white'
             ) : (
@@ -72,7 +72,7 @@ export default function SenateMap({ candidates, averagedPolls, incumbents }) {
               y={state.textY-15}
               className={`w-[18px] h-[30px] cursor-pointer ${
                 averagedPolls.find(a => { return a.state_po===stateId && a.office==='Senate' }) ? (
-                  averagedPolls.find(a => { return a.state_po===stateId && a.office==='Senate' }).lean>50 ? (candidates.senate[stateId].find(a => { return a.party==='independent' }) ? 'stroke-2 stroke-white fill-amber-300' : 'stroke-2 stroke-white fill-blue-300')
+                  averagedPolls.find(a => { return a.state_po===stateId && a.office==='Senate' }).lean>50 ? (stateId==='AK' ? 'fill-red-300' : candidates.senate[stateId].find(a => { return a.party==='independent' }) ? 'stroke-2 stroke-white fill-amber-300' : 'stroke-2 stroke-white fill-blue-300')
                   : averagedPolls.find(a => { return a.state_po===stateId && a.office==='Senate' }).lean<50 ? 'stroke-2 stroke-white fill-red-300':
                   'stroke-2 stroke-white fill-neutral-300'
                 ) : (
@@ -204,7 +204,7 @@ export default function SenateMap({ candidates, averagedPolls, incumbents }) {
                   {(Number(averagedPolls.find(a => { return a.state_po===selectedState && a.office==='Senate' }).lean)).toFixed(1)}%
                 </td>
                 <td
-                  className={`pl-2 pb-0.5 font-bold ${candidates.senate[selectedState].find(a => { return a.party==='independent' }) ? 'text-amber-500' : 'text-blue-500'}`}
+                  className={`pl-2 pb-0.5 font-bold ${selectedState==='AK' ? 'text-red-500' : candidates.senate[selectedState].find(a => { return a.party==='independent' }) ? 'text-amber-500' : 'text-blue-500'}`}
                 >
                   {Number(averagedPolls.find(a => { return a.state_po===selectedState && a.office==='Senate' }).dem_wins).toFixed(0)}%
                 </td>

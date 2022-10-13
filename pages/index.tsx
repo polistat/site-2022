@@ -6,9 +6,11 @@ import { getBlogList } from "../lib/blog";
 
 import SenateMap from '../components/SenateMap';
 import GovernorMap from '../components/GovernorMap';
-import { getCandidates, getIncumbents, getAveragedPolls } from '../lib/results';
+import SenateDistributionPreview from '../components/SenateDistributionPreview';
+import GovernorDistributionPreview from '../components/GovernorDistributionPreview';
+import { getCandidates, getIncumbents, getAveragedPolls, getOverallSenate } from '../lib/results';
 
-export default function Home({ blogPosts, latestDate, candidates, averagedPolls, incumbents }: { blogPosts:any, latestDate:any, candidates:any, averagedPolls:any, incumbents:any }) {
+export default function Home({ blogPosts, latestDate, candidates, averagedPolls, incumbents, overallSenate }: { blogPosts:any, latestDate:any, candidates:any, averagedPolls:any, incumbents:any, overallSenate:any }) {
   const [headerSlide, setHeaderSlide] = React.useState(0);
 
   return <>
@@ -45,66 +47,92 @@ export default function Home({ blogPosts, latestDate, candidates, averagedPolls,
         </div>
 
         <div className="flex flex-col-reverse md:flex-row gap-12 md:gap-4">
-          <div className="p-0.5 md:max-w-xs self-start relative bg-neutral-100 rounded-xl overflow-hidden shadow-sm">
-            <ul className="flex border-b text-sm font-medium rounded-t-xl">
-              <li
-                className={`pt-2.5 pb-2 px-5 grow cursor-pointer rounded-t-xl ${headerSlide===0 ? 'bg-white' : null}`}
-                onClick={() => setHeaderSlide(0)}
-              >
-                Senate
-              </li>
-              <li
-                className={`pt-2.5 pb-2 px-5 grow cursor-pointer rounded-t-xl ${headerSlide===1 ? 'bg-white' : null}`}
-                onClick={() => setHeaderSlide(1)}
-              >
-                Governors
-              </li>
-            </ul>
-
-            <div className="p-6 bg-white rounded-b-xl">
-              <AnimatePresence exitBeforeEnter>
-                <motion.div
-                  key={headerSlide}
-                  initial={{ opacity: 0 }}
-                  animate={{ opacity: 1 }}
-                  exit={{ opacity: 0 }}
-                  transition={{ duration: 0.2 }}
+          <div className="flex flex-col gap-4">
+            <div className="p-0.5 md:max-w-xs self-start relative bg-neutral-100 rounded-xl overflow-hidden shadow-sm">
+              <ul className="flex border-b text-sm font-medium rounded-t-xl">
+                <li
+                  className={`pt-2.5 pb-2 px-5 grow cursor-pointer rounded-t-xl ${headerSlide===0 ? 'bg-white' : null}`}
+                  onClick={() => setHeaderSlide(0)}
                 >
-                {headerSlide === 0 ? <>
-                  <h2 className="text-2xl font-bold">
-                    The Senate
-                  </h2>
-                  <p className="text-sm mt-2">
-                    We constructed a model to predict the outcomes of the 2022 Senate elections. Click on a colored state on the map to learn more about the race, the candidates, and our prediction.
-                  </p>
+                  Senate
+                </li>
+                <li
+                  className={`pt-2.5 pb-2 px-5 grow cursor-pointer rounded-t-xl ${headerSlide===1 ? 'bg-white' : null}`}
+                  onClick={() => setHeaderSlide(1)}
+                >
+                  Governors
+                </li>
+              </ul>
 
-                  <Link href="/senate" passHref>
-                    <a>
-                      <button className="px-3 py-1.5 text-sm uppercase font-bold border-2 border-neutral-200 hover:bg-neutral-50 rounded-lg mt-6">
-                        See the Senate forecast
-                      </button>
-                    </a>
-                  </Link>
-                </> : headerSlide === 1 ? <>
-                  <h2 className="text-2xl font-bold">
-                    The Governors
-                  </h2>
-                  <p className="text-sm mt-2">
-                    We constructed a model to predict the outcomes of the 2022 gubernatorial elections. Click on a colored state on the map to learn more about the race, the candidates, and our prediction.
-                  </p>
-                  
-                  <Link href="/governors" passHref>
-                    <a>
-                      <button className="px-3 py-1.5 text-sm uppercase font-bold border-2 border-neutral-200 hover:bg-neutral-50 rounded-lg mt-6">
-                        See the Governor forecast
-                      </button>
-                    </a>
-                  </Link>
-                </> : null}
-                </motion.div>
-              </AnimatePresence>
+              <div className="p-6 bg-white rounded-b-xl">
+                <AnimatePresence exitBeforeEnter>
+                  <motion.div
+                    key={headerSlide}
+                    initial={{ opacity: 0 }}
+                    animate={{ opacity: 1 }}
+                    exit={{ opacity: 0 }}
+                    transition={{ duration: 0.2 }}
+                  >
+                  {headerSlide === 0 ? <>
+                    <h2 className="text-2xl font-bold">
+                      The Senate
+                    </h2>
+                    <p className="text-sm mt-2">
+                      We constructed a model to predict the outcomes of the 2022 Senate elections. Click on a colored state on the map to learn more about the race, the candidates, and our prediction.
+                    </p>
+
+                    <Link href="/senate" passHref>
+                      <a>
+                        <button className="px-3 py-1.5 text-sm uppercase font-bold border-2 border-neutral-200 hover:bg-neutral-50 rounded-lg mt-6">
+                          See the Senate forecast
+                        </button>
+                      </a>
+                    </Link>
+                  </> : headerSlide === 1 ? <>
+                    <h2 className="text-2xl font-bold">
+                      The Governors
+                    </h2>
+                    <p className="text-sm mt-2">
+                      We constructed a model to predict the outcomes of the 2022 gubernatorial elections. Click on a colored state on the map to learn more about the race, the candidates, and our prediction.
+                    </p>
+                    
+                    <Link href="/governors" passHref>
+                      <a>
+                        <button className="px-3 py-1.5 text-sm uppercase font-bold border-2 border-neutral-200 hover:bg-neutral-50 rounded-lg mt-6">
+                          See the Governor forecast
+                        </button>
+                      </a>
+                    </Link>
+                  </> : null}
+                  </motion.div>
+                </AnimatePresence>
+              </div>
             </div>
-           
+            
+            <AnimatePresence exitBeforeEnter>
+              <motion.div
+                key={headerSlide}
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                exit={{ opacity: 0 }}
+                transition={{ duration: 0.2 }}
+              >
+                {headerSlide === 0 ? 
+                  <div className="rounded-xl overflow-hidden border-2 border-neutral-100">
+                    <SenateDistributionPreview
+                      overallSenate={overallSenate}
+                    />
+                  </div>
+                : headerSlide === 1 ?
+                  <div className="rounded-xl">
+                    <GovernorDistributionPreview
+                      incumbents={incumbents}
+                      averagedPolls={averagedPolls}
+                    />
+                  </div>
+                : null}
+              </motion.div>
+            </AnimatePresence>
           </div>
 
           <div className="relative w-full flex-1 self-start">
@@ -211,6 +239,7 @@ export async function getStaticProps() {
   const candidates = await getCandidates();
   const incumbents = await getIncumbents();
   const { averagedPolls, latestDate } = await getAveragedPolls();
+  const { overallSenate, latestDate:latestDate2 } = await getOverallSenate();
 
   return {
     props: {
@@ -218,7 +247,8 @@ export async function getStaticProps() {
       latestDate,
       candidates,
       averagedPolls,
-      incumbents
+      incumbents,
+      overallSenate
     },
     revalidate: 3600 // 1 hour
   };

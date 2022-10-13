@@ -35,7 +35,7 @@ export default function ChancesTimeline({ dates, timeline, labels }: { dates: st
 
       {/* lines */}
       <path
-        className={`fill-transparent ${labels?.independent ? 'stroke-amber-500' : 'stroke-blue-500' } stroke-[4px]`}
+        className={`fill-transparent ${labels?.democrat==='Murkowski' ? 'stroke-red-500' : labels?.independent ? 'stroke-amber-500' : 'stroke-blue-500' } stroke-[4px]`}
         d={`M 60 ${550-demTimeline[0]*500} ${demTimeline.slice(1).map((a,i) => `L ${60+(i+1)*940/(demTimeline.length-1)} ${550-a*500}`).join(' ')}`}
       />
       <path
@@ -52,7 +52,7 @@ export default function ChancesTimeline({ dates, timeline, labels }: { dates: st
         <text
           x={Math.max(60+(selectedIndex)*940/(demTimeline.length-1)-90-(labels?.democrat || labels?.independent || 'DEM').length*14, 58)}
           y={550-demTimeline[selectedIndex]*500+(demTimeline[selectedIndex]>0.9 ? 30 : demTimeline[selectedIndex]<0.2 ? -20 : 30)}
-          className={`text-2xl font-semibold ${labels?.independent ? 'fill-amber-500' : 'fill-blue-500' }`}
+          className={`text-2xl font-semibold ${labels?.democrat==='Murkowski' ? 'fill-red-500' : labels?.independent ? 'fill-amber-500' : 'fill-blue-500' }`}
         >
           {labels?.democrat || labels?.independent || 'DEM'} {(demTimeline[selectedIndex]*100).toFixed(1)}%
         </text>
