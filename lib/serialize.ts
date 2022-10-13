@@ -11,8 +11,8 @@ export const serialize:any = async (content: any, data: any) => {
   return await mdxSerialize(content, {
     scope: data,
     mdxOptions: {
-      remarkPlugins: [remarkGfm, /*remarkBreaks,*/ remarkMath],
-      rehypePlugins: [rehypeSlug, rehypeMathjax],
+      remarkPlugins: [remarkGfm, /*remarkBreaks, remarkMath*/],
+      rehypePlugins: [rehypeSlug, /*rehypeMathjax*/],
     },
   });
 }
