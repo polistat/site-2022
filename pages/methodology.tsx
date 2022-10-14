@@ -29,7 +29,7 @@ export default function MethodologyPage({ source, frontMatter }: Props) {
       </header>
 
       <main className="pt-4 pb-8 px-8">
-        <MDXRemote {...source} components={components}/>
+        <MDXRemote {...source} components={components} lazy/>
       </main>
     </div>
   </>;
