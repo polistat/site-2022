@@ -26,7 +26,7 @@ export default function GovernorDistribution({ incumbents, averagedPolls }: { in
   ];
 
   // const distLabels = ["","Solid D","Likely D","Lean D","Toss-up","Lean R","Likely R","Solid R",""];
-  const distLabels = ["",">70%","60-70%","55-60%","50-55%","55-60%","60-70%",">70%",""];
+  const distLabels = ["No races",">70% D","60-70% D","55-60% D","Tossup","55-60% R","60-70% R",">70% R","No races"];
   
   const [selectedBin, setSelectedBin] = React.useState<number|null>(null);
 

@@ -33,7 +33,7 @@ export default function MDXCompProvider(props: HTMLAttributes<HTMLDivElement>) {
     input: (props) => <input className="my-2 ml-4 mr-1" {...props}/>, // task lists
 
     section: ({ children, ...props }) => props.className === 'footnotes' ?
-      <div className="container max-w-3xl border-t">
+      <div className="container max-w-3xl border-t text-sm">
         {/* @ts-expect-error ; TODO: fix*/}
         <section {...props}>{children.filter(child => child.props?.id !== 'footnote-label')}</section>
       </div>

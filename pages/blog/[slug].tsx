@@ -8,6 +8,8 @@ import { MDXRemote, MDXRemoteSerializeResult } from 'next-mdx-remote';
 import { serialize } from '../../lib/serialize';
 import { getBlogSlugs, getBlogData } from "../../lib/blog";
 
+import components from '../../components/MdComponents';
+
 interface Props {
   params: ParsedUrlQuery | undefined;
   source: MDXRemoteSerializeResult<Record<string, unknown>, Record<string, string>>;
@@ -55,7 +57,7 @@ export default function BlogPost({ source, frontMatter }: Props) {
       </header>
 
       <main className="pt-4 pb-8 px-8">
-        <MDXRemote {...source} /*components={components}*//>
+        <MDXRemote {...source} components={components}/>
       </main>
     </div>
   </>;
