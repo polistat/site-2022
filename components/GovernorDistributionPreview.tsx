@@ -26,7 +26,9 @@ export default function GovernorDistributionPreview({ incumbents, averagedPolls 
   ];
 
   // const distLabels = ["","Solid D","Likely D","Lean D","Toss-up","Lean R","Likely R","Solid R",""];
-  const distLabels = ["",">70%","60-70%","55-60%","50-55%","55-60%","60-70%",">70%",""];
+  const distLabels = ["No races",">70% D","60-70% D","55-60% D","Tossup","55-60% R","60-70% R",">70% R","No races"];
+  
+  const [selectedBin, setSelectedBin] = React.useState<number|null>(null);
   
   return <>
     <svg
@@ -86,6 +88,28 @@ export default function GovernorDistributionPreview({ incumbents, averagedPolls 
             className={`w-[24px] h-[24px] ${distStyles[i]}`}
           />
         </> : null}
+        
+        {/* labels */}
+        {selectedBin===i && <>
+          <text
+            x={5+10+110*i+Math.floor((85-10*distLabels[i].length)/2)}
+            y={200}
+            className={`text-lg font-medium uppercase ${i>=5 ? 'fill-red-500' : i<=3 ? 'fill-blue-500' : 'fill-neutral-500'}`}
+          >
+            {distLabels[i]}
+          </text>
+        </>}
+
+        {/* hover */}
+        <rect
+          x={5+110*i}
+          y={0}
+          width={110}
+          height={170}
+          className={`fill-transparent`}
+          onMouseEnter={() => setSelectedBin(i)}
+          onMouseLeave={() => setSelectedBin(null)}
+        />
       </>)}
     </svg>
   </>;
