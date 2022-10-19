@@ -35,7 +35,7 @@ export default function SenatePage({ latestDate, candidates, averagedPolls, incu
             transition={{ duration: 2, repeat: Infinity, }}
           />
           <p className="text-sm text-center text-neutral-400 uppercase font-bold">
-            Updated {!isNaN(new Date(latestDate).valueOf()) ? new Date(`${latestDate}T00:00:00.000-05:00`).toLocaleDateString('en-US') : latestDate}
+              Updated {!isNaN(new Date(latestDate).valueOf()) ? new Date(`${latestDate}`).toLocaleDateString('en-US', { month:'numeric',day:'numeric',year:'numeric',hour:'2-digit',minute:'2-digit'}) : latestDate}
           </p>
         </div>
 
