@@ -63,7 +63,7 @@ export const getAveragedPolls = async () => {
   })
   .catch(err => console.error(err));
 
-  const latestDate = averagedPollsFileName.replace(/\.[^/.]+$/, "");
+  const latestDate = averagedPollsFileName.replace(/\.[^/.]+$/, "").replaceAll("_", ":");
   
   const averagedPolls = await octokit.request('GET /repos/{owner}/{repo}/contents/{path}', {
     owner: 'polistat',
@@ -94,7 +94,7 @@ export const getOverallSenate = async () => {
   })
   .catch(err => console.error(err));
 
-  const latestDate = overallSenateFileName.replace(/\.[^/.]+$/, "");
+  const latestDate = overallSenateFileName.replace(/\.[^/.]+$/, "").replaceAll("_", ":");
   
   const overallSenate = await octokit.request('GET /repos/{owner}/{repo}/contents/{path}', {
     owner: 'polistat',
@@ -125,7 +125,7 @@ export const getLatestPolls = async (category:string, state?:string) => {
   })
   .catch(err => console.error(err));
 
-  const latestDate = latestPollsFileName.replace(/\.[^/.]+$/, "");
+  const latestDate = latestPollsFileName.replace(/\.[^/.]+$/, "").replaceAll("_", ":");
   
   const latestPolls = await octokit.request('GET /repos/{owner}/{repo}/contents/{path}', {
     owner: 'polistat',

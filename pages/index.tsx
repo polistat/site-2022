@@ -15,12 +15,12 @@ export default function Home({ blogPosts, latestDate, candidates, averagedPolls,
 
   return <>
     <Head>
-      <title>ORACLE of Blair</title>
+      <title>2022 Election Forecast – ORACLE of Blair</title>
       <meta name="description" content="The ORACLE (Overall Results of an Analytical Consideration of the Looming Elections) of Blair is a senior class project at Montgomery Blair High School with the goal of modeling the 2022 senate and gubernatorial elections."/>
       <meta itemProp="description" content="The ORACLE (Overall Results of an Analytical Consideration of the Looming Elections) of Blair is a senior class project at Montgomery Blair High School with the goal of modeling the 2022 senate and gubernatorial elections."/>
-      <meta property="og:title" content="ORACLE of Blair"/>
+      <meta property="og:title" content="2022 Election Forecast – ORACLE of Blair"/>
       <meta property="og:description" content="The ORACLE (Overall Results of an Analytical Consideration of the Looming Elections) of Blair is a senior class project at Montgomery Blair High School with the goal of modeling the 2022 senate and gubernatorial elections."/>
-      <meta name="twitter:title" content="ORACLE of Blair"/>
+      <meta name="twitter:title" content="2022 Election Forecast – ORACLE of Blair"/>
       <meta name="twitter:description" content="The ORACLE (Overall Results of an Analytical Consideration of the Looming Elections) of Blair is a senior class project at Montgomery Blair High School with the goal of modeling the 2022 senate and gubernatorial elections."/>
     </Head>
 
@@ -41,7 +41,7 @@ export default function Home({ blogPosts, latestDate, candidates, averagedPolls,
               transition={{ duration: 2, repeat: Infinity, }}
             />
             <p className="text-sm text-center text-neutral-400 uppercase font-bold">
-              Updated {!isNaN(new Date(latestDate).valueOf()) ? new Date(`${latestDate}T00:00:00.000-05:00`).toLocaleDateString('en-US') : latestDate}
+              Updated {!isNaN(new Date(latestDate).valueOf()) ? new Date(`${latestDate}`).toLocaleDateString('en-US', { month:'numeric',day:'numeric',year:'numeric',hour:'2-digit',minute:'2-digit'}) : latestDate}
             </p>
           </div>
         </div>

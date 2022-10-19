@@ -21,10 +21,10 @@ export default function SenatePage({ latestDate, candidates, averagedPolls, incu
       <section className="p-8 container max-w-4xl flex flex-col gap-4 bg-neutral-50 border-2 shadow-md rounded-2xl">
         <div className="flex flex-col gap-1.5 items-center">
           <h1 className="px-1.5 text-xl text-center font-medium uppercase bg-amber-100 rounded-md">
-            The Governors
+            Gubernatorial Forecast
           </h1>
           <p className="text-4xl text-center font-serif">
-            The 2022 <span className="font-extrabold">Governor elections</span>
+            Forecasting the <span className="font-extrabold">2022 Gubernatorial elections</span>
           </p>
         </div>
           
@@ -35,7 +35,7 @@ export default function SenatePage({ latestDate, candidates, averagedPolls, incu
             transition={{ duration: 2, repeat: Infinity, }}
           />
           <p className="text-sm text-center text-neutral-400 uppercase font-bold">
-            Updated {!isNaN(new Date(latestDate).valueOf()) ? new Date(`${latestDate}T00:00:00.000-05:00`).toLocaleDateString('en-US') : latestDate}
+              Updated {!isNaN(new Date(latestDate).valueOf()) ? new Date(`${latestDate}`).toLocaleDateString('en-US', { month:'numeric',day:'numeric',year:'numeric',hour:'2-digit',minute:'2-digit'}) : latestDate}
           </p>
         </div>
 
