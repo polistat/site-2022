@@ -32,8 +32,13 @@ export default function SenateStatePage({ params, source, frontMatter, stateName
 
   return <>
     <Head>
-      <title>{`${stateName} – Senate – ORACLE of Blair`}</title>
-      <meta property="og:title" content={`${stateName} – Senate – ORACLE of Blair`} key="ogtitle"/>
+      <title>{`2022 ${stateName} Senate Election Predictions – ORACLE of Blair`}</title>
+      {/* <meta name="description" content={``}/> */}
+      <meta itemProp="description" content=""/>
+      <meta property="og:title" content={`2022 ${stateName} Senate Election Predictions – ORACLE of Blair`}/>
+      {/* <meta property="og:description" content=""/> */}
+      <meta name="twitter:title" content={`2022 ${stateName} Senate Election Predictions – ORACLE of Blair`}/>
+      {/* <meta name="twitter:description" content=""/> */}
     </Head>
 
     <main className="p-4 flex flex-col gap-8">
