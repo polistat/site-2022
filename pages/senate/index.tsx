@@ -67,7 +67,7 @@ export default function SenatePage({ latestDate, candidates, incumbents, average
             transition={{ duration: 2, repeat: Infinity, }}
           />
           <p className="text-sm text-center text-neutral-400 uppercase font-bold">
-            Updated {!isNaN(new Date(latestDate).valueOf()) ? (latestDate.includes("T") ? new Date(latestDate) : new Date(`${latestDate}T00:00:00.000-05:00`)).toLocaleDateString('en-US') : latestDate}
+            Updated {!isNaN(new Date(latestDate).valueOf()) ? (latestDate.includes("T") ? new Date(latestDate.replaceAll("_", ":")) : new Date(`${latestDate}T00:00:00.000-05:00`)).toLocaleDateString('en-US') : latestDate}
           </p>
         </div>
 
