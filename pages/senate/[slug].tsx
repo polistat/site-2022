@@ -27,7 +27,6 @@ interface Props {
 }
 
 export default function SenateStatePage({ params, source, stateName, candidates, averagedPolls, latestPolls, racesTimeline }: InferGetStaticPropsType<FixUpProps<typeof getStaticProps>>) {
-  // @ts-expect-error
   const noRace = !candidates.senate[params?.slug];
 
   return <>
@@ -42,22 +41,15 @@ export default function SenateStatePage({ params, source, stateName, candidates,
     </Head>
 
     <main className="p-4 flex flex-col gap-8">
-      {/*
-        // @ts-expect-error */ }
         {candidates.senate[params.slug.replace(/[0-9]/g, '')] && candidates.senate[params.slug.replace(/[0-9]/g, '').concat('2')] &&
           <div className="container max-w-3xl flex items-start -mb-6">
             <ul className="w-full md:w-auto flex text-sm font-medium rounded-xl bg-neutral-100 border-2">
               <li className="grow md:grow-0">
-                {/*
-                // @ts-expect-error */ }
                 <Link href={`/senate/${params.slug.replace(/[0-9]/g, '')}`} passHref>
                   <a>
                     <div
-                      // @ts-expect-error 
                       className={`py-2 px-5 md:px-4 cursor-pointer rounded-xl ${params.slug===params.slug.replace(/[0-9]/g, '')?'bg-white':''}`}
                     >
-                      {/*
-                      // @ts-expect-error */ }
                       {`${params.slug.replace(/[0-9]/g, '')} Regular`}
                     </div>
                     </a>
@@ -65,16 +57,11 @@ export default function SenateStatePage({ params, source, stateName, candidates,
               </li>
 
               <li className="grow md:grow-0">
-              {/*
-              // @ts-expect-error */ }
                 <Link href={`/senate/${params.slug.replace(/[0-9]/g, '').concat('2')}`} passHref>
                   <a>
                     <div
-                      // @ts-expect-error 
                       className={`py-2 px-5 md:px-4 cursor-pointer rounded-xl ${params.slug===params.slug.replace(/[0-9]/g, '').concat('2')?'bg-white':''}`}
                     >
-                      {/*
-                      // @ts-expect-error */ }
                       {`${params.slug.replace(/[0-9]/g, '')} Special`}
                     </div>
                     </a>
@@ -89,8 +76,6 @@ export default function SenateStatePage({ params, source, stateName, candidates,
           <div className="flex flex-col md:flex-row gap-16 justify-between items-center">
             <div className="flex flex-col gap-1.5 items-center md:items-start">
               <h1 className="text-4xl font-bold">
-                {/*
-                // @ts-expect-error */ }
                 {stateName} {params.slug===params.slug.replace(/[0-9]/g, '').concat('2')?'(special)':''}
               </h1>
               {!noRace ?
@@ -105,16 +90,14 @@ export default function SenateStatePage({ params, source, stateName, candidates,
             </div>
             
             <div className={`${!noRace ? '-mr-4' : null} flex gap-8 justify-center`}>
-              {/*
-              // @ts-expect-error */ }
-              <img src={`/states/${params?.slug.replace(/[0-9]/g, '')}.svg`} className="w-36"/>
+              <img src={`/states/${params.slug.replace(/[0-9]/g, '')}.svg`} className="w-36"/>
 
               {!noRace &&
                 <table className="table-auto self-center">
                   <tbody>
                     <tr>
                       <td className="text-lg font-semibold">
-                        {(parseFloat(averagedPolls.find((a:any) => { return a.state_po===params?.slug && a.office==='Senate' })!.BPI)).toFixed(2)}
+                        {(parseFloat(averagedPolls.find((a) => { return a.state_po===params?.slug && a.office==='Senate' })!.BPI)).toFixed(2)}
                       </td>
                       <th className="px-2 uppercase text-left text-xs text-neutral-400 leading-4">
                         BPI
@@ -122,8 +105,8 @@ export default function SenateStatePage({ params, source, stateName, candidates,
                     </tr>
                     <tr>
                       <td className="text-lg font-semibold">
-                        {isNaN(Number(averagedPolls.find((a:any) => { return a.state_po===params?.slug && a.office==='Senate' })!.weighted_polls)) ? 'N/A'
-                        : (parseFloat(averagedPolls.find((a:any) => { return a.state_po===params?.slug && a.office==='Senate' })!.weighted_polls)).toFixed(2)}
+                        {isNaN(Number(averagedPolls.find((a) => { return a.state_po===params?.slug && a.office==='Senate' })!.weighted_polls)) ? 'N/A'
+                        : (parseFloat(averagedPolls.find((a) => { return a.state_po===params?.slug && a.office==='Senate' })!.weighted_polls)).toFixed(2)}
                       </td>
                       <th className="px-2 uppercase text-left text-xs text-neutral-400 leading-4">
                         Poll avg.
@@ -147,25 +130,20 @@ export default function SenateStatePage({ params, source, stateName, candidates,
               <tbody className="text-xl md:text-2xl font-normal">
                 <tr>
                   <td className="pr-4 pb-1">
-                    {/*
-                    // @ts-expect-error*/}
                     {candidates.senate[params.slug].filter((a:any) => { return a.party==='democrat' || a.party==='independent' })[0].name}
                   </td>
                   <td className="px-4 pb-1">
-                    {(Number(averagedPolls.find((a:any) => { return a.state_po===params?.slug && a.office==='Senate' })!.lean)).toFixed(1)}%
+                    {(Number(averagedPolls.find((a) => { return a.state_po===params?.slug && a.office==='Senate' })!.lean)).toFixed(1)}%
                   </td>
                   <td
-                  // @ts-expect-error
                     className={`pl-4 pb-1 font-bold ${candidates.senate[params.slug].find((a:any) => { return a.party==='independent' }) ? 'text-amber-500' : params.slug==='AK' ? 'text-red-500' : 'text-blue-500'}`}
                   >
-                    {Number(averagedPolls.find((a:any) => { return a.state_po===params?.slug && a.office==='Senate' })!.dem_wins).toFixed(0)}%
+                    {Number(averagedPolls.find((a) => { return a.state_po===params?.slug && a.office==='Senate' })!.dem_wins).toFixed(0)}%
                   </td>
                 </tr>
 
                 <tr>
                   <td className="pr-4 pb-1">
-                    {/*
-                    // @ts-expect-error*/}
                     {candidates.senate[params.slug].find((a:any) => { return a.party==='republican' }).name}
                   </td>
                   <td className="px-4 pb-1">
@@ -201,14 +179,10 @@ export default function SenateStatePage({ params, source, stateName, candidates,
           <div className="mt-4">
             <ChancesTimeline
               dates={racesTimeline.dates}
-              // @ts-expect-error
               timeline={racesTimeline.senate[params.slug].map(n => Number(n)/100)}
               labels={{
-              // @ts-expect-error
                 democrat: candidates.senate[params.slug].find((a:any) => { return a.party==='democrat' })?.name.split(' ').at(-1),
-                // @ts-expect-error
                 independent: candidates.senate[params.slug].find((a:any) => { return a.party==='independent' })?.name.split(' ').at(-1),
-              // @ts-expect-error
                 republican: candidates.senate[params.slug].find((a:any) => { return a.party==='republican' })?.name.split(' ').at(-1),
               }}
             />
@@ -294,12 +268,12 @@ export const getStaticProps = async ({ params }: GetStaticPropsContext) => {
   const candidates = await getCandidates();
 
   // @ts-expect-error
-  if (!candidates.senate[params?.slug] && !mapconfig[params?.slug])
+  if ((!candidates.senate[params?.slug] && !mapconfig[params?.slug]) || !params)
     return {
       notFound: true,
     } as const;
   
-  if (typeof params?.slug !== "string") return { notFound: true } as const;
+  if (typeof params.slug !== "string") return { notFound: true } as const;
     
   const { averagedPolls, } = await getAveragedPolls();
 
@@ -318,7 +292,7 @@ export const getStaticProps = async ({ params }: GetStaticPropsContext) => {
 
   return {
     props: {
-      params,
+      params: { slug: params.slug },
       source: mdxSource,
       frontMatter: data,
       stateName,

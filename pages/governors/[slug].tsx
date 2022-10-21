@@ -28,7 +28,6 @@ interface Props {
 }
 
 export default function GovernorsStatePage({ params, source, stateName, candidates, averagedPolls, latestPolls, racesTimeline }: InferGetStaticPropsType<FixUpProps<typeof getStaticProps>>) {
-  // @ts-expect-error
   const noRace = !candidates.governor[params?.slug];
 
   return <>
@@ -100,8 +99,6 @@ export default function GovernorsStatePage({ params, source, stateName, candidat
             <tbody className="text-2xl font-normal">
               <tr>
                 <td className="pr-4 pb-1">
-                  {/*
-                  // @ts-expect-error*/}
                   {candidates.governor[params.slug].filter((a:any) => { return a.party==='democrat' || a.party==='independent' })[0].name}
                 </td>
                 <td className="px-4 pb-1">
@@ -153,14 +150,10 @@ export default function GovernorsStatePage({ params, source, stateName, candidat
           <div className="mt-4">
             <ChancesTimeline
               dates={racesTimeline.dates}
-              // @ts-expect-error
               timeline={racesTimeline.governor[params.slug].map(n => Number(n)/100)}
               labels={{
-              // @ts-expect-error
                 democrat: candidates.governor[params.slug].find((a:any) => { return a.party==='democrat' })?.name.split(' ').at(-1),
-                // @ts-expect-error
                 independent: candidates.governor[params.slug].find((a:any) => { return a.party==='independent' })?.name.split(' ').at(-1),
-              // @ts-expect-error
                 republican: candidates.governor[params.slug].find((a:any) => { return a.party==='republican' })?.name.split(' ').at(-1),
               }}
             />
@@ -207,13 +200,9 @@ export default function GovernorsStatePage({ params, source, stateName, candidat
                   <div className="flex gap-4">
                     <div className="flex gap-2">
                       <p className="font-thin">
-                        {/*
-                        // @ts-expect-error */ }
-                        {candidates.governor[params.slug].find((a:any)=>a.party==='democrat') ? poll.find((a:any) => a.party==='DEM')?.answer : poll.find((a:any) => a.party==='IND')?.answer}
+                        {candidates.governor[params.slug].find((a: any)=>a.party==='democrat') ? poll.find((a) => a.party==='DEM')?.answer : poll.find((a) => a.party==='IND')?.answer}
                       </p>
-                      {/*
-                      // @ts-expect-error */ }
-                      {candidates.governor[params.slug].find((a:any)=>a.party==='democrat') ?
+                      {candidates.governor[params.slug].find((a: any)=>a.party==='democrat') ?
                         <p className={`text-blue-500 font-normal`}>
                           {poll.find((a:any) => a.party==='DEM')?.pct}%
                         </p>
@@ -253,15 +242,14 @@ export const getStaticProps = async ({ params }: GetStaticPropsContext<{ slug: s
   const candidates = await getCandidates();
 
   // @ts-expect-error
-  if (!candidates.governor[params?.slug] && !mapconfig[params?.slug])
+  if ((!candidates.governor[params?.slug] && !mapconfig[params?.slug]) || !params)
     return {
       notFound: true,
     } as const;
-    
+  
   const { averagedPolls, latestDate } = await getAveragedPolls();
   
-  // @ts-expect-error
-  const { timeline: timelineTimestamp, races: { dates:timelineDates, governor: { [params.slug]:raceTimeline} } } = await getTimeline();
+  const { races: { dates: timelineDates, governor: { [params.slug]: raceTimeline} } } = await getTimeline();
 
   // @ts-expect-error
   const stateName = mapconfig[params?.slug].name;
@@ -284,8 +272,7 @@ export const getStaticProps = async ({ params }: GetStaticPropsContext<{ slug: s
       averagedPolls,
       latestDate,
       latestPolls,
-      // @ts-expect-error
-      racesTimeline: { dates:timelineDates, governor: { [params.slug]:raceTimeline } },
+      racesTimeline: { dates: timelineDates, governor: { [params.slug]: raceTimeline } },
     },
     revalidate: 3600 // 1 hour
   };

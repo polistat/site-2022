@@ -37,10 +37,14 @@ export const getIncumbents = async () => {
   return incumbents;
 }
 
+interface Timeline {
+  overallSenate: { dates: string[], demWinChances: number[] };
+  races: { dates: string[], governor: { [key: string]: string[] }, senate: { [key: string]: string[] } };
+}
+
 // fetch timeline.json from @polistat/results-22
-// todo: type this better
 export const getTimeline = async () => {
-  const timeline = await octokit.request('GET /repos/{owner}/{repo}/contents/{path}', {
+  const timeline: Timeline = await octokit.request('GET /repos/{owner}/{repo}/contents/{path}', {
     owner: 'polistat',
     repo: 'results-2022',
     path: `timeline.json`
@@ -52,7 +56,15 @@ export const getTimeline = async () => {
   })
   .catch(err => console.error(err));
 
-  return { ...timeline, overallSenate: {...timeline.overallSenate, dates: timeline.overallSenate.dates.map((date: any) => date.replaceAll("_", ":")) }, races: { ...timeline.races, dates: timeline.races.dates.map((date: any) => date.replaceAll("_", ":")) } };
+  return {
+    ...timeline,
+    overallSenate: {
+      ...timeline.overallSenate, dates: timeline.overallSenate.dates.map((date) => date.replaceAll("_", ":"))
+    },
+    races: {
+      ...timeline.races, dates: timeline.races.dates.map((date) => date.replaceAll("_", ":"))
+    }
+  };
 }
 
 interface AveragedState {
@@ -151,6 +163,7 @@ interface Poll {
   end_date: string;
   pct: string;
   answer: string;
+  party: string;
 }
 
 // fetch latest polls from @polistat/results-2022
