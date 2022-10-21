@@ -121,6 +121,7 @@ export async function getStaticProps() {
   const candidates = await getCandidates();
   const incumbents = await getIncumbents();
   const { timeline: timelineTimestamp, overallSenate: overallSenateTimeline } = await getTimeline();
+
   const { averagedPolls, latestDate } = await getAveragedPolls();
   const { overallSenate, latestDate:latestDate2 } = await getOverallSenate();
 

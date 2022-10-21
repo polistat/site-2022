@@ -71,7 +71,7 @@ export default function ChancesTimeline({ dates, timeline, labels }: { dates: st
           y={595}
           className="text-lg font-semibold fill-neutral-400"
         >
-          {dates[selectedIndex]}
+          {new Date(dates[selectedIndex]).toLocaleDateString('en-US', { month:'numeric',day:'numeric',year:'numeric'})}
         </text>
       </>}
 

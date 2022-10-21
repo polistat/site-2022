@@ -46,7 +46,7 @@ export const getTimeline = async () => {
   })
   .catch(err => console.error(err));
 
-  return timeline;
+  return { ...timeline, overallSenate: {...timeline.overallSenate, dates: timeline.overallSenate.dates.map((date:any) => date.replaceAll("_", ":")) }, races: { ...timeline.races, dates: timeline.races.dates.map((date:any) => date.replaceAll("_", ":")) } };
 }
 
 // fetch latest averaged polls and date from @polistat/results-2022
