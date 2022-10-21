@@ -5,7 +5,14 @@ import GovernorMap from '../../components/GovernorMap';
 import GovernorDistribution from '../../components/GovernorDistribution';
 import { getCandidates, getIncumbents, getAveragedPolls } from '../../lib/results';
 
-export default function SenatePage({ latestDate, candidates, averagedPolls, incumbents }: { latestDate:any, candidates:any, averagedPolls:any, incumbents:any }) {
+interface Props {
+  latestDate: string | undefined;
+  candidates: any;
+  averagedPolls: any;
+  incumbents: any;
+}
+
+export default function SenatePage({ latestDate, candidates, averagedPolls, incumbents }: Props) {
   return <>
     <Head>
       <title>2022 Governors Forecast – ORACLE of Blair</title>
@@ -35,7 +42,7 @@ export default function SenatePage({ latestDate, candidates, averagedPolls, incu
             transition={{ duration: 2, repeat: Infinity, }}
           />
           <p className="text-sm text-center text-neutral-400 uppercase font-bold">
-              Updated {!isNaN(new Date(latestDate).valueOf()) ? new Date(`${latestDate}`).toLocaleDateString('en-US', { month:'numeric',day:'numeric',year:'numeric',hour:'2-digit',minute:'2-digit'}) : latestDate}
+              Updated {!isNaN(new Date(latestDate ?? "").valueOf()) ? new Date(`${latestDate}`).toLocaleDateString('en-US', { month:'numeric',day:'numeric',year:'numeric',hour:'2-digit',minute:'2-digit'}) : latestDate}
           </p>
         </div>
 

@@ -21,12 +21,11 @@ interface Props {
   stateName: string;
   candidates: any;
   averagedPolls: any;
-  latestDate: string;
   latestPolls: any;
   racesTimeline: any;
 }
 
-export default function SenateStatePage({ params, source, frontMatter, stateName, candidates, averagedPolls, latestDate, latestPolls, racesTimeline }: Props) {
+export default function SenateStatePage({ params, source, frontMatter, stateName, candidates, averagedPolls, latestPolls, racesTimeline }: Props) {
   // @ts-expect-error
   const noRace = !candidates.senate[params?.slug];
 
@@ -300,10 +299,10 @@ export const getStaticProps: GetStaticProps = async ({ params }): Promise<{props
       notFound: true,
     };
     
-  const { averagedPolls, latestDate } = await getAveragedPolls();
+  const { averagedPolls, } = await getAveragedPolls();
 
   // @ts-expect-error
-  const { timeline: timelineTimestamp, races: { dates:timelineDates, senate: { [params.slug]:raceTimeline} } } = await getTimeline();
+  const { races: { dates:timelineDates, senate: { [params.slug]: raceTimeline} } } = await getTimeline();
   
   // @ts-expect-error
   const stateName = mapconfig[params.slug.replace(/[0-9]/g, '')].name;
@@ -314,7 +313,7 @@ export const getStaticProps: GetStaticProps = async ({ params }): Promise<{props
     });
   const mdxSource = content&&data ? await serialize(content, { scope: data }) : null;
 
-  const { latestPolls, latestDate:latestDate2 } = await getLatestPolls('senate', stateName);
+  const latestPolls = await getLatestPolls('senate', stateName);
 
   return {
     props: {
@@ -324,10 +323,9 @@ export const getStaticProps: GetStaticProps = async ({ params }): Promise<{props
       stateName,
       candidates,
       averagedPolls,
-      latestDate,
       latestPolls,
       // @ts-expect-error
-      racesTimeline: { dates:timelineDates, senate: { [params.slug]:raceTimeline } },
+      racesTimeline: { dates: timelineDates, senate: { [params.slug]: raceTimeline } },
     },
     // @ts-expect-error
     revalidate: 3600 // 1 hour
