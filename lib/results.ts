@@ -83,7 +83,7 @@ export const getAveragedPolls = async () => {
     const encoded = res.data.content.replace(/\s/g, '');
     const decoded = decodeURIComponent(escape(atob(encoded)));
     // return decoded.split("\r\n").map(a => a.split(','));
-    return csvToJson(decoded);
+    return csvToJson<any>(decoded);
   })
   .catch(err => console.error(err));
 
@@ -118,7 +118,7 @@ export const getOverallSenate = async () => {
     const encoded = res.data.content.replace(/\s/g, '');
     const decoded = decodeURIComponent(escape(atob(encoded)));
     // return decoded.split("\r\n").map(a => a.split(','));
-    return csvToJson(decoded);
+    return csvToJson<any>(decoded);
   })
   .catch(err => console.error(err));
 
@@ -127,8 +127,18 @@ export const getOverallSenate = async () => {
   return overallSenate;
 }
 
+interface Poll {
+  state: string;
+  url: string;
+  pollster: string;
+  population: string;
+  end_date: string;
+  pct: string;
+  answer: string;
+}
+
 // fetch latest polls from @polistat/results-2022
-export const getLatestPolls = async (category:string, state?:string) => {
+export const getLatestPolls = async (category: string, state?: string) => {
   const latestPollsFileName = await octokit.request('GET /repos/{owner}/{repo}/contents/{path}', {
     owner: 'polistat',
     repo: 'results-2022',
@@ -154,7 +164,7 @@ export const getLatestPolls = async (category:string, state?:string) => {
     const decoded = decodeURIComponent(escape(atob(encoded)));
     // return decoded.split("\r\n").map(a => a.split(','));
 
-    const csv = csvToJson(decoded);
+    const csv = csvToJson<Poll>(decoded);
 
     if (state) return csv.filter((poll) => poll.state === state);
     return csv;
@@ -167,12 +177,12 @@ export const getLatestPolls = async (category:string, state?:string) => {
 }
 
 
-function csvToJson(csv: string){
+function csvToJson<Type>(csv: string): Type[] {
   let lines = csv.replace(/\r/g, '').split("\n");
   let result = [];
   let headers=lines[0].split(",");
   for(let i=1;i<lines.length;i++){
-    let obj:any = {};
+    let obj: Record<string, string> = {};
     let currentline=lines[i].split(",");
       for(let j=0;j<headers.length;j++){
         obj[headers[j]] = currentline[j];
@@ -180,5 +190,6 @@ function csvToJson(csv: string){
       result.push(obj);
   }
 
+  // @ts-expect-error
   return result;
 }

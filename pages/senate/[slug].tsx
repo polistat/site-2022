@@ -1,6 +1,6 @@
 import Head from 'next/head';
 import Link from 'next/link';
-import { GetStaticProps } from 'next';
+import { GetStaticProps, GetStaticPropsContext, InferGetStaticPropsType } from 'next';
 import { ParsedUrlQuery } from 'querystring';
 
 // import matter from "gray-matter";
@@ -13,6 +13,7 @@ import mapconfig from '../../mapconfig.json';
 
 import components from '../../components/MdComponents';
 import ChancesTimeline from '../../components/ChancesTimeline';
+import { FixUpProps } from '../../lib/types';
 
 interface Props {
   params: ParsedUrlQuery | undefined;
@@ -25,7 +26,7 @@ interface Props {
   racesTimeline: any;
 }
 
-export default function SenateStatePage({ params, source, frontMatter, stateName, candidates, averagedPolls, latestPolls, racesTimeline }: Props) {
+export default function SenateStatePage({ params, source, stateName, candidates, averagedPolls, latestPolls, racesTimeline }: InferGetStaticPropsType<FixUpProps<typeof getStaticProps>>) {
   // @ts-expect-error
   const noRace = !candidates.senate[params?.slug];
 
@@ -289,20 +290,20 @@ export async function getStaticPaths() {
   };
 }
 
-export const getStaticProps: GetStaticProps = async ({ params }): Promise<{props: Props}> => {
+export const getStaticProps = async ({ params }: GetStaticPropsContext) => {
   const candidates = await getCandidates();
 
   // @ts-expect-error
   if (!candidates.senate[params?.slug] && !mapconfig[params?.slug])
     return {
-      // @ts-expect-error
       notFound: true,
-    };
+    } as const;
+  
+  if (typeof params?.slug !== "string") return { notFound: true } as const;
     
   const { averagedPolls, } = await getAveragedPolls();
 
-  // @ts-expect-error
-  const { races: { dates:timelineDates, senate: { [params.slug]: raceTimeline} } } = await getTimeline();
+  const { races: { dates: timelineDates, senate: { [params.slug]: raceTimeline} } } = await getTimeline();
   
   // @ts-expect-error
   const stateName = mapconfig[params.slug.replace(/[0-9]/g, '')].name;
@@ -324,10 +325,8 @@ export const getStaticProps: GetStaticProps = async ({ params }): Promise<{props
       candidates,
       averagedPolls,
       latestPolls,
-      // @ts-expect-error
       racesTimeline: { dates: timelineDates, senate: { [params.slug]: raceTimeline } },
     },
-    // @ts-expect-error
     revalidate: 3600 // 1 hour
   };
 }
