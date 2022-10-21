@@ -15,17 +15,6 @@ import components from '../../components/MdComponents';
 import ChancesTimeline from '../../components/ChancesTimeline';
 import { FixUpProps } from '../../lib/types';
 
-interface Props {
-  params: ParsedUrlQuery | undefined;
-  source: MDXRemoteSerializeResult<Record<string, unknown>, Record<string, string>> | null;
-  frontMatter: { [key: string]: string } | null;
-  stateName: string;
-  candidates: any;
-  averagedPolls: any;
-  latestPolls: any;
-  racesTimeline: any;
-}
-
 export default function SenateStatePage({ params, source, stateName, candidates, averagedPolls, latestPolls, racesTimeline }: InferGetStaticPropsType<FixUpProps<typeof getStaticProps>>) {
   const noRace = !candidates.senate[params?.slug];
 
@@ -130,13 +119,13 @@ export default function SenateStatePage({ params, source, stateName, candidates,
               <tbody className="text-xl md:text-2xl font-normal">
                 <tr>
                   <td className="pr-4 pb-1">
-                    {candidates.senate[params.slug].filter((a:any) => { return a.party==='democrat' || a.party==='independent' })[0].name}
+                    {candidates.senate[params.slug].filter((a) => { return a.party==='democrat' || a.party==='independent' })[0].name}
                   </td>
                   <td className="px-4 pb-1">
                     {(Number(averagedPolls.find((a) => { return a.state_po===params?.slug && a.office==='Senate' })!.lean)).toFixed(1)}%
                   </td>
                   <td
-                    className={`pl-4 pb-1 font-bold ${candidates.senate[params.slug].find((a:any) => { return a.party==='independent' }) ? 'text-amber-500' : params.slug==='AK' ? 'text-red-500' : 'text-blue-500'}`}
+                    className={`pl-4 pb-1 font-bold ${candidates.senate[params.slug].find((a) => { return a.party==='independent' }) ? 'text-amber-500' : params.slug==='AK' ? 'text-red-500' : 'text-blue-500'}`}
                   >
                     {Number(averagedPolls.find((a) => { return a.state_po===params?.slug && a.office==='Senate' })!.dem_wins).toFixed(0)}%
                   </td>
@@ -144,15 +133,15 @@ export default function SenateStatePage({ params, source, stateName, candidates,
 
                 <tr>
                   <td className="pr-4 pb-1">
-                    {candidates.senate[params.slug].find((a:any) => { return a.party==='republican' }).name}
+                    {candidates.senate[params.slug].find((a) => { return a.party==='republican' })!.name}
                   </td>
                   <td className="px-4 pb-1">
-                    {(100-Number(averagedPolls.find((a:any) => { return a.state_po===params?.slug && a.office==='Senate' })!.lean)).toFixed(1)}%
+                    {(100-Number(averagedPolls.find((a) => { return a.state_po===params?.slug && a.office==='Senate' })!.lean)).toFixed(1)}%
                   </td>
                   <td
                     className={`pl-4 pb-1 font-bold text-red-500`}
                   >
-                    {(100-Number(averagedPolls.find((a:any) => { return a.state_po===params?.slug && a.office==='Senate' })!.dem_wins)).toFixed(0)}%
+                    {(100-Number(averagedPolls.find((a) => { return a.state_po===params?.slug && a.office==='Senate' })!.dem_wins)).toFixed(0)}%
                   </td>
                 </tr>
               </tbody>
@@ -181,9 +170,9 @@ export default function SenateStatePage({ params, source, stateName, candidates,
               dates={racesTimeline.dates}
               timeline={racesTimeline.senate[params.slug].map(n => Number(n)/100)}
               labels={{
-                democrat: candidates.senate[params.slug].find((a:any) => { return a.party==='democrat' })?.name.split(' ').at(-1),
-                independent: candidates.senate[params.slug].find((a:any) => { return a.party==='independent' })?.name.split(' ').at(-1),
-                republican: candidates.senate[params.slug].find((a:any) => { return a.party==='republican' })?.name.split(' ').at(-1),
+                democrat: candidates.senate[params.slug].find((a) => { return a.party==='democrat' })?.name.split(' ').at(-1),
+                independent: candidates.senate[params.slug].find((a) => { return a.party==='independent' })?.name.split(' ').at(-1),
+                republican: candidates.senate[params.slug].find((a) => { return a.party==='republican' })?.name.split(' ').at(-1),
               }}
             />
           </div>
@@ -204,12 +193,12 @@ export default function SenateStatePage({ params, source, stateName, candidates,
           :
             <ul className="grid grid-cols-1 md:grid-cols-2 gap-4 mt-6">
               {latestPolls
-              .sort((a:any,b:any) => new Date(b[0]?.end_date).valueOf() - new Date(a[0]?.end_date).valueOf())
-              .map((a:any) => a.poll_id)
-              .filter((v:any,i:any,a:any) => a.indexOf(v) === i) // remove duplicates
-              .slice(0,16)
-              .map((pollId:any) => {
-                const poll = latestPolls.filter((a:any) => a.poll_id==pollId);
+              .sort((a, b) => new Date(b?.end_date).valueOf() - new Date(a?.end_date).valueOf())
+              .map((a) => a.poll_id)
+              .filter((v, i, a) => a.indexOf(v) === i) // remove duplicates
+              .slice(16)
+              .map((pollId) => {
+                const poll = latestPolls.filter((a) => a.poll_id==pollId);
                 return <li className="px-3 py-2 bg-neutral-100 rounded-lg" key={pollId}>
                   <div className="flex items-start gap-4">
                     <div className="flex-1">
@@ -227,7 +216,7 @@ export default function SenateStatePage({ params, source, stateName, candidates,
                   </div>
 
                   <div className="grid grid-cols-2 gap-x-4 gap-y-0">
-                    {poll.map((a:any) =>
+                    {poll.map((a) =>
                       <div className="flex gap-2" key={a.answer}>
                         <p className="font-thin">
                           {a.answer}
@@ -268,7 +257,7 @@ export const getStaticProps = async ({ params }: GetStaticPropsContext) => {
   const candidates = await getCandidates();
 
   // @ts-expect-error
-  if ((!candidates.senate[params?.slug] && !mapconfig[params?.slug]) || !params)
+  if (typeof params?.slug !== "string" || (!candidates.senate[params?.slug] && !mapconfig[params?.slug]) || !params)
     return {
       notFound: true,
     } as const;

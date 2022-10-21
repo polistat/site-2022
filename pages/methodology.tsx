@@ -7,13 +7,9 @@ import { serialize } from '../lib/serialize';
 import { getMethodologyData } from "../lib/blog";
 
 import components from '../components/MdComponents';
+import { InferGetStaticPropsType } from 'next';
 
-interface Props {
-  source: MDXRemoteSerializeResult<Record<string, unknown>, Record<string, string>>;
-  frontMatter: {[key: string]: string}
-}
-
-export default function MethodologyPage({ source, frontMatter }: Props) {
+export default function MethodologyPage({ source, frontMatter }: InferGetStaticPropsType<typeof getStaticProps>) {
   return <>
     <Head>
       <title>{`${frontMatter.title} – ORACLE of Blair`}</title>
@@ -35,7 +31,7 @@ export default function MethodologyPage({ source, frontMatter }: Props) {
   </>;
 }
 
-export async function getStaticProps() {
+export const getStaticProps = async () => {
   const fileContent = await getMethodologyData();
   const { data, content } = matter(fileContent);
   const mdxSource = await serialize(content, data);

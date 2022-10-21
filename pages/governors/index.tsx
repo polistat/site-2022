@@ -4,15 +4,9 @@ import { motion } from 'framer-motion';
 import GovernorMap from '../../components/GovernorMap';
 import GovernorDistribution from '../../components/GovernorDistribution';
 import { getCandidates, getIncumbents, getAveragedPolls } from '../../lib/results';
+import { InferGetStaticPropsType } from 'next';
 
-interface Props {
-  latestDate: string | undefined;
-  candidates: any;
-  averagedPolls: any;
-  incumbents: any;
-}
-
-export default function SenatePage({ latestDate, candidates, averagedPolls, incumbents }: Props) {
+export default function SenatePage({ latestDate, candidates, averagedPolls, incumbents }: InferGetStaticPropsType<typeof getStaticProps>) {
   return <>
     <Head>
       <title>2022 Governors Forecast – ORACLE of Blair</title>
@@ -77,7 +71,7 @@ export default function SenatePage({ latestDate, candidates, averagedPolls, incu
   </>;
 }
 
-export async function getStaticProps() {
+export const getStaticProps = async () => {
   const candidates = await getCandidates();
   const incumbents = await getIncumbents();
   const { averagedPolls, latestDate } = await getAveragedPolls();

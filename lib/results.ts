@@ -1,9 +1,13 @@
 import { octokit } from "./octokit";
 
+interface Candidates {
+  governor: { [key: string]: {party: string, name: string}[] };
+  senate: { [key: string]: {party: string, name: string}[] };
+}
+
 // fetch candidates.json from @polistat/results-2022
-// todo: type this better
 export const getCandidates = async () => {
-  const candidates = await octokit.request('GET /repos/{owner}/{repo}/contents/{path}', {
+  const candidates: Candidates = await octokit.request('GET /repos/{owner}/{repo}/contents/{path}', {
     owner: 'polistat',
     repo: 'results-2022',
     path: `candidates.json`
@@ -17,12 +21,13 @@ export const getCandidates = async () => {
 
   return candidates;
 }
-// const candidates = JSON.parse(decodeURIComponent(escape(atob(JSON.parse(await getRawFileFromRepo('candidates.json')).content.replace(/\s/g, '')))));
+
+// todo: get the keys
+interface Incumbents {}
 
 // fetch senateIncumbents.json from @polistat/results-22
-// todo: type this better
 export const getIncumbents = async () => {
-  const incumbents = await octokit.request('GET /repos/{owner}/{repo}/contents/{path}', {
+  const incumbents: Incumbents = await octokit.request('GET /repos/{owner}/{repo}/contents/{path}', {
     owner: 'polistat',
     repo: 'results-2022',
     path: `incumbents.json`
@@ -89,7 +94,6 @@ export const getAveragedPolls = async (): Promise<{ averagedPolls: AveragedState
     // res.data
     if (!Array.isArray(res.data)) return;
     return res.data.map((file) => file.name).sort().at(-1);
-    // return res.data.find((a:any) => { return a.name === latestFileName });
   })
   .catch(err => console.error(err));
 
@@ -131,7 +135,6 @@ export const getOverallSenate = async () => {
     // res.data
     if (!Array.isArray(res.data)) return;
     return res.data.map((file) => file.name).sort().at(-1);
-    // return res.data.find((a:any) => { return a.name === latestFileName });
   })
   .catch(err => console.error(err));
 
@@ -164,6 +167,7 @@ interface Poll {
   pct: string;
   answer: string;
   party: string;
+  poll_id: string;
 }
 
 // fetch latest polls from @polistat/results-2022

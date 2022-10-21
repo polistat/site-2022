@@ -1,6 +1,6 @@
 import React from 'react';
 import Head from 'next/head';
-import { GetStaticProps } from 'next';
+import { GetStaticProps, GetStaticPropsContext, InferGetStaticPropsType } from 'next';
 import { ParsedUrlQuery } from 'querystring';
 
 // import matter from "gray-matter";
@@ -9,6 +9,7 @@ import { serialize } from '../../lib/serialize';
 import { getBlogSlugs, getBlogData } from "../../lib/blog";
 
 import components from '../../components/MdComponents';
+import { FixUpProps } from '../../lib/types';
 
 interface Props {
   params: ParsedUrlQuery | undefined;
@@ -16,7 +17,7 @@ interface Props {
   frontMatter: { [key: string]: string }
 }
 
-export default function BlogPost({ source, frontMatter }: Props) {
+export default function BlogPost({ source, frontMatter }: InferGetStaticPropsType<FixUpProps<typeof getStaticProps>>) {
   // let components;
   // try {
   //   components = require(`../content/blog/components`).default;
@@ -71,15 +72,14 @@ export async function getStaticPaths() {
   };
 }
 
-export const getStaticProps: GetStaticProps = async ({ params }): Promise<{props: Props}> => {
-  const paths = await getBlogSlugs();
-  if (!paths.find((a:any) => a.params.slug===params?.slug))
+export const getStaticProps = async ({ params }: GetStaticPropsContext) => {
+  const paths = await getBlogSlugs() ?? [];
+  if (!paths.find((a) => a.params.slug === params?.slug) || typeof params?.slug !== "string")
     return {
-      // @ts-expect-error
       notFound: true,
-    };
+    } as const;
 
-  const { data, content } = await getBlogData((params?.slug as unknown) as string);
+  const { data, content } = await getBlogData(params.slug);
   const mdxSource = await serialize(content, { scope: data });
 
   return {
@@ -88,7 +88,6 @@ export const getStaticProps: GetStaticProps = async ({ params }): Promise<{props
       source: mdxSource,
       frontMatter: data
     },
-    // @ts-expect-error
     revalidate: 3600 // 1 hour
   };
 }
