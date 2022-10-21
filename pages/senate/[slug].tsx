@@ -114,7 +114,7 @@ export default function SenateStatePage({ params, source, stateName, candidates,
                   <tbody>
                     <tr>
                       <td className="text-lg font-semibold">
-                        {(parseFloat(averagedPolls.find((a:any) => { return a.state_po===params?.slug && a.office==='Senate' }).BPI)).toFixed(2)}
+                        {(parseFloat(averagedPolls.find((a:any) => { return a.state_po===params?.slug && a.office==='Senate' })!.BPI)).toFixed(2)}
                       </td>
                       <th className="px-2 uppercase text-left text-xs text-neutral-400 leading-4">
                         BPI
@@ -122,8 +122,8 @@ export default function SenateStatePage({ params, source, stateName, candidates,
                     </tr>
                     <tr>
                       <td className="text-lg font-semibold">
-                        {isNaN(averagedPolls.find((a:any) => { return a.state_po===params?.slug && a.office==='Senate' }).weighted_polls) ? 'N/A'
-                        : (parseFloat(averagedPolls.find((a:any) => { return a.state_po===params?.slug && a.office==='Senate' }).weighted_polls)).toFixed(2)}
+                        {isNaN(Number(averagedPolls.find((a:any) => { return a.state_po===params?.slug && a.office==='Senate' })!.weighted_polls)) ? 'N/A'
+                        : (parseFloat(averagedPolls.find((a:any) => { return a.state_po===params?.slug && a.office==='Senate' })!.weighted_polls)).toFixed(2)}
                       </td>
                       <th className="px-2 uppercase text-left text-xs text-neutral-400 leading-4">
                         Poll avg.
@@ -152,13 +152,13 @@ export default function SenateStatePage({ params, source, stateName, candidates,
                     {candidates.senate[params.slug].filter((a:any) => { return a.party==='democrat' || a.party==='independent' })[0].name}
                   </td>
                   <td className="px-4 pb-1">
-                    {(Number(averagedPolls.find((a:any) => { return a.state_po===params?.slug && a.office==='Senate' }).lean)).toFixed(1)}%
+                    {(Number(averagedPolls.find((a:any) => { return a.state_po===params?.slug && a.office==='Senate' })!.lean)).toFixed(1)}%
                   </td>
                   <td
                   // @ts-expect-error
                     className={`pl-4 pb-1 font-bold ${candidates.senate[params.slug].find((a:any) => { return a.party==='independent' }) ? 'text-amber-500' : params.slug==='AK' ? 'text-red-500' : 'text-blue-500'}`}
                   >
-                    {Number(averagedPolls.find((a:any) => { return a.state_po===params?.slug && a.office==='Senate' }).dem_wins).toFixed(0)}%
+                    {Number(averagedPolls.find((a:any) => { return a.state_po===params?.slug && a.office==='Senate' })!.dem_wins).toFixed(0)}%
                   </td>
                 </tr>
 
@@ -169,12 +169,12 @@ export default function SenateStatePage({ params, source, stateName, candidates,
                     {candidates.senate[params.slug].find((a:any) => { return a.party==='republican' }).name}
                   </td>
                   <td className="px-4 pb-1">
-                    {(100-Number(averagedPolls.find((a:any) => { return a.state_po===params?.slug && a.office==='Senate' }).lean)).toFixed(1)}%
+                    {(100-Number(averagedPolls.find((a:any) => { return a.state_po===params?.slug && a.office==='Senate' })!.lean)).toFixed(1)}%
                   </td>
                   <td
                     className={`pl-4 pb-1 font-bold text-red-500`}
                   >
-                    {(100-Number(averagedPolls.find((a:any) => { return a.state_po===params?.slug && a.office==='Senate' }).dem_wins)).toFixed(0)}%
+                    {(100-Number(averagedPolls.find((a:any) => { return a.state_po===params?.slug && a.office==='Senate' })!.dem_wins)).toFixed(0)}%
                   </td>
                 </tr>
               </tbody>

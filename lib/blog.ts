@@ -39,7 +39,7 @@ export const getBlogList = async () => {
   })
   .catch(err => console.error(err));
 
-  return posts;
+  return posts ?? [];
 }
 
 export const getBlogSlugs = async () => {

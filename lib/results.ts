@@ -55,8 +55,19 @@ export const getTimeline = async () => {
   return { ...timeline, overallSenate: {...timeline.overallSenate, dates: timeline.overallSenate.dates.map((date: any) => date.replaceAll("_", ":")) }, races: { ...timeline.races, dates: timeline.races.dates.map((date: any) => date.replaceAll("_", ":")) } };
 }
 
+interface AveragedState {
+  state_po: string;
+  office: string;
+  BPI: string;
+  weighted_polls: string;
+  weighted_sd: string;
+  weighted_var: string;
+  lean: string;
+  dem_wins: string;
+}
+
 // fetch latest averaged polls and date from @polistat/results-2022
-export const getAveragedPolls = async () => {
+export const getAveragedPolls = async (): Promise<{ averagedPolls: AveragedState[], latestDate: undefined | string}> => {
   const averagedPollsFileName = await octokit.request('GET /repos/{owner}/{repo}/contents/{path}', {
     owner: 'polistat',
     repo: 'results-2022',
@@ -83,13 +94,18 @@ export const getAveragedPolls = async () => {
     const encoded = res.data.content.replace(/\s/g, '');
     const decoded = decodeURIComponent(escape(atob(encoded)));
     // return decoded.split("\r\n").map(a => a.split(','));
-    return csvToJson<any>(decoded);
+    return csvToJson<AveragedState>(decoded);
   })
   .catch(err => console.error(err));
 
   if (!averagedPolls) return { averagedPolls: [], latestDate: undefined };
 
   return { averagedPolls, latestDate };
+}
+
+interface OverallSenate {
+  demSeats: number;
+  occurrences: number;
 }
 
 // fetch latest overall senate data and date from @polistat/results-2022
@@ -118,7 +134,7 @@ export const getOverallSenate = async () => {
     const encoded = res.data.content.replace(/\s/g, '');
     const decoded = decodeURIComponent(escape(atob(encoded)));
     // return decoded.split("\r\n").map(a => a.split(','));
-    return csvToJson<any>(decoded);
+    return csvToJson<OverallSenate>(decoded);
   })
   .catch(err => console.error(err));
 

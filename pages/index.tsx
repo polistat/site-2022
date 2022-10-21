@@ -9,17 +9,9 @@ import GovernorMap from '../components/GovernorMap';
 import SenateDistributionPreview from '../components/SenateDistributionPreview';
 import GovernorDistributionPreview from '../components/GovernorDistributionPreview';
 import { getCandidates, getIncumbents, getAveragedPolls, getOverallSenate } from '../lib/results';
+import { InferGetStaticPropsType } from 'next';
 
-interface Props {
-  blogPosts: any,
-  latestDate: string | undefined,
-  candidates: any,
-  averagedPolls: any,
-  incumbents: any,
-  overallSenate: any
-}
-
-export default function Home({ blogPosts, latestDate, candidates, averagedPolls, incumbents, overallSenate }: Props) {
+export default function Home({ blogPosts, latestDate, candidates, averagedPolls, incumbents, overallSenate }: InferGetStaticPropsType<typeof getStaticProps>) {
   const [headerSlide, setHeaderSlide] = React.useState(0);
 
   return <>
@@ -242,7 +234,7 @@ export default function Home({ blogPosts, latestDate, candidates, averagedPolls,
   </>;
 }
 
-export async function getStaticProps() {
+export const getStaticProps = async () => {
   const blogPosts = await getBlogList();
 
   const candidates = await getCandidates();

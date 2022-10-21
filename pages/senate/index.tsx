@@ -7,15 +7,6 @@ import ChancesTimeline from '../../components/ChancesTimeline';
 import { getCandidates, getIncumbents, getTimeline, getAveragedPolls, getOverallSenate } from '../../lib/results';
 import { InferGetStaticPropsType } from 'next';
 
-interface Props {
-  latestDate: string | undefined;
-  candidates: any;
-  incumbents: any;
-  averagedPolls: any;
-  overallSenate: any;
-  overallSenateTimeline:any;
-}
-
 export default function SenatePage({ latestDate, candidates, incumbents, averagedPolls, overallSenate, overallSenateTimeline }: InferGetStaticPropsType<typeof getStaticProps>) {
   const totalSimulations = overallSenate.reduce((sum:number, a:any) => sum+Number(a.occurrences), 0);
   const demWinChance = overallSenate.filter((a:any) => Number(a.demSeats)>=50).reduce((sum:number, a:any) => sum+Number(a.occurrences), 0) / totalSimulations;
@@ -130,7 +121,7 @@ export default function SenatePage({ latestDate, candidates, incumbents, average
 export const getStaticProps = async () => {
   const candidates = await getCandidates();
   const incumbents = await getIncumbents();
-  const { timeline: timelineTimestamp, overallSenate: overallSenateTimeline } = await getTimeline();
+  const { overallSenate: overallSenateTimeline } = await getTimeline();
 
   const { averagedPolls, latestDate } = await getAveragedPolls();
   const overallSenate = await getOverallSenate();
