@@ -51,14 +51,16 @@ export default function ChancesTimeline({ dates, timeline, labels }: { dates: st
         />
         <text
           x={Math.max(60+(selectedIndex)*940/(demTimeline.length-1)-90-(labels?.democrat || labels?.independent || 'DEM').length*14, 58)}
-          y={550-demTimeline[selectedIndex]*500+(demTimeline[selectedIndex]>0.9 ? 30 : demTimeline[selectedIndex]<0.2 ? -20 : 30)}
+          // y={550-demTimeline[selectedIndex]*500+(demTimeline[selectedIndex]>0.9 ? 30 : demTimeline[selectedIndex]<0.2 ? -20 : 30)}
+          y={550-demTimeline[selectedIndex]*500+(Math.abs(demTimeline[selectedIndex]-repTimeline[selectedIndex])>0.2 ? (demTimeline[selectedIndex]>=0.5?40:-30) : (demTimeline[selectedIndex]>=0.5?-30:40))}
           className={`text-2xl font-semibold ${labels?.democrat==='Murkowski' ? 'fill-red-500' : labels?.independent ? 'fill-amber-500' : 'fill-blue-500' }`}
         >
           {labels?.democrat || labels?.independent || 'DEM'} {(demTimeline[selectedIndex]*100).toFixed(1)}%
         </text>
         <text
           x={Math.max(60+(selectedIndex)*940/(repTimeline.length-1)-90-(labels?.republican || 'REP').length*14, 58)}
-          y={550-repTimeline[selectedIndex]*500+(repTimeline[selectedIndex]>0.9 ? 30 : repTimeline[selectedIndex]<0.2 ? -20 : -20)}
+          // y={550-repTimeline[selectedIndex]*500+(repTimeline[selectedIndex]>0.9 ? 30 : repTimeline[selectedIndex]<0.2 ? -20 : -20)}
+          y={550-repTimeline[selectedIndex]*500+(Math.abs(demTimeline[selectedIndex]-repTimeline[selectedIndex])>0.2 ? (repTimeline[selectedIndex]>=0.5?40:-30) : (repTimeline[selectedIndex]>=0.5?-30:40))}
           className="text-2xl font-semibold fill-red-500"
         >
           {labels?.republican || 'REP'} {(repTimeline[selectedIndex]*100).toFixed(1)}%
@@ -69,7 +71,7 @@ export default function ChancesTimeline({ dates, timeline, labels }: { dates: st
           y={595}
           className="text-lg font-semibold fill-neutral-400"
         >
-          {dates[selectedIndex]}
+          {new Date(dates[selectedIndex]).toLocaleDateString('en-US', { month:'numeric',day:'numeric',year:'numeric'})}
         </text>
       </>}
 
