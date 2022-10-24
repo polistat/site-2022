@@ -1,6 +1,6 @@
 import Head from 'next/head';
 import Link from 'next/link';
-import { GetStaticProps } from 'next';
+import { GetStaticPropsContext, InferGetStaticPropsType } from 'next';
 import { ParsedUrlQuery } from 'querystring';
 
 // import matter from "gray-matter";
@@ -13,21 +13,9 @@ import mapconfig from '../../mapconfig.json';
 
 import components from '../../components/MdComponents';
 import ChancesTimeline from '../../components/ChancesTimeline';
+import { FixUpProps } from '../../lib/types';
 
-interface Props {
-  params: ParsedUrlQuery | undefined;
-  source: MDXRemoteSerializeResult<Record<string, unknown>, Record<string, string>> | null;
-  frontMatter: { [key: string]: string } | null;
-  stateName: string;
-  candidates: any;
-  averagedPolls: any;
-  latestDate: string;
-  latestPolls: any;
-  racesTimeline: any;
-}
-
-export default function GovernorsStatePage({ params, source, frontMatter, stateName, candidates, averagedPolls, latestDate, latestPolls, racesTimeline }: Props) {
-  // @ts-expect-error
+export default function GovernorsStatePage({ params, source, stateName, candidates, averagedPolls, latestPolls, racesTimeline }: InferGetStaticPropsType<FixUpProps<typeof getStaticProps>>) {
   const noRace = !candidates.governor[params?.slug];
 
   return <>
@@ -66,7 +54,7 @@ export default function GovernorsStatePage({ params, source, frontMatter, stateN
                 <tbody>
                   <tr>
                     <td className="text-lg font-semibold">
-                      {(parseFloat(averagedPolls.find((a:any) => { return a.state_po===params?.slug && a.office==='Governor' }).BPI)).toFixed(2)}
+                      {(parseFloat(averagedPolls.find((a) => a.state_po===params?.slug && a.office==='Governor')!.BPI)).toFixed(2)}
                     </td>
                     <th className="px-2 uppercase text-left text-xs text-neutral-400 leading-4">
                       BPI
@@ -74,8 +62,8 @@ export default function GovernorsStatePage({ params, source, frontMatter, stateN
                   </tr>
                   <tr>
                     <td className="text-lg font-semibold">
-                      {isNaN(averagedPolls.find((a:any) => { return a.state_po===params?.slug && a.office==='Governor' }).weighted_polls) ? 'N/A'
-                      : (parseFloat(averagedPolls.find((a:any) => { return a.state_po===params?.slug && a.office==='Governor' }).weighted_polls)).toFixed(2)}
+                      {isNaN(parseFloat(averagedPolls.find((a) => { return a.state_po===params?.slug && a.office==='Governor' })!.weighted_polls)) ? 'N/A'
+                      : (parseFloat(averagedPolls.find((a) => { return a.state_po===params?.slug && a.office==='Governor' })!.weighted_polls)).toFixed(2)}
                     </td>
                     <th className="px-2 uppercase text-left text-xs text-neutral-400 leading-4">
                       Poll avg.
@@ -99,18 +87,15 @@ export default function GovernorsStatePage({ params, source, frontMatter, stateN
             <tbody className="text-2xl font-normal">
               <tr>
                 <td className="pr-4 pb-1">
-                  {/*
-                  // @ts-expect-error*/}
-                  {candidates.governor[params.slug].filter((a:any) => { return a.party==='democrat' || a.party==='independent' })[0].name}
+                  {candidates.governor[params.slug].filter((a) => { return a.party==='democrat' || a.party==='independent' })[0].name}
                 </td>
                 <td className="px-4 pb-1">
-                  {(Number(averagedPolls.find((a:any) => { return a.state_po===params?.slug && a.office==='Governor' }).lean)).toFixed(1)}%
+                  {(Number(averagedPolls.find((a) => { return a.state_po===params?.slug && a.office==='Governor' })!.lean)).toFixed(1)}%
                 </td>
                 <td
-                  // @ts-expect-error
                   className={`pl-4 pb-1 font-bold ${candidates.governor[params.slug].find(a => { return a.party==='independent' }) ? 'text-amber-500' : 'text-blue-500'}`}
                 >
-                  {Number(averagedPolls.find((a:any) => { return a.state_po===params?.slug && a.office==='Governor' }).dem_wins).toFixed(0)}%
+                  {Number(averagedPolls.find((a) => { return a.state_po===params?.slug && a.office==='Governor' })!.dem_wins).toFixed(0)}%
                 </td>
               </tr>
 
@@ -121,12 +106,12 @@ export default function GovernorsStatePage({ params, source, frontMatter, stateN
                   {candidates.governor[params.slug].find(a => { return a.party==='republican' }).name}
                 </td>
                 <td className="px-4 pb-1">
-                  {(100-Number(averagedPolls.find((a:any) => { return a.state_po===params?.slug && a.office==='Governor' }).lean)).toFixed(1)}%
+                  {(100-Number(averagedPolls.find((a) => { return a.state_po === params?.slug && a.office==='Governor' })!.lean)).toFixed(1)}%
                 </td>
                 <td
                   className={`pl-4 pb-1 font-bold text-red-500`}
                 >
-                  {(100-Number(averagedPolls.find((a:any) => { return a.state_po===params?.slug && a.office==='Governor' }).dem_wins)).toFixed(0)}%
+                  {(100-Number(averagedPolls.find((a) => { return a.state_po === params?.slug && a.office==='Governor' })!.dem_wins)).toFixed(0)}%
                 </td>
               </tr>
             </tbody>
@@ -152,15 +137,11 @@ export default function GovernorsStatePage({ params, source, frontMatter, stateN
           <div className="mt-4">
             <ChancesTimeline
               dates={racesTimeline.dates}
-              // @ts-expect-error
               timeline={racesTimeline.governor[params.slug].map(n => Number(n)/100)}
               labels={{
-              // @ts-expect-error
-                democrat: candidates.governor[params.slug].find((a:any) => { return a.party==='democrat' })?.name.split(' ').at(-1),
-                // @ts-expect-error
-                independent: candidates.governor[params.slug].find((a:any) => { return a.party==='independent' })?.name.split(' ').at(-1),
-              // @ts-expect-error
-                republican: candidates.governor[params.slug].find((a:any) => { return a.party==='republican' })?.name.split(' ').at(-1),
+                democrat: candidates.governor[params.slug].find((a) => { return a.party==='democrat' })?.name.split(' ').at(-1),
+                independent: candidates.governor[params.slug].find((a) => { return a.party==='independent' })?.name.split(' ').at(-1),
+                republican: candidates.governor[params.slug].find((a) => { return a.party==='republican' })?.name.split(' ').at(-1),
               }}
             />
           </div>
@@ -181,12 +162,12 @@ export default function GovernorsStatePage({ params, source, frontMatter, stateN
           :
             <ul className="grid grid-cols-1 md:grid-cols-2 gap-4 mt-6">
               {latestPolls
-              .sort((a:any,b:any) => new Date(b[0]?.end_date).valueOf() - new Date(a[0]?.end_date).valueOf())
-              .map((a:any) => a.poll_id)
-              .filter((v:any,i:any,a:any) => a.indexOf(v) === i) // remove duplicates
+              .sort((a, b) => new Date(b.end_date).valueOf() - new Date(a.end_date).valueOf())
+              .map((a) => a.poll_id)
+              .filter((v, i, a) => a.indexOf(v) === i) // remove duplicates
               .slice(0,16)
-              .map((pollId:any) => {
-                const poll = latestPolls.filter((a:any) => a.poll_id==pollId);
+              .map((pollId) => {
+                const poll = latestPolls.filter((a) => a.poll_id==pollId);
                 return <li className="px-3 py-2 bg-neutral-100 rounded-lg" key={pollId}>
                   <div className="flex items-start gap-4">
                     <div className="flex-1">
@@ -206,28 +187,24 @@ export default function GovernorsStatePage({ params, source, frontMatter, stateN
                   <div className="flex gap-4">
                     <div className="flex gap-2">
                       <p className="font-thin">
-                        {/*
-                        // @ts-expect-error */ }
-                        {candidates.governor[params.slug].find((a:any)=>a.party==='democrat') ? poll.find((a:any) => a.party==='DEM')?.answer : poll.find((a:any) => a.party==='IND')?.answer}
+                        {candidates.governor[params.slug].find((a) => a.party==='democrat') ? poll.find((a) => a.party==='DEM')?.answer : poll.find((a) => a.party==='IND')?.answer}
                       </p>
-                      {/*
-                      // @ts-expect-error */ }
-                      {candidates.governor[params.slug].find((a:any)=>a.party==='democrat') ?
+                      {candidates.governor[params.slug].find((a) => a.party==='democrat') ?
                         <p className={`text-blue-500 font-normal`}>
-                          {poll.find((a:any) => a.party==='DEM')?.pct}%
+                          {poll.find((a) => a.party==='DEM')?.pct}%
                         </p>
                       :
                         <p className={`text-amber-500`}>
-                          {poll.find((a:any) => a.party==='IND')?.pct}%
+                          {poll.find((a) => a.party==='IND')?.pct}%
                         </p>
                       }
                     </div>
                     <div className="flex gap-2">
                       <p className="font-thin">
-                        {poll.find((a:any) => a.party==='REP')?.answer}
+                        {poll.find((a) => a.party==='REP')?.answer}
                       </p>
                       <p className="text-red-500 font-normal">
-                        {poll.find((a:any) => a.party==='REP')?.pct}%
+                        {poll.find((a) => a.party==='REP')?.pct}%
                       </p>
                     </div>
                   </div>
@@ -248,21 +225,18 @@ export async function getStaticPaths() {
     fallback: 'blocking'
   };
 }
-
-export const getStaticProps: GetStaticProps = async ({ params }): Promise<{props: Props}> => {
+export const getStaticProps = async ({ params }: GetStaticPropsContext<{ slug: string }>) => {
   const candidates = await getCandidates();
 
   // @ts-expect-error
-  if (!candidates.governor[params?.slug] && !mapconfig[params?.slug])
+  if ((!candidates.governor[params?.slug] && !mapconfig[params?.slug]) || !params)
     return {
-      // @ts-expect-error
       notFound: true,
-    };
-    
+    } as const;
+  
   const { averagedPolls, latestDate } = await getAveragedPolls();
   
-  // @ts-expect-error
-  const { timeline: timelineTimestamp, races: { dates:timelineDates, governor: { [params.slug]:raceTimeline} } } = await getTimeline();
+  const { races: { dates: timelineDates, governor: { [params.slug]: raceTimeline} } } = await getTimeline();
 
   // @ts-expect-error
   const stateName = mapconfig[params?.slug].name;
@@ -273,7 +247,7 @@ export const getStaticProps: GetStaticProps = async ({ params }): Promise<{props
     });
   const mdxSource = content&&data ? await serialize(content, { scope: data }) : null;
 
-  const { latestPolls, latestDate:latestDate2 } = await getLatestPolls('governor', stateName);
+  const latestPolls = await getLatestPolls('governor', stateName);
 
   return {
     props: {
@@ -285,10 +259,8 @@ export const getStaticProps: GetStaticProps = async ({ params }): Promise<{props
       averagedPolls,
       latestDate,
       latestPolls,
-      // @ts-expect-error
-      racesTimeline: { dates:timelineDates, governor: { [params.slug]:raceTimeline } },
+      racesTimeline: { dates: timelineDates, governor: { [params.slug]: raceTimeline } },
     },
-    // @ts-expect-error
     revalidate: 3600 // 1 hour
   };
 }
