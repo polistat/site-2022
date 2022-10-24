@@ -125,7 +125,7 @@ export default function SenateStatePage({ params, source, stateName, candidates,
                     {(Number(averagedPolls.find((a) => { return a.state_po===params?.slug && a.office==='Senate' })!.lean)).toFixed(1)}%
                   </td>
                   <td
-                    className={`pl-4 pb-1 font-bold ${candidates.senate[params.slug].find((a) => { return a.party==='independent' }) ? 'text-amber-500' : params.slug==='AK' ? 'text-red-500' : 'text-blue-500'}`}
+                    className={`pl-4 pb-1 font-bold ${candidates.senate[params.slug].find((a) => { return a.party==='independent' }) ? 'text-purple-500' : params.slug==='AK' ? 'text-red-500' : 'text-blue-500'}`}
                   >
                     {Number(averagedPolls.find((a) => { return a.state_po===params?.slug && a.office==='Senate' })!.dem_wins).toFixed(0)}%
                   </td>
@@ -225,7 +225,7 @@ export default function SenateStatePage({ params, source, stateName, candidates,
                           className={`${
                             a.party==='DEM' ? 'text-blue-500'
                             : a.party==='REP' ? 'text-red-500'
-                            : a.party==='IND' ? 'text-amber-500'
+                            : a.party==='IND' ? 'text-purple-500'
                             : a.party==='GRE' ? 'text-green-500'
                             : 'text-neutral-400'
                           } font-normal`}
