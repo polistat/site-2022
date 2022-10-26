@@ -6,23 +6,21 @@ export const getBlogList = async () => {
     owner: 'polistat',
     repo: 'content-2022',
     path: `blog`
-  }).then(async (res) => {
-    if (!Array.isArray(res.data)) return;
-    return Promise.all(res.data.map(async (file) => {
+  }).then(async (res:any) => {
+    return Promise.all(res.data.map(async (file:any) => {
       const slug = file.name.replace(".md", "");
       const fileContent = await octokit.request('GET /repos/{owner}/{repo}/contents/{path}', {
         owner: 'polistat',
         repo: 'content-2022',
         path: `blog/${file.name}`
-      }).then((fileRes) => {
-        if (!("content" in fileRes.data)) return;
+      }).then((fileRes:any) => {
         const encoded = fileRes.data.content.replace(/\s/g, '');
         const decoded = decodeURIComponent(escape(atob(encoded)));
         return decoded;
       })
       .catch(err => console.error(err));
-      
-      const { data } = matter(fileContent ?? "Unable to locate file.");
+      // @ts-expect-error
+      const { data } = matter(fileContent);
   
       const date = (new Date(data.date)).toLocaleDateString("en-US", {
         year: "numeric",
@@ -41,7 +39,7 @@ export const getBlogList = async () => {
   })
   .catch(err => console.error(err));
 
-  return posts ?? [];
+  return posts;
 }
 
 export const getBlogSlugs = async () => {
@@ -49,15 +47,14 @@ export const getBlogSlugs = async () => {
     owner: 'polistat',
     repo: 'content-2022',
     path: `blog`
-  }).then((res) => {
-    if (!Array.isArray(res.data)) return [];
-    return res.data.map((file) =>
-      ({
+  }).then((res:any) => {
+    return res.data.map((file:any) => {
+      return {
         params: {
           slug: file.name.replace(".md", ""),
         },
-      })
-    );
+      };
+    });
   })
   .catch(err => console.error(err));
 
@@ -69,15 +66,14 @@ export const getBlogData = async (slug: string): Promise<Pick<GrayMatterFile<str
     owner: 'polistat',
     repo: 'content-2022',
     path: `blog/${slug}.md`
-  }).then((fileRes) => {
-    if (!("content" in fileRes.data)) return;
+  }).then((fileRes:any) => {
     const encoded = fileRes.data.content.replace(/\s/g, '');
     const decoded = decodeURIComponent(escape(atob(encoded)));
     return decoded;
   })
   .catch(err => console.error(err));
-
-  const { data, content } = matter(fileContent ?? "Unable to locate file.");
+  // @ts-expect-error
+  const { data, content } = matter(fileContent);
 
   const date = (new Date(data.date)).toLocaleDateString("en-US", {
     year: "numeric",
@@ -95,14 +91,14 @@ export const getMethodologyData = async () => {
     owner: 'polistat',
     repo: 'content-2022',
     path: `methodology.md`
-  }).then((fileRes) => {
-    if (!("content" in fileRes.data)) return;
+  }).then((fileRes:any) => {
     const encoded = fileRes.data.content.replace(/\s/g, '');
     const decoded = decodeURIComponent(escape(atob(encoded)));
     return decoded;
   })
   .catch(err => console.error(err));
-  const { data, content } = matter(fileContent ?? "Unable to locate file.");
+  // @ts-expect-error
+  const { data, content } = matter(fileContent);
 
   const date = (new Date(data.date)).toLocaleDateString("en-US", {
     year: "numeric",

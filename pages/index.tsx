@@ -9,9 +9,8 @@ import GovernorMap from '../components/GovernorMap';
 import SenateDistributionPreview from '../components/SenateDistributionPreview';
 import GovernorDistributionPreview from '../components/GovernorDistributionPreview';
 import { getCandidates, getIncumbents, getAveragedPolls, getOverallSenate } from '../lib/results';
-import { InferGetStaticPropsType } from 'next';
 
-export default function Home({ blogPosts, latestDate, candidates, averagedPolls, incumbents, overallSenate }: InferGetStaticPropsType<typeof getStaticProps>) {
+export default function Home({ blogPosts, latestDate, candidates, averagedPolls, incumbents, overallSenate }: { blogPosts:any, latestDate:any, candidates:any, averagedPolls:any, incumbents:any, overallSenate:any }) {
   const [headerSlide, setHeaderSlide] = React.useState(0);
 
   return <>
@@ -42,7 +41,7 @@ export default function Home({ blogPosts, latestDate, candidates, averagedPolls,
               transition={{ duration: 2, repeat: Infinity, }}
             />
             <p className="text-sm text-center text-neutral-400 uppercase font-bold">
-              Updated {!isNaN(new Date(latestDate ?? "").valueOf()) ? new Date(`${latestDate}`).toLocaleDateString('en-US', { month:'numeric',day:'numeric',year:'numeric',hour:'2-digit',minute:'2-digit'}) : latestDate}
+              Updated {!isNaN(new Date(latestDate).valueOf()) ? new Date(`${latestDate}`).toLocaleDateString('en-US', { month:'numeric',day:'numeric',year:'numeric',hour:'2-digit',minute:'2-digit'}) : latestDate}
             </p>
           </div>
         </div>
@@ -234,13 +233,13 @@ export default function Home({ blogPosts, latestDate, candidates, averagedPolls,
   </>;
 }
 
-export const getStaticProps = async () => {
+export async function getStaticProps() {
   const blogPosts = await getBlogList();
 
   const candidates = await getCandidates();
   const incumbents = await getIncumbents();
   const { averagedPolls, latestDate } = await getAveragedPolls();
-  const overallSenate = await getOverallSenate();
+  const { overallSenate, latestDate:latestDate2 } = await getOverallSenate();
 
   return {
     props: {
