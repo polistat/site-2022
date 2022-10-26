@@ -300,13 +300,20 @@ export const getStaticProps: GetStaticProps = async ({ params }): Promise<{props
       notFound: true,
     };
     
-  const { averagedPolls, latestDate } = await getAveragedPolls();
+  const { averagedPolls, latestDate } = await getAveragedPolls()
+    .catch(err => {
+      return { averagedPolls: null, latestDate: null };
+    })
 
   // @ts-expect-error
-  const { timeline: timelineTimestamp, races: { dates:timelineDates, senate: { [params.slug]:raceTimeline} } } = await getTimeline();
+  const { timeline: timelineTimestamp, races: { dates:timelineDates, senate: { [params.slug]:raceTimeline} } } = await getTimeline()
+    .catch(err => {
+      // @ts-expect-error
+      return { timeline: null, races: { dates: null, senate: { [params.slug]: null } } };
+    });
   
   // @ts-expect-error
-  const stateName = mapconfig[params.slug.replace(/[0-9]/g, '')].name;
+  const stateName = mapconfig[params.slug.replace(/[0-9]/g, '')].name || null;
   
   const { data, content } = await getSenateData((params?.slug as unknown) as string)
     .catch(err => {
@@ -314,7 +321,10 @@ export const getStaticProps: GetStaticProps = async ({ params }): Promise<{props
     });
   const mdxSource = content&&data ? await serialize(content, { scope: data }) : null;
 
-  const { latestPolls, latestDate:latestDate2 } = await getLatestPolls('senate', stateName);
+  const { latestPolls, latestDate:latestDate2 } = await getLatestPolls('senate', stateName)
+    .catch(err => {
+      return { latestPolls:null, latestDate:null };
+    });
 
   return {
     props: {
@@ -327,7 +337,7 @@ export const getStaticProps: GetStaticProps = async ({ params }): Promise<{props
       latestDate,
       latestPolls,
       // @ts-expect-error
-      racesTimeline: { dates:timelineDates, senate: { [params.slug]:raceTimeline } },
+      racesTimeline: { dates:timelineDates, senate: { [params.slug]:raceTimeline||null } },
     },
     // @ts-expect-error
     revalidate: 3600 // 1 hour
