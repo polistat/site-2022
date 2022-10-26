@@ -5,9 +5,8 @@ import SenateMap from '../../components/SenateMap';
 import SenateDistribution from '../../components/SenateDistribution';
 import ChancesTimeline from '../../components/ChancesTimeline';
 import { getCandidates, getIncumbents, getTimeline, getAveragedPolls, getOverallSenate } from '../../lib/results';
-import { InferGetStaticPropsType } from 'next';
 
-export default function SenatePage({ latestDate, candidates, incumbents, averagedPolls, overallSenate, overallSenateTimeline }: InferGetStaticPropsType<typeof getStaticProps>) {
+export default function SenatePage({ latestDate, candidates, incumbents, averagedPolls, overallSenate, overallSenateTimeline }: { latestDate:any; candidates:any; incumbents:any; averagedPolls:any; overallSenate:any; overallSenateTimeline:any; }) {
   const totalSimulations = overallSenate.reduce((sum:number, a:any) => sum+Number(a.occurrences), 0);
   const demWinChance = overallSenate.filter((a:any) => Number(a.demSeats)>=50).reduce((sum:number, a:any) => sum+Number(a.occurrences), 0) / totalSimulations;
   
@@ -26,7 +25,7 @@ export default function SenatePage({ latestDate, candidates, incumbents, average
       <section className="p-8 container max-w-4xl flex flex-col gap-4 bg-neutral-50 border-2 shadow-md rounded-2xl">
         <div className="flex flex-col gap-1.5 items-center">
           <h1 className="px-1.5 text-xl text-center font-medium uppercase bg-amber-100 rounded-md">
-            Senate Forecast
+             Senate Forecast
           </h1>
           <p className="text-4xl text-center font-serif">
             {demWinChance>0.7 ?
@@ -68,7 +67,7 @@ export default function SenatePage({ latestDate, candidates, incumbents, average
             transition={{ duration: 2, repeat: Infinity, }}
           />
           <p className="text-sm text-center text-neutral-400 uppercase font-bold">
-              Updated {!isNaN(new Date(latestDate ?? "").valueOf()) ? new Date(`${latestDate}`).toLocaleDateString('en-US', { month:'numeric',day:'numeric',year:'numeric',hour:'2-digit',minute:'2-digit'}) : latestDate}
+              Updated {!isNaN(new Date(latestDate).valueOf()) ? new Date(`${latestDate}`).toLocaleDateString('en-US', { month:'numeric',day:'numeric',year:'numeric',hour:'2-digit',minute:'2-digit'}) : latestDate}
           </p>
         </div>
 
@@ -118,13 +117,13 @@ export default function SenatePage({ latestDate, candidates, incumbents, average
   </>;
 }
 
-export const getStaticProps = async () => {
+export async function getStaticProps() {
   const candidates = await getCandidates();
   const incumbents = await getIncumbents();
-  const { overallSenate: overallSenateTimeline } = await getTimeline();
+  const { timeline: timelineTimestamp, overallSenate: overallSenateTimeline } = await getTimeline();
 
   const { averagedPolls, latestDate } = await getAveragedPolls();
-  const overallSenate = await getOverallSenate();
+  const { overallSenate, latestDate:latestDate2 } = await getOverallSenate();
 
   return {
     props: {

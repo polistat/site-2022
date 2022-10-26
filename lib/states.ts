@@ -13,9 +13,8 @@ export const getSenateSlugs = async () => {
     owner: 'polistat',
     repo: 'content-2022',
     path: `races/senate`
-  }).then((res) => {
-    if (!Array.isArray(res.data)) return [];
-    return res.data.map((file) => {
+  }).then((res:any) => {
+    return res.data.map((file:any) => {
       return {
         params: {
           slug: file.name.replace(".md", ""),
@@ -33,9 +32,8 @@ export const getGovernorsSlugs = async () => {
     owner: 'polistat',
     repo: 'content-2022',
     path: `races/governor`
-  }).then((res) => {
-    if (!Array.isArray(res.data)) return [];
-    return res.data.map((file) => {
+  }).then((res:any) => {
+    return res.data.map((file:any) => {
       return {
         params: {
           slug: file.name.replace(".md", ""),
@@ -53,15 +51,14 @@ export const getSenateData = async (slug: string): Promise<Pick<GrayMatterFile<s
     owner: 'polistat',
     repo: 'content-2022',
     path: `races/senate/${slug}.md`
-  }).then((fileRes) => {
-    if (!("content" in fileRes.data)) return;
+  }).then((fileRes:any) => {
     const encoded = fileRes.data.content.replace(/\s/g, '');
     const decoded = decodeURIComponent(escape(atob(encoded)));
     return decoded;
   })
   .catch(err => console.error(err));
-
-  const { data, content } = matter(fileContent ?? "Unable to locate file.");
+  // @ts-expect-error
+  const { data, content } = matter(fileContent);
 
   const date = (new Date(data.date)).toLocaleDateString("en-US", {
     year: "numeric",
@@ -79,15 +76,14 @@ export const getGovernorsData = async (slug: string): Promise<Pick<GrayMatterFil
     owner: 'polistat',
     repo: 'content-2022',
     path: `races/governor/${slug}.md`
-  }).then((fileRes) => {
-    if (!("content" in fileRes.data)) return;
+  }).then((fileRes:any) => {
     const encoded = fileRes.data.content.replace(/\s/g, '');
     const decoded = decodeURIComponent(escape(atob(encoded)));
     return decoded;
   })
   .catch(err => console.error(err));
-
-  const { data, content } = matter(fileContent ?? "Unable to locate file.");
+  // @ts-expect-error
+  const { data, content } = matter(fileContent);
 
   const date = (new Date(data.date)).toLocaleDateString("en-US", {
     year: "numeric",
