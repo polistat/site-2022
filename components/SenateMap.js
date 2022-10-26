@@ -28,8 +28,8 @@ export default function SenateMap({ candidates, averagedPolls, incumbents }) {
           // className="fill-neutral-200 stroke-2 stroke-white"
           className={`${
             averagedPolls.find(a => { return a.state_po===stateId && a.office==='Senate' }) ? (
-              averagedPolls.find(a => { return a.state_po===stateId && a.office==='Senate' }).lean>50  ? (stateId==='AK' ? 'fill-red-50' : candidates.senate[stateId].find(a => { return a.party==='independent' }) ? 'fill-amber-50' : 'fill-blue-50')
-              : averagedPolls.find(a => { return a.state_po===stateId && a.office==='Senate' }).lean<50 ? 'fill-red-50'
+              averagedPolls.find(a => { return a.state_po===stateId && a.office==='Senate' }).lean>50  ? (stateId==='AK' ? 'fill-red-100/75' : candidates.senate[stateId].find(a => { return a.party==='independent' }) ? 'fill-amber-50' : 'fill-blue-100/75')
+              : averagedPolls.find(a => { return a.state_po===stateId && a.office==='Senate' }).lean<50 ? 'fill-red-100/75'
               : 'fill-white'
             ) : (
               'fill-neutral-100'

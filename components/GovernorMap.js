@@ -29,8 +29,8 @@ export default function GovernorMap({ candidates, averagedPolls, incumbents }) {
           // className="fill-neutral-200 stroke-2 stroke-white"
           className={`${
             averagedPolls.find(a => { return a.state_po===stateId && a.office==='Governor' }) ?
-            (averagedPolls.find(a => { return a.state_po===stateId && a.office==='Governor' }).lean>50 ? 'fill-blue-50'
-              : averagedPolls.find(a => { return a.state_po===stateId && a.office==='Governor' }).lean<50 ? 'fill-red-50'
+            (averagedPolls.find(a => { return a.state_po===stateId && a.office==='Governor' }).lean>50 ? 'fill-blue-100/75'
+              : averagedPolls.find(a => { return a.state_po===stateId && a.office==='Governor' }).lean<50 ? 'fill-red-100/75'
               : 'fill-white'
             ) : 'fill-neutral-100'
           } stroke-2 stroke-neutral-300`}
