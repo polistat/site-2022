@@ -1,5 +1,6 @@
 import React from 'react';
 import Head from 'next/head';
+import Link from 'next/link';
 import { GetStaticProps } from 'next';
 import { ParsedUrlQuery } from 'querystring';
 
@@ -16,7 +17,6 @@ interface Props {
 }
 
 export default function BlogPost() {
-
   const [value, setValue] = React.useState(`---
 title: "Title"
 description: "Description"
@@ -26,6 +26,7 @@ date: "2022-09-10T16:20-04:00"
 The beginning of a new blog post.`);
   const [frontMatter, setFrontMatter] = React.useState<any>(null);
   const [source, setSource] = React.useState<MDXRemoteSerializeResult<Record<string, unknown>, Record<string, string>> | null>(null);
+  const [downloadURL, setDownloadURL] = React.useState<any>(null);
 
   React.useEffect(() => {
     const updateSource = async (d:any, c:any) => {
@@ -49,7 +50,15 @@ The beginning of a new blog post.`);
     } catch(err) {
       console.log(err);
     }
-  }, [value])
+
+    // update download url
+    const data = new Blob([value], { type: 'text/plain' });
+    setDownloadURL(window.URL.createObjectURL(data));
+  }, [value]);
+
+  React.useEffect(() => {
+    window.onbeforeunload = () => "Wait! You may have unsaved changes.";
+  }, []);
 
   return <>
     <Head>
@@ -58,13 +67,40 @@ The beginning of a new blog post.`);
     </Head>
 
     <div className="h-screen container max-w-6xl grid grid-cols-2">
-      <div className="border-r-[4px]">
+      <div className="flex flex-col bg-neutral-100">
+        <div className="flex justify-between p-4">
+          <div>
+            <h2 className="text-xl font-semibold">
+              Blog Markdown Editor
+            </h2>
+            <p className="text-sm">
+              <span className="font-medium">Warning:</span> Changes are NOT saved!!
+            </p>
+          </div>
+
+          <div className="flex flex-col items-end gap-1">
+            <a
+              className="bg-blue-600 text-white rounded-md text-sm font-medium px-3 py-1"
+              download="blogpost.md"
+              href={downloadURL}
+            >
+              Download
+            </a>
+
+            <Link href="/markdown" passHref>
+              <a className="text-xs text-blue-500 hover:underline underline-offset-1" target="_blank" rel="noopener noreferrer">
+                Markdown reference
+              </a>
+            </Link>
+          </div>
+        </div>
         <textarea
-          className="p-4 w-full h-full border-2 bg-neutral-800 text-white"
+          className="p-4 w-full h-full bg-neutral-800 text-white resize-none"
           value={value}
           onChange={(e) => setValue(e.target.value)}
         />
       </div>
+
       <div className="">
         <header className="pt-12 pb-8 px-8">
           <div className="flex justify-center">
