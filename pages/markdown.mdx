@@ -1,10 +1,16 @@
 import Letterhead from '../components/layouts/Letterhead';
+import { MathJax as Math } from 'better-react-mathjax';
+import Center from '../components/Center';
 
 <Letterhead
   title="Markdown"
   description="A page showing the supported features of markdown on this site."
   date="Sep. 14, 2022, 9:10 a.m."
 >
+
+> *Hint: To add LaTeX or AsciiMath to your markdown, [skip to the **Math** section](#math)*
+<br/>
+
 
 ## Headings
 ---
@@ -277,6 +283,65 @@ You can add tables to your content by using this syntax:
 | myriad | a very large number |
 | thwart | to oppose successfully; to prevent, frustrate |
 | grudgingly | displaying or reflecting reluctance or unwillingness |
+
+
+## Math
+---
+The site has been set up with [MathJax](https://www.mathjax.org). You can add formatted math to your content with LaTeX or AsciiMath.
+
+### LaTeX
+LaTeX is added with the syntax, `<Math>{""}</Math>`, with the LaTeX code between the quotes.
+
+To add centered math, use `<Center> <Math>{""}</Math> <Center>`.
+
+To add inline math, use `<Math inline>{""}</Math>`.
+
+<u>Examples:</u>
+<Math>{"\\(\\frac{10}{4x} \\approx 2^{12}\\)"}</Math>
+
+Math, like <Math inline>{"\\(\\frac{10}{4x} \\approx 2^{12}\\)"}</Math>, can be added inline as well
+
+And also centered:
+<Center>
+  <Math>{"\\(\\frac{10}{4x} \\approx 2^{12}\\)"}</Math>
+</Center>
+
+```
+<Math>{"\\(\\frac{10}{4x} \\approx 2^{12}\\)"}</Math>
+
+Math, like <Math inline>{"\\(\\frac{10}{4x} \\approx 2^{12}\\)"}</Math>, can be added inline as well
+
+And also centered:
+<Center>
+  <Math>{"\\(\\frac{10}{4x} \\approx 2^{12}\\)"}</Math>
+</Center>
+```
+
+### AsciiMath
+AsciiMath is also supported with a similar syntax, but with ``` `` ``` within the quotes, like so: ``` <Math>{"``"}</Math> ```.
+
+AsciiMath is simpler than LaTeX. [Click to learn more.](http://asciimath.org)
+
+<u>Examples:</u>
+<Math>{"`frac(10)(4x) approx 2^(12)`"}</Math>
+
+Math, like <Math inline>{"`frac(10)(4x) approx 2^(12)`"}</Math>, can be added inline as well
+
+And also centered:
+<Center>
+  <Math>{"`frac(10)(4x) approx 2^(12)`"}</Math>
+</Center>
+
+```
+<Math>{"`frac(10)(4x) approx 2^(12)`"}</Math>
+
+Math, like <Math inline>{"`frac(10)(4x) approx 2^(12)`"}</Math>, can be added inline as well
+
+And also centered:
+<Center>
+  <Math>{"`frac(10)(4x) approx 2^(12)`"}</Math>
+</Center>
+```
 
 
 ## Ignoring Markdown formatting
