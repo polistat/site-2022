@@ -89,9 +89,11 @@ export default function BlogPost() {
               Blog Markdown Editor
             </h2>
             <p className="text-sm">
-              <a className="text-blue-500 hover:underline underline-offset-1 cursor-pointer" target="_blank" rel="noopener noreferrer">
-                Markdown reference
-              </a>
+              <Link href="/markdown" passHref>
+                <a className="text-blue-500 hover:underline underline-offset-1" target="_blank" rel="noopener noreferrer">
+                  Markdown reference
+                </a>
+              </Link>
             </p>
           </div>
 
@@ -111,14 +113,12 @@ export default function BlogPost() {
               </a>
             </div>
 
-            <Link href="/markdown" passHref>
-              <a className="text-xs text-blue-500 hover:text-red-500 hover:underline underline-offset-1" target="_blank" rel="noopener noreferrer" onClick={() => {
-                setValue(defaultValue);
-                window.location.reload();
-              }}>
-                Reset editor
-              </a>
-            </Link>
+            <a className="text-xs text-blue-500 hover:text-red-500 hover:underline underline-offset-1 cursor-pointer" target="_blank" rel="noopener noreferrer" onClick={() => {
+              setValue(defaultValue);
+              window.location.reload();
+            }}>
+              Reset editor
+            </a>
           </div>
         </div>
 
