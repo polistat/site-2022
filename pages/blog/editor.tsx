@@ -8,6 +8,7 @@ import matter from "gray-matter";
 import { MDXRemote, MDXRemoteSerializeResult } from 'next-mdx-remote';
 import { serialize } from '../../lib/serialize';
 
+import Editor, { DiffEditor, useMonaco, loader } from "@monaco-editor/react";
 import components from '../../components/MdComponents';
 
 interface Props {
@@ -16,19 +17,26 @@ interface Props {
   frontMatter: { [key: string]: string }
 }
 
-export default function BlogPost() {
-  const [value, setValue] = React.useState(`---
+
+const defaultValue = `---
 title: "Title"
 description: "Description"
 date: "2022-09-10T16:20-04:00"
 ---
   
-The beginning of a new blog post.`);
+The beginning of a new blog post.`;
+
+export default function BlogPost() {
+  const [value, setValue] = React.useState<string|null>(null);
   const [frontMatter, setFrontMatter] = React.useState<any>(null);
   const [source, setSource] = React.useState<MDXRemoteSerializeResult<Record<string, unknown>, Record<string, string>> | null>(null);
   const [downloadURL, setDownloadURL] = React.useState<any>(null);
 
+  const [fileName, setFileName] = React.useState<string>("blogpost.md");
+
   React.useEffect(() => {
+    if (!value) return;
+
     const updateSource = async (d:any, c:any) => {
       const newSource = await serialize(c, { scope: d });
       setSource(newSource);
@@ -54,10 +62,17 @@ The beginning of a new blog post.`);
     // update download url
     const data = new Blob([value], { type: 'text/plain' });
     setDownloadURL(window.URL.createObjectURL(data));
+
+    // save to local storage
+    if (typeof window !== 'undefined') window.localStorage.setItem("blog-editor-value", value);
   }, [value]);
 
   React.useEffect(() => {
-    window.onbeforeunload = () => "Wait! You may have unsaved changes.";
+    // window.onbeforeunload = () => "Wait! You may have unsaved changes.";
+    
+    if (typeof window !== 'undefined') {
+      setValue(window.localStorage.getItem("blog-editor-value") || defaultValue);
+    }
   }, []);
 
   return <>
@@ -74,30 +89,57 @@ The beginning of a new blog post.`);
               Blog Markdown Editor
             </h2>
             <p className="text-sm">
-              <span className="font-medium">Warning:</span> Changes are NOT saved!!
+              <Link href="/markdown" passHref>
+                <a className="text-blue-500 hover:underline underline-offset-1" target="_blank" rel="noopener noreferrer">
+                  Markdown reference
+                </a>
+              </Link>
             </p>
           </div>
 
           <div className="flex flex-col items-end gap-1">
-            <a
-              className="bg-blue-600 text-white rounded-md text-sm font-medium px-3 py-1"
-              download="blogpost.md"
-              href={downloadURL}
-            >
-              Download
-            </a>
-
-            <Link href="/markdown" passHref>
-              <a className="text-xs text-blue-500 hover:underline underline-offset-1" target="_blank" rel="noopener noreferrer">
-                Markdown reference
+            <div className="flex rounded-md overflow-hidden">
+              <input
+                className="px-2 w-24 text-xs bg-neutral-200 border-neutral-400"
+                value={fileName}
+                onChange={e => setFileName(e.target.value)}
+              />
+              <a
+                className="bg-blue-600 hover:bg-blue-700 text-white text-sm font-medium px-2 py-1"
+                download={fileName}
+                href={downloadURL}
+              >
+                Download
               </a>
-            </Link>
+            </div>
+
+            <a className="text-xs text-blue-500 hover:text-red-500 hover:underline underline-offset-1 cursor-pointer" target="_blank" rel="noopener noreferrer" onClick={() => {
+              setValue(defaultValue);
+              window.location.reload();
+            }}>
+              Reset editor
+            </a>
           </div>
         </div>
-        <textarea
-          className="p-4 w-full h-full bg-neutral-800 text-white resize-none"
-          value={value}
-          onChange={(e) => setValue(e.target.value)}
+
+        <Editor
+          theme="vs-dark"
+          defaultLanguage="markdown"
+          defaultValue={typeof window !== 'undefined' && window.localStorage.getItem('blog-editor-value') || defaultValue}
+          options={{
+            acceptSuggestionOnEnter: "off",
+            cursorBlinking: "phase",
+            cursorSmoothCaretAnimation: true,
+            wordWrap: "on",
+            tabSize: 2,
+            // minimap: { enabled: false }
+          }}
+          onChange={(newValue, event) => newValue && setValue(newValue)}
+          // loading=
+          onMount={(editor, monaco) => {
+            // editorRef.current = editor
+            // if (typeof window !== 'undefined') setValue(window.localStorage.getItem('blog-editor-value') || defaultValue);
+          }}
         />
       </div>
 
