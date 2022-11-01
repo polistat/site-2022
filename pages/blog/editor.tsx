@@ -81,7 +81,7 @@ export default function BlogPost() {
       <meta property="og:title" content={`Blog Editor – ORACLE of Blair`} key="ogtitle"/>
     </Head>
 
-    <div className="h-screen container max-w-6xl grid grid-cols-2">
+    <div className="min-h-screen container max-w-6xl grid grid-cols-2">
       <div className="flex flex-col bg-neutral-100">
         <div className="flex justify-between p-4">
           <div>

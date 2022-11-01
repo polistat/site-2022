@@ -20,6 +20,7 @@ export default async function handler(req, res) {
         await Promise.all(Object.keys(candidates.governor).map(async a => await res.revalidate(`/governors/${a}`)));
         break;
       case 'blog':
+        await res.revalidate('/');
         await res.revalidate('/blog');
         await Promise.all(blogSlugs.map(async a => await res.revalidate(`/blog/${a.params.slug}`)));
         break;
