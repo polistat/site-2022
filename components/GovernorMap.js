@@ -9,7 +9,7 @@ export default function GovernorMap({ candidates, averagedPolls, incumbents }) {
   const [selectedState, setSelectedState] = React.useState(null);
 
   const onMouseMove = e => {
-    setCursorPosition({ top: e.pageY+30, left: e.pageX })
+    setCursorPosition({ top: e.clientY+30, left: e.clientX })
   };
 
   return <>
