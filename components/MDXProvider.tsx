@@ -15,7 +15,7 @@ export default function MDXCompProvider(props: HTMLAttributes<HTMLDivElement>) {
     ul: (props) => <ul className="my-4 pl-8 list-disc" {...props}/>,
     ol: (props) => <ol className="my-4 pl-8 list-decimal" {...props}/>,
     li: (props) => <li {...props}/>,
-    table: (props) => <table className="my-4 table-auto" {...props}/>,
+    table: (props) => <table className="my-4 mx-auto table-auto" {...props}/>,
     thead: (props) => <thead className="text-left uppercase text-sm text-neutral-500" {...props}/>,
     tbody: (props) => <tbody {...props}/>,
     tr: (props) => <tr {...props}/>,

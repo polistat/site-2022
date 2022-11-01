@@ -43,7 +43,7 @@ export default function GovernorsStatePage({ params, source, frontMatter, stateN
     <main className="p-4 flex flex-col gap-8">
       <section className="px-8 py-8 container max-w-3xl flex flex-col gap-12 bg-neutral-50 border-2 shadow-md rounded-2xl">
         <div className="flex flex-col md:flex-row gap-16 justify-between items-center">
-          <div className="flex flex-col gap-1.5 items-start">
+          <div className="flex flex-col gap-1.5 items-center md:items-start">
             <h1 className="text-4xl font-bold">
               {stateName}
             </h1>
@@ -259,21 +259,31 @@ export const getStaticProps: GetStaticProps = async ({ params }): Promise<{props
       notFound: true,
     };
     
-  const { averagedPolls, latestDate } = await getAveragedPolls();
+  const { averagedPolls, latestDate } = await getAveragedPolls()
+  .catch(err => {
+    return { averagedPolls: null, latestDate: null };
+  });
   
   // @ts-expect-error
-  const { timeline: timelineTimestamp, races: { dates:timelineDates, governor: { [params.slug]:raceTimeline} } } = await getTimeline();
+  const { timeline: timelineTimestamp, races: { dates:timelineDates, governor: { [params.slug]:raceTimeline} } } = await getTimeline()
+  .catch(err => {
+    // @ts-expect-error
+    return { timeline: null, races: { dates: null, senate: { [params.slug]: null } } };
+  });
 
   // @ts-expect-error
   const stateName = mapconfig[params?.slug].name;
 
   const { data, content } = await getGovernorsData((params?.slug as unknown) as string)
-    .catch(err => {
-      return { data:null, content:null };
-    });
+  .catch(err => {
+    return { data:null, content:null };
+  });
   const mdxSource = content&&data ? await serialize(content, { scope: data }) : null;
 
-  const { latestPolls, latestDate:latestDate2 } = await getLatestPolls('governor', stateName);
+  const { latestPolls, latestDate:latestDate2 } = await getLatestPolls('governor', stateName)
+  .catch(err => {
+    return { latestPolls:null, latestDate:null };
+  });
 
   return {
     props: {
@@ -286,7 +296,7 @@ export const getStaticProps: GetStaticProps = async ({ params }): Promise<{props
       latestDate,
       latestPolls,
       // @ts-expect-error
-      racesTimeline: { dates:timelineDates, governor: { [params.slug]:raceTimeline } },
+      racesTimeline: { dates:timelineDates, governor: { [params.slug]:raceTimeline||null } },
     },
     // @ts-expect-error
     revalidate: 3600 // 1 hour
