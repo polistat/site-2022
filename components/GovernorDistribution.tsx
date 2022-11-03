@@ -3,13 +3,13 @@ import React from 'react';
 export default function GovernorDistribution({ incumbents, averagedPolls }: { incumbents: any, averagedPolls: any }) {
   const dist = [
     Object.keys(incumbents.governor).filter((a:any) => incumbents.governor[a][0].party === 'democrat'),
-    averagedPolls.filter((a:any) => { return a.office==='Governor' && a.lean/100>0.7 }).map((a:any) => a.state_po),
-    averagedPolls.filter((a:any) => { return a.office==='Governor' && a.lean/100>0.6 && a.lean/100<=0.7 }).map((a:any) => a.state_po),
-    averagedPolls.filter((a:any) => { return a.office==='Governor' && a.lean/100>0.55 && a.lean/100<=0.6 }).map((a:any) => a.state_po),
-    averagedPolls.filter((a:any) => { return a.office==='Governor' && a.lean/100>0.45 && a.lean/100<=0.55 }).map((a:any) => a.state_po),
-    averagedPolls.filter((a:any) => { return a.office==='Governor' && a.lean/100>0.4 && a.lean/100<=0.45 }).map((a:any) => a.state_po),
-    averagedPolls.filter((a:any) => { return a.office==='Governor' && a.lean/100>0.3 && a.lean/100<=0.4 }).map((a:any) => a.state_po),
-    averagedPolls.filter((a:any) => { return a.office==='Governor' && a.lean/100<=0.3 }).map((a:any) => a.state_po),
+    averagedPolls.filter((a:any) => { return a.office==='Governor' && a.dem_wins/100>0.7 }).map((a:any) => a.state_po),
+    averagedPolls.filter((a:any) => { return a.office==='Governor' && a.dem_wins/100>0.6 && a.dem_wins/100<=0.7 }).map((a:any) => a.state_po),
+    averagedPolls.filter((a:any) => { return a.office==='Governor' && a.dem_wins/100>0.55 && a.dem_wins/100<=0.6 }).map((a:any) => a.state_po),
+    averagedPolls.filter((a:any) => { return a.office==='Governor' && a.dem_wins/100>0.45 && a.dem_wins/100<=0.55 }).map((a:any) => a.state_po),
+    averagedPolls.filter((a:any) => { return a.office==='Governor' && a.dem_wins/100>0.4 && a.dem_wins/100<=0.45 }).map((a:any) => a.state_po),
+    averagedPolls.filter((a:any) => { return a.office==='Governor' && a.dem_wins/100>0.3 && a.dem_wins/100<=0.4 }).map((a:any) => a.state_po),
+    averagedPolls.filter((a:any) => { return a.office==='Governor' && a.dem_wins/100<=0.3 }).map((a:any) => a.state_po),
     Object.keys(incumbents.governor).filter((a:any) => incumbents.governor[a][0].party === 'republican'),
   ];
 

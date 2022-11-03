@@ -39,7 +39,7 @@ export const getBlogList = async () => {
   })
   .catch(err => console.error(err));
 
-  return posts;
+  return posts?.sort((a:any, b:any) => Number(new Date(b.date)) - Number(new Date(a.date)));
 }
 
 export const getBlogSlugs = async () => {
