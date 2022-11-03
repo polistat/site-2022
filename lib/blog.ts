@@ -7,7 +7,7 @@ export const getBlogList = async () => {
     repo: 'content-2022',
     path: `blog`
   }).then(async (res:any) => {
-    return Promise.all(res.data.map(async (file:any) => {
+    return Promise.all(res.data.filter((file:any) => file.name.endsWith('.md')).map(async (file:any) => {
       const slug = file.name.replace(".md", "");
       const fileContent = await octokit.request('GET /repos/{owner}/{repo}/contents/{path}', {
         owner: 'polistat',
@@ -39,7 +39,7 @@ export const getBlogList = async () => {
   })
   .catch(err => console.error(err));
 
-  return posts;
+  return posts?.sort((a:any, b:any) => Number(new Date(b.date)) - Number(new Date(a.date)));
 }
 
 export const getBlogSlugs = async () => {
@@ -48,7 +48,7 @@ export const getBlogSlugs = async () => {
     repo: 'content-2022',
     path: `blog`
   }).then((res:any) => {
-    return res.data.map((file:any) => {
+    return res.data.filter((file:any) => file.name.endsWith('.md')).map((file:any) => {
       return {
         params: {
           slug: file.name.replace(".md", ""),

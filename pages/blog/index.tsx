@@ -50,7 +50,7 @@ export async function getStaticProps() {
   const posts = await getBlogList();
   return {
     props: {
-      posts
+      posts: posts || []
     },
     revalidate: 3600 // 1 hour
   };
