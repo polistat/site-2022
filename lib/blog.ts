@@ -7,7 +7,7 @@ export const getBlogList = async () => {
     repo: 'content-2022',
     path: `blog`
   }).then(async (res:any) => {
-    return Promise.all(res.data.map(async (file:any) => {
+    return Promise.all(res.data.filter((file:any) => file.name.endsWith('.md')).map(async (file:any) => {
       const slug = file.name.replace(".md", "");
       const fileContent = await octokit.request('GET /repos/{owner}/{repo}/contents/{path}', {
         owner: 'polistat',
