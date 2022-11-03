@@ -48,7 +48,7 @@ export const getBlogSlugs = async () => {
     repo: 'content-2022',
     path: `blog`
   }).then((res:any) => {
-    return res.data.map((file:any) => {
+    return res.data.filter((file:any) => file.name.endsWith('.md')).map((file:any) => {
       return {
         params: {
           slug: file.name.replace(".md", ""),
